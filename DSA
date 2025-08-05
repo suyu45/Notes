@@ -1,0 +1,66 @@
+1) Binary search
+
+Binary Search is a search algorithm used on sorted arrays (or ranges) to find the position of a target value.
+It repeatedly divides the search interval in half. (divide ad conquer algorithm)
+
+Precondition: Array must be sorted.
+
+| Case    | Time     | Space |
+| ------- | -------- | ----- |
+| Best    | O(1)     | O(1)  |
+| Average | O(log n) | O(1)  |	
+| Worst   | O(log n) | O(1)  |
+
+
+2) stack
+
+A stack is a linear data structure that follows the LIFO (Last In First Out) principle — the last element inserted is the first to be removed.
+Examples:
+Stack of plates,Undo feature in editors,Browser back button,Recursion call stack
+
+| Operation     | Description / Use                                      | Time Complexity |
+|---------------|--------------------------------------------------------|-----------------|
+| push(x)       | Add element x to the top of the stack                  | O(1)            |
+| pop()         | Remove the top element                                 | O(1)            |
+| peek() / top()| Get the top element without removing it                | O(1)            |
+| isEmpty()     | Check if the stack is empty                            | O(1)            |
+| size()        | Return the number of elements in the stack             | O(1)            |
+
+Monotonic Stack -> A monotonic stack is a stack that maintains elements in increasing or decreasing order.
+
+Stack in Recursion -> During recursion, function calls are stored in the call stack. Each recursive call is pushed onto the stack, 
+and once the function completes, it's popped off. This allows the program to return to the correct previous state.
+
+
+
+******************  Sorting  ************************
+
+| Algorithm       | Idea (Concept)                                      | Best Case  | Avg Case   | Worst Case | Space    | Stable  | In-place  | Best Use Case                                 |
+| --------------- | --------------------------------------------------- | ---------- | ---------- | ---------- | -------- | ------  | --------  | --------------------------------------------- |
+| **Bubble Sort** | Repeatedly swap adjacent elements if out of order   | O(n)       | O(n²)      | O(n²)      | O(1)     | ✅ Yes  | ✅ Yes    | Small / nearly sorted arrays, teaching basics |
+| **Selection**   | Select min element, place at beginning              | O(n²)      | O(n²)      | O(n²)      | O(1)     | ❌ No   | ✅ Yes    | Few swaps needed, simple logic                |
+| **Insertion**   | Insert element into correct position in sorted part | O(n)       | O(n²)      | O(n²)      | O(1)     | ✅ Yes  | ✅ Yes    | Nearly sorted or small arrays                 |
+| **Quick Sort**  | Partition around pivot, sort subarrays              | O(n log n) | O(n log n) | O(n²)      | O(log n) | ❌ No   | ✅ Yes    | Large datasets, fastest in practice           |
+| **Merge Sort**  | Divide array, sort halves, merge                    | O(n log n) | O(n log n) | O(n log n) | O(n)     | ✅ Yes  | ❌ No     | Linked lists, stability required              |
+| **Heap Sort**   | Build max heap, extract max, heapify                | O(n log n) | O(n log n) | O(n log n) | O(1)     | ❌ No   | ✅ Yes    | Guaranteed O(n log n) in-place sort           |
+
+
+Quick Memory Hooks
+Stable Sorts: BIM → Bubble, Insertion, Merge
+In-place: All except Merge
+Guaranteed O(n log n): Merge, Heap
+Best for large data: Quick (fast), Merge (stable)
+Best for nearly sorted: Insertion
+
+Idea keywords:
+Bubble → Swap Adjacent (“bubble” largest to the end).
+Selection → Select Min  (Find minimum element in unsorted part, place it at beginning.)
+Insertion → Insert in Sorted ( Insert each element into its correct position in the sorted part.)
+Quick → Pivot Partition (Choose pivot, partition array into < pivot and > pivot, recursively sort.)
+Merge → Divide & Merge ( Divide array into halves, sort each half, merge sorted halves.)
+Heap → Heapify & Extract (Build max heap, repeatedly extract max element, heapify remaining.)
+
+
+
+
+

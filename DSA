@@ -61,6 +61,17 @@ Merge → Divide & Merge ( Divide array into halves, sort each half, merge sorte
 Heap → Heapify & Extract (Build max heap, repeatedly extract max element, heapify remaining.)
 
 
+In C++, `std::sort` (from `<algorithm>`) uses a **hybrid sorting algorithm called IntroSort**.
+It works like this:
+* **Starts with Quicksort** for fast average performance.
+* If recursion depth becomes too large (to avoid worst-case O(n²)), it **switches to Heapsort** to ensure O(n log n) worst-case time.
+* For very small subarrays, it uses **Insertion sort** for better efficiency.
+* Best case: O(n log n)
+* Average case: O(n log n)
+* Worst case: O(n log n)
+
+sort(nums.begin(), nums.end(), greater<int>());
+
 
 
 

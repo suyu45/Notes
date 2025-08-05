@@ -1,0 +1,329 @@
+OOP->OOP is a way of writing programs using objects and classes to represent real-world things. It helps make code more organized, reusable, and easier to understand.
+Class:Class is a user-defined data type which defines its properties and its functions.It specifies the characteristics (properties) and actions (methods) that objects of that class will have.
+Attributes: These are the variables or data members connected to a class
+Methods: The functions that define a class's behavior are called methods
+Object:An object is an instance of a class that contains data (variables) and functions (methods) to work on that data.It represents a real-world entity like a car, person, or book.
+
+Static Memory Allocation:
+A static object is created at compile time and stored in the stack memory. ->It is automatically destroyed when it goes out of scope.Memory used for local variables,Function calls,Small Size,speed->fast
+
+Dynamic MEmory Allocation:
+A dynamic object is created at run-time using the new keyword and stored in heap memory(region of a computer's memory). You must manually delete it using delete.->Dynamic memory allocation (new / malloc),Objects with manually controlled lifetime,larger size,speed->slow
+
+
+class Car {
+  public:
+    void start() {
+      cout << "Car started\n";
+    }
+};
+
+int main() {
+  Car c1;     // static object
+  c1.start(); // accessing member function
+
+ Car* c1 = new Car();  // dynamic object
+  c1->start();          // using arrow operator ->
+  delete c1;            // manually freeing memory
+  return 0;
+}
+
+Compile time:Compile time is the time when your code is converted from high-level language (like C++/Java) to machine code (binary) by the compiler.
+Activities->Syntax checking,Type checking,Variable declaration errors,Function overloading resolution,Code optimization
+Runtime : Run time is the time when your program is actually executed on the system after successful compilation.
+Activities->Actual logic execution,Memory allocation (heap),Input/output handling,Runtime errors.
+
+Pillers of OOPS->
+1) Inheritance
+2) Encapsulation
+3) Abstraction
+4) Polymorphism
+
+1) INHERITANCE:
+-Inheritance is an OOP concept where a class (child/derived class) acquires the properties (fields) and behaviors (methods) of another class (parent/base class).
+-you can reuse,extend or modify the attributes and behaviors which are defined in other
+
+class Animal {
+public:
+    void eat() {
+        cout << "Eating..." << endl;
+    }
+};
+
+class Dog : public Animal {  // Inheriting Animal class
+public:
+    void bark() {
+        cout << "Barking..." << endl;
+    }
+};
+
+int main() {
+    Dog d;
+    d.eat();   // Inherited from Animal
+    d.bark();  // Own method
+}
+
+| Type of Inheritance | Description                                        | Example Syntax                                   |      
+| ------------------- | -------------------------------------------------- | ------------------------------------------------ |
+| **Single**          | One child class inherits from one parent class     | `class B : public A {}`                          |
+| **Multilevel**      | A class is derived from a derived class            | `class C : public B {}`                          |
+| **Multiple**        | One class inherits from more than one base class   | `class C : public A, public B {}`                |
+| **Hierarchical**    | Multiple classes inherit from a single base class  | `class B : public A {}`, `class C : public A {}` |
+| **Hybrid**          | Combination of multiple and multilevel inheritance | Mix of above                                     |
+
+| Base Class Member | `public` Inheritance | `protected` Inheritance | `private` Inheritance |
+| ----------------- | -------------------- | ----------------------- | --------------------- |
+| `public`          | `public` in child    | `protected` in child    | `private` in child    |
+| `protected`       | `protected` in child | `protected` in child    | `private` in child    |
+| `private`         | Not Inherited        | Not Inherited           | Not Inherited         |
+
+DATA HIDING
+
+2) ENCAPSULATION
+Encapsulation is the OOP concept of wrapping data (variables) and code (methods) together as a single unit. It restricts direct access to some components and helps achieve data hiding.
+ACCESS Modifiers TABLES
++--------------+------------------------+-----------------------------+----------------------------+
+| Specifier    | Within Class           | In Derived Class           | Outside the Class          |
++--------------+------------------------+-----------------------------+----------------------------+
+| private      | ✅ Yes                 | ❌ No                      | ❌ No                      |
+| protected    | ✅ Yes                 | ✅ Yes                     | ❌ No                      |
+| public       | ✅ Yes                 | ✅ Yes                     | ✅ Yes                     |
++--------------+------------------------+-----------------------------+----------------------------+
+3) ABSTRACTION
+| **Concept**             | **Definition**                                                              | **Java Example**                                          | **C++ Example**                                                              |
+| ----------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **Abstraction**         | Hiding internal details and showing only necessary features                 | `abstract class Shape { abstract void draw(); }`          | `class Shape { virtual void draw() = 0; };`                                  |
+| **Purpose**             | Reduce complexity, enhance maintainability, increase security               | `Animal obj = new Dog(); obj.makeSound();`                | `Animal* a = new Dog(); a->makeSound();`                                     |
+| **Abstract Class**      | A class that can have abstract and concrete methods. Cannot be instantiated | `abstract class Animal { abstract void sound(); }`        | `class Animal { virtual void sound() = 0; };`                                |
+| **Abstract Method**     | A method without a body, must be overridden in subclass                     | `abstract void draw();`                                   | `virtual void draw() = 0;`                                                   |
+| **Interface**           | 100% abstract type (only abstract methods, no implementation)               | `interface Vehicle { void drive(); }`                     | *Not supported directly; use abstract class with all pure virtual functions* |
+| **Object Creation**     | Cannot create object of abstract class directly                             | `Animal a = new Dog();`                                   | `Animal* a = new Dog();`                                                     |
+| **Polymorphism Use**    | Abstract class/interface enables runtime polymorphism                       | `Animal a = new Dog(); a.makeSound();`                    | `Animal* a = new Dog(); a->makeSound();`                                     |
+| **Partial Abstraction** | Possible using abstract class                                               | `abstract class A { void show(); abstract void hide(); }` | `class A { void show(); virtual void hide() = 0; };`                         |
+| **Full Abstraction**    | Achieved using interfaces                                                   | `interface Printable { void print(); }`                   | `class A { virtual void print() = 0; };`                                     |
+| **Real-Life Example**   | ATM hides internal code, shows options only                                 | Pressing ATM buttons without knowing backend logic        | Using a remote without knowing internal circuit                              |
+
+
+
+4) POLYMORPHISM
+Polymorphism means "many forms".
+It allows a single function, method, or operator to behave differently based on the context (i.e., input types or object types).
+
+1. Compile Time Polymorphism (Static)->implemented at compile time
+a) Function overloading:Method overloading is a technique which allows youto have more than one function with the same function name but with different functionality.
+Possible by
+1. The return type of the overloaded function.but not only return type diff atleast one paramter type diff.
+2. The type of the parameters passed to the function.
+3. The number of parameters passed to the function.
+
+eg
+class Print {
+public:
+    void show(int a) { cout << "Integer: " << a << endl; }
+    void show(double b) { cout << "Double: " << b << endl; }
+};
+
+b) operator overloading:Operator overloading allows you to redefine the behavior of operators (+, -, *, etc.) for user-defined types (like classes or structs).
+synatx:
+return_type operator symbol (parameters) {
+    // custom code
+}
+eg:
+class Student {
+    int rollNo;
+public:
+    Student(int r) : rollNo(r) {}
+
+    bool operator==(const Student& s) {
+        return rollNo == s.rollNo;
+    }
+};
+
+int main() {
+    Student s1(101), s2(101), s3(102);
+
+    cout << (s1 == s2) << endl;  // Output: 1 (true)
+    cout << (s1 == s3) << endl;  // Output: 0 (false)
+}
+
+
+
+2. Runtime Polymorphism (Dynamic)->implemented at runtime
+It is achieved using virtual functions and inheritance.
+class Animal {
+public:
+    virtual void speak() {
+        cout << "Animal speaks\n";
+    }
+};
+class Dog : public Animal {
+public:
+    void speak() override {
+        cout << "Dog barks\n";
+    }
+};
+int main() {
+    Animal* a;
+    Dog d;
+
+    a = &d;  or  //Animal* a1 = new Dog();
+
+    a->speak();  // Output: Dog barks (runtime polymorphism)
+}
+Animal has a virtual function speak()->Dog overrides it->Base class pointer a points to a Dog object->At runtime, it calls Dog's version of speak()
+If you remove virtual, the base class version will be called, even if it points to a derived object (this is compile-time binding)
+
+virtual – tells compiler to enable runtime dispatch
+override (C++11+) – optional, improves code clarity
+We use a base class pointer (Animal* a) to achieve runtime polymorphism.
+This allows calling derived class functions using base class pointers dynamically, enabling generic and extensible code.
+
+CONSTRUCTOR:
+A constructor is a special member function that is automatically called when an object is created. Its main purpose is to initialize the object.
+class Student {
+    int roll;
+    string name;
+
+public:
+    // 🔹 1. Default Constructor
+    Student() {
+        roll = 0;
+        name = "Unknown";
+    }
+    // 🔹 2. Parameterized Constructor->When specific values are passed during creation
+    Student(int r, string n) {
+        roll = r;
+        name = n;
+    }
+    // 🔹 3. Copy Constructor->deep copy->When object is initialized using another object
+    Student(const Student &s) {
+        roll = s.roll;
+        name = s.name;
+    }
+    void display() {
+        cout << "Roll: " << roll << ", Name: " << name << endl;
+    }
+};
+int main() {
+    Student s1;                        // Default constructor
+    Student s2(101, "Ram");            // Parameterized constructor
+    Student s3 = s2;                   // Copy constructor
+
+    s1.display();  // Roll: 0, Name: Unknown
+    s2.display();  // Roll: 101, Name: Ram
+    s3.display();  // Roll: 101, Name: Ram
+}
+
+➣If you do not create a copy constructor, C++ will automatically generate a default copy constructor for your class. But that default version performs a shallow copy, which can be dangerous in some cases
+➣shallow copy->Shallow copy copies all member variables as-is, including pointers, meaning both objects point to the same memory.
+
+DESTURCTOR:
+A destructor is a special member function that is automatically called when an object goes out of scope or is deleted, to release resources like memory->prefixed with a tilde sign (~)
+If your class allocates dynamic memory using new then it should use->Destructor will run automatically at end of scope
+
+| Aspect          | **Static Object**          | **Dynamic Object**                          |
+| --------------- | -------------------------- | ------------------------------------------- |
+| Created using   | `ClassName obj;`           | `ClassName* obj = new ClassName();`         |
+| Destroyed when  | Goes out of **scope**      | You **explicitly delete** it using `delete` |
+| Destructor call | ✅ Called **automatically** | ❌ Not called unless you use `delete`        |
+| Risk if missed  | —                          | ❌ **Memory leak** if `delete` is not used   |
+
+class Test {
+public:
+    Test()  { cout << "Constructor\n"; }
+    ~Test() { cout << "Destructor\n"; }
+};
+
+int main() {
+    Test* t = new Test();  // Dynamic allocation
+    delete t;              // Manually call destructor and free memory 
+
+if delete d; is called, if there's no destructor to delete the memory allocated for ptr. So the memory stays allocated — leak!
+}
+
+THIS keyword
+this is a special pointer available inside non-static member functions of a class.It points to the current object — the object which invoked the function.
+class Student {
+    int roll;
+public:
+    void setRoll(int roll) {
+        this->roll = roll; // this->roll refers to the data member, roll is parameter
+    }
+}
+
+FRIEND FUNCTION:
+➣A friend function is a non-member function that has access to the private and protected members of a class...You declare it using the friend keyword inside the class.
+class Box {
+private:
+    int length;
+
+public:
+    Box(int l) : length(l) {}
+
+    // Friend function declaration
+    friend void showLength(Box b);
+};
+
+// Friend function definition (outside class)
+void showLength(Box b) {
+    cout << "Length is: " << b.length << endl; // can access private data
+}
+● Aggregation : 
+It is a process in which one class defines another class as any entity reference. It is another way to reuse the class. It is a form of association that represents the HAS-A relationship.
+
+● VIRTUAL FUNCTION
+ A virtual function is a member function in a base class that you expect to override in derived classes.It is declared using the virtual keyword and supports runtime polymorphism via function overriding.
+class Base {
+public:
+    virtual void show(); // virtual function
+};
+class Derived : public Base {
+public:
+    void show() override; // override base class version
+//override keyword is optional but useful to	Catches errors due to typos or wrong parameters.
+};
+
+● FINAL KEYWORD
+| Feature / Context   | Java                                       | C++ (C++11 and later)                           |
+| ------------------- | ------------------------------------------ | ----------------------------------------------- |
+| **Variable**        | `final` variable cannot be reassigned      | Not applicable (`const` is used instead)        |
+| **Method**          | Prevents method overriding in subclass     | Prevents overriding of virtual functions        |
+| **Class**           | Prevents inheritance (no subclass allowed) | Prevents inheritance (no derived class allowed) |
+| **Syntax (Method)** | `final void show() { }`                    | `virtual void show() final;`                    |
+| **Syntax (Class)**  | `final class A { }`                        | `class A final { };`                            |
+
+● SUPER KEYWORD
+| Feature               | Java (`super`)   | C++ (No `super`)             |
+| --------------------- | ---------------- | ---------------------------- |
+| Call base method      | `super.method()` | `Base::method()`             |
+| Call base constructor | `super()`        | `Derived(): Base() {}`       |
+| Access base variable  | `super.var`      | `Base::var`                  |
+| Keyword exists?       | ✅ Yes            | ❌ No (`Base::` used instead) |
+
+
+
+
+
+IS-A relationship->Represents "is a type of" relationship.  Implementation: Inheritance (extends / :).Example: Dog IS-A Animal.
+class Animal {
+public:
+    void eat() { cout << "Eating...\n"; }
+};
+class Dog : public Animal { // Dog IS-A Animal
+public:
+    void bark() { cout << "Barking...\n"; }
+};
+
+HAS-A Relationship->Represents "has a" or "contains" relationship , Implementation: Composition / Aggregation (object as member). Example: Car HAS-A Engine.
+class Engine {
+public:
+    void start() { cout << "Engine starting...\n"; }
+};
+class Car { // Car HAS-A Engine
+    Engine engine;
+public:
+    void startCar() {
+        engine.start();
+        cout << "Car started!\n";
+    }
+};

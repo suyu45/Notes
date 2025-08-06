@@ -75,3 +75,21 @@ sort(nums.begin(), nums.end(), greater<int>());
 
 
 
+************************************* Sliding window and 2 pointer ********************************************
+1.Fixed-size window
+  Window size k is constant.
+  Example: Max sum of subarray of size k.
+
+2.Variable-size window ( longest subarray / substring where <condition> )
+  Window expands/contracts until a condition is met.
+  Example: Longest subarray where sum <= k.
+
+3. No. of subarray where <condition> 
+  using pattern 2 ==>  
+  (No. of subarray where  sum = k)  = (No. of subarray where  sum <= k) - (No. of subarray where  sum <= (k-1))
+  ans = x-y
+
+4.Shortest / Minimum window <condition>
+
+
+

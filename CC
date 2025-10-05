@@ -1,0 +1,12 @@
+Virtualization is a technique, which allows to
+share a single physical demand of a resource
+or an application among multiple customers
+and organizations.
+Virtualization is the "creation of a virtual
+(rather than actual) version of Server,
+Desktop, Storage device, Operating system or
+network resources".
+Virtualization is commonly hypervisor-based. The hypervisor (In hypervisor process the time
+required to access and terminate server is reduced through hardware virtualization) isolates
+operating systems and applications from the underlying computer hardware so that the host
+machine can run multiple virtual machines.

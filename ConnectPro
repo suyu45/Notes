@@ -1,5 +1,7 @@
 express – Express.js, often referred to simply as Express, is a minimal and flexible Node.js web application framework designed for building web applications and APIs. 
           It is a popular and widely used framework within the Node.js ecosystem, often considered the de facto standard for server-side development with Node.js. 
+          In essence, Express.js simplifies and enhances the process of building server-side applications and APIs with Node.js by providing a structured and efficient way 
+          to handle HTTP requests, manage routing, and implement various functionalities through its middleware system.
 
 dotenv/config – automatically loads .env file (containing secrets like MONGO_URI, JWT_SECRET, PORT).
 
@@ -9,6 +11,34 @@ cors – enables cross-origin requests (important since frontend runs on a diffe
 
 path – helps resolve file paths safely across platforms.
 
-1)authRoutes, 2)userRoutes, 3)chatRoutes – modular route handlers for authentication, user management, and chat operations.
+1)authRoutes, 
+2)userRoutes, 
+3)chatRoutes 
+– modular route handlers for authentication, user management, and chat operations.
 
-connectDB() – establishes MongoDB connection.
+************************* CORS Middleware ******************
+Allows your React frontend (Vite on port 5173) to communicate with backend.
+credentials: true lets cookies/JWT tokens be shared securely.
+
+
+express.json() parses incoming JSON requests.
+
+cookieParser() extracts cookies from client requests.
+
+
+1️⃣ What is the role of cors() here?
+Answer: It enables requests from a different origin (the frontend). Since the React app runs on a different port (5173), CORS allows the browser to make secure API calls 
+          and include cookies/tokens.
+
+2️⃣ Why is credentials: true important?
+Answer: It lets browsers send authentication cookies (or JWT tokens) with cross-origin requests. Without it, the server can’t identify logged-in users.
+
+5️⃣ What is the use of cookieParser()?
+Answer: It parses cookies attached to client requests so they can be accessed via req.cookies. Useful for authentication tokens stored in cookies.
+
+6️⃣ How are frontend routes handled in production?
+Answer: All non-API routes (*) serve the index.html file from the React build folder, letting React Router handle client-side navigation.
+
+7️⃣ What is path.resolve() doing here?
+Answer: It returns the absolute path of the current directory (__dirname), which is necessary for serving static files correctly.
+

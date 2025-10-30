@@ -1,0 +1,14 @@
+express – Express.js, often referred to simply as Express, is a minimal and flexible Node.js web application framework designed for building web applications and APIs. 
+          It is a popular and widely used framework within the Node.js ecosystem, often considered the de facto standard for server-side development with Node.js. 
+
+dotenv/config – automatically loads .env file (containing secrets like MONGO_URI, JWT_SECRET, PORT).
+
+cookie-parser – allows server to read cookies (used for JWT tokens or session IDs).
+
+cors – enables cross-origin requests (important since frontend runs on a different port).
+
+path – helps resolve file paths safely across platforms.
+
+1)authRoutes, 2)userRoutes, 3)chatRoutes – modular route handlers for authentication, user management, and chat operations.
+
+connectDB() – establishes MongoDB connection.

@@ -42,3 +42,46 @@ Answer: All non-API routes (*) serve the index.html file from the React build fo
 7️⃣ What is path.resolve() doing here?
 Answer: It returns the absolute path of the current directory (__dirname), which is necessary for serving static files correctly.
 
+
+
+********************************************************** 1)authRoutes ******************************************
+/signup → Registers new users (usually stores hashed passwords, creates tokens).
+/login → Verifies credentials, issues authentication token or cookie.
+/logout → Clears session/cookie or invalidates token.
+These routes are public (no authentication required).
+
+Protected Routes
+router.post("/onboarding", protectRoute, onboard);
+
+
+protectRoute middleware runs first:
+Checks if user is authenticated (usually by decoding JWT).
+If valid, attaches user info to req.user.
+
+Then calls onboard controller, which completes user setup (e.g., saving preferences, profile info).
+
+
+Session Check Route
+router.get("/me", protectRoute, (req, res) => {
+  res.status(200).json({ success: true, user: req.user });
+});
+
+Returns the currently logged-in user’s data.
+
+Useful for restoring sessions (e.g., after page refresh, to auto-login).
+
+
+| Route                  | Auth Required | HTTP | Description                       |
+| ---------------------- | ------------- | ---- | --------------------------------- |
+| `/api/auth/signup`     | ❌             | POST | Register new user                 |
+| `/api/auth/login`      | ❌             | POST | Log user in                       |
+| `/api/auth/logout`     | ❌             | POST | Log user out (clear cookie/token) |
+| `/api/auth/onboarding` | ✅             | POST | Setup user profile after auth     |
+| `/api/auth/me`         | ✅             | GET  | Check if token/session is valid   |
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+| **Feature**              | **C Language**                                                   | **C++ Language**                                                          |
+| ------------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **Programming Paradigm** | Procedure-oriented / Structure-oriented                          | Both Procedure-oriented and Object-oriented                               |
+| **Approach**             | Top-down approach                                                | Bottom-up + OOP approach                                                  |
+| **Relationship**         | Base language                                                    | Incremental version of C                                                  |
+| **File Extension**       | `.c`                                                             | `.cpp`                                                                    |
+| **Overloading**          | Function and operator overloading **not supported**              | Function and operator overloading **supported**                           |
+| **Variable Declaration** | Local variables must be declared at the **beginning of a block** | Variables can be declared **inline**, wherever needed                     |
+| **Emphasis**             | More emphasis on **procedures**                                  | More emphasis on **data**                                                 |
+| **OOP Features**         | No polymorphism, encapsulation, or inheritance                   | Supports polymorphism, encapsulation, and inheritance                     |
+| **Data Abstraction**     | **Not supported**                                                | **Supported**                                                             |
+| **Data Security**        | Data is open; any function can access it                         | Access controlled using **visibility modes** (public, private, protected) |
+| **Dynamic Binding**      | Not supported                                                    | Supported                                                                 |
+| **Modularity**           | Uses functions and subprograms                                   | Uses classes, objects, functions                                          |
+| **Compatibility**        | C code runs in C++                                               | C++ code may not run in C                                                 |
+| **Control Structures**   | Jump statements and subroutine calls                             | Supports all C features plus OOP structures                               |
+| **Data Handling**        | Data is globally accessible                                      | Provides **data hiding** and security                                     |

@@ -264,6 +264,104 @@ int main() {
 ************************************************************************************************************************************************************************************
 
 
+
+
+************************************************************** Diamond problem and solution ( using virtual inheritance ) **************************************************************
+💎 What is the Diamond Problem in C++?
+Diamond Problem occurs in multiple inheritance when:
+Class A is the base class.
+Classes B and C inherit from A.
+Class D inherits from both B and C.
+
+This creates a diamond-shaped hierarchy:
+        A
+       / \
+      B   C
+       \ /
+        D
+Now, class D gets two copies of class A, one from B and one from C.
+This creates ambiguity, known as the Diamond Problem.
+
+❌ Problem Example (Without virtual inheritance)
+Code Showing the Issue
+
+class A {
+public:
+    void show() {
+        cout << "Inside A" << endl;
+    }
+};
+
+class B : public A {};
+
+class C : public A {};
+
+class D : public B, public C {};
+
+int main() {
+    D obj;
+
+    // obj.show();  // ❌ ERROR: Ambiguous
+    obj.B::show();  // Works but not ideal
+    obj.C::show();  // Works but not ideal
+
+    return 0;
+}
+
+❗ Error:
+error: request for member 'show' is ambiguous
+
+👉 Because compiler sees two copies of A’s show() inside D:
+One from B → A
+One from C → A
+
+
+✅ Solution: Use Virtual Inheritance
+C++ solves the diamond problem using virtual base classes, ensuring only one copy of A goes to D.
+
+✔ Correct Code (Using virtual inheritance)
+
+class A {
+public:
+    void show() {
+        cout << "Inside A" << endl;
+    }
+};
+
+class B : virtual public A {};  // virtual inheritance
+class C : virtual public A {};  // virtual inheritance
+
+class D : public B, public C {};
+
+int main() {
+    D obj;
+    obj.show();   // No ambiguity
+
+    return 0;
+}
+
+✔ Output:
+Inside A
+
+🧠 Why virtual inheritance solves it
+With virtual inheritance:
+B and C share one common instance of A.
+D inherits only one copy of A.
+So calling obj.show() is not ambiguous anymore.
+
+🎯 Short Explanation for Interviews
+Diamond Problem occurs in multiple inheritance when a class inherits from two classes that both inherit from the same base class, causing multiple copies of the base class and ambiguity.
+C++ solves this using virtual inheritance, which ensures only one shared instance of the base class.
+
+*******************************************************************************************************************************************************************************
+
+
+
+
+
+
+
+
 OOP->OOP is a way of writing programs using objects and classes to represent real-world things. It helps make code more organized, reusable, and easier to understand.
 Class:Class is a user-defined data type which defines its properties and its functions.It specifies the characteristics (properties) and actions (methods) that objects of that class will have.
 Attributes: These are the variables or data members connected to a class

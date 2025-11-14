@@ -15,3 +15,20 @@
 | **Compatibility**        | C code runs in C++                                               | C++ code may not run in C                                                 |
 | **Control Structures**   | Jump statements and subroutine calls                             | Supports all C features plus OOP structures                               |
 | **Data Handling**        | Data is globally accessible                                      | Provides **data hiding** and security                                     |
+
+
+
+
+
+| **Feature**           | **Procedure Oriented Programming (POP)** | **Object Oriented Programming (OOP)**        |
+| --------------------- | ---------------------------------------- | -------------------------------------------- |
+| **Program Structure** | Divided into **functions**               | objects=> contain data & functions together. |
+| **Focus**             | On **functions & procedures**            | On **data & objects**                        |
+| **Approach**          | **Top-Down**                             | **Bottom-Up**                                |
+| **Access Specifiers** | Not available                            | Public, Private, Protected                   |
+| **Data Movement**     | Data moves freely between functions      | Data stays inside objects; controlled access |
+| **Data Sharing**      | Uses global data; easily accessible      | Data is protected using access specifiers    |
+| **Security**          | Less secure, no data hiding              | Highly secure due to data hiding             |
+| **Extensibility**     | Hard to add new data/functions           | Easy to extend with new data/functions       |
+| **Overloading**       | Not supported                            | Supported (function & operator overloading)  |
+| **Examples**          | C, VB, FORTRAN, Pascal                   | C++, Java, VB.NET, C#.NET                    |

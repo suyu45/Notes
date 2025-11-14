@@ -170,13 +170,31 @@ NoSQL is non-relational, schema-less, scalable, and good for big data and real-t
 
 
 
+⭐ What are SQL Data Types?
+SQL Data Types define what kind of value can be stored in a column of a table—such as:
+1️⃣ Numeric Data Types
+2️⃣ String / Character Data Types
+3️⃣ Date & Time Data Types
+4️⃣ Boolean Data Type
+5️⃣ Binary Data Types
+6️⃣ Special Types (ENUM, SET, JSON)
+
+eg. salary DECIMAL(10, 2)  -- Max 10 digits, 2 after decimal
+
+CHAR(n) =>	Fixed-length text (Faster) eg. gender CHAR(1)
+VARCHAR(n)	=> Variable-length text (Most used)  eg. name VARCHAR(50)
+
+✔ Use CHAR for fixed values like gender ('M', 'F')
+✔ Use VARCHAR for names, emails, addresses
+
+
+🏷️ 6. Special Data Types (MySQL)
+ENUM: Stores a fixed list of values.
+      eg. status ENUM('active','inactive','blocked')
+
+🎯 Interview Short Answer
+SQL data types define the kind of data a column holds, such as numeric, string, date/time, boolean, and binary types, ensuring proper storage and efficient processing.
 
 
 
-
-Simple and declarative
-Portable across RDBMS
-Supports ACID transactions
-Works with large data
-Powerful filtering and aggregation
 

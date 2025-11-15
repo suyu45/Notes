@@ -410,3 +410,362 @@ int main() {
 📤 Output
 7 + 7i
 
+
+******************************************************************************************************************************************************************************
+
+⭐ What is a Virtual Function?
+A virtual function is a function in the base class that is redefined in the derived class and supports runtime polymorphism (dynamic binding).
+It ensures that the function of the derived class is called, even when you use a base class pointer.
+
+🎯 Why Do We Use Virtual Functions?
+Because using a base class pointer normally calls the base class version, not the derived version.
+
+Virtual functions allow us to achieve:
+✔ Runtime polymorphism
+✔ Dynamic binding
+✔ Method overriding
+
+🧠 Key Points
+Declared using the keyword virtual
+Must be a member function of a class
+Invoked through base class pointers
+Works during runtime (late binding)
+Helps implement polymorphism & abstraction
+
+✔ Simple Example of Virtual Function
+
+class Animal {
+public:
+    virtual void sound() {     // virtual function
+        cout << "Animal makes a sound" << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void sound() override {    // overriding
+        cout << "Dog barks" << endl;
+    }
+};
+
+int main() {
+    Animal* a;   // base class pointer
+    Dog d;
+
+    a = &d;     // pointer holding object of derived class
+
+    a->sound(); // calls Dog's sound() because of virtual function
+
+    return 0;
+}
+
+📤 Output
+Dog barks
+
+
+🧩 How It Works (Simple Explanation)
+Without virtual:
+➡ Base class pointer → Base class function
+
+With virtual:
+➡ Base class pointer → Derived class function
+
+This is runtime polymorphism.
+
+⭐ Real-world Analogy
+Base class: Remote → has a general function “pressPower()”
+Derived class: TV Remote, AC Remote, Fan Remote
+When you press the power button (call function), the behavior depends on which remote you’re holding, not on the “Remote class”.
+
+Virtual function ensures:
+👉 The correct device turns ON based on the object type.
+
+✔ More Detailed Example (Multiple Derived Classes)
+class Shape {
+public:
+    virtual void draw() {
+        cout << "Drawing Shape" << endl;
+    }
+};
+
+class Circle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing Circle" << endl;
+    }
+};
+
+class Square : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing Square" << endl;
+    }
+};
+
+🔥 Short Interview Answer (10 Seconds)
+A virtual function is a function in a base class that can be overridden in derived classes and supports runtime polymorphism.
+It ensures that the derived class version is executed when a base class pointer is used.
+
+******************************************************************************************************************************************************************************
+
+⭐ What is a Pure Virtual Function?
+A pure virtual function is a virtual function that has no definition in the base class and must be overridden in the derived class.
+It makes the base class abstract, meaning you cannot create objects of that class.
+
+✅ Definition
+A pure virtual function is declared using:     virtual void functionName() = 0;
+
+🎯 Why use Pure Virtual Function?
+To create a common interface for all derived classes.
+To ensure every derived class provides its own implementation.
+To support runtime polymorphism.
+
+✅ Example: Pure Virtual Function in Real Use (Shape Example)
+👉 Base class Shape defines a pure virtual function area()
+Every shape must implement its own formula.
+
+class Shape {
+public:
+    // Pure virtual function
+    virtual float area() = 0;
+};
+
+👉 Derived class 1: Rectangle
+class Rectangle : public Shape {
+    float length, width;
+public:
+    Rectangle(float l, float w) {
+        length = l;
+        width = w;
+    }
+
+    float area() {
+        return length * width;
+    }
+};
+
+👉 Derived class 2: Circle
+class Circle : public Shape {
+    float radius;
+public:
+    Circle(float r) {
+        radius = r;
+    }
+
+    float area() {
+        return 3.14 * radius * radius;
+    }
+};
+
+👉 Using polymorphism
+int main() {
+    Shape *s;
+
+    Rectangle r(5, 4);
+    Circle c(3);
+
+    s = &r;
+    cout << "Rectangle Area: " << s->area() << endl;
+
+    s = &c;
+    cout << "Circle Area: " << s->area() << endl;
+
+    return 0;
+}
+
+📝 Output
+Rectangle Area: 20
+Circle Area: 28.26
+
+⭐ Key Points to Remember
+✔ Makes class abstract => A class with at least one pure virtual function is an abstract class.
+✔ Cannot create object of abstract class => Shape s; // ❌ Not allowed
+✔ Forces derived classes to override function => Each child class must implement area().
+
+🎯 Real-World Example
+Think of a "Payment" interface:
+Every payment method must implement processPayment().
+But base class cannot define it because each system is different.
+
+
+*******************************************************************************************************************************************
+
+⭐ What is a Abstract class?
+An abstract class in C++ is a class that cannot be instantiated and is meant to be used only as a base class.
+It contains at least one pure virtual function.
+It provides a blueprint/interface for derived classes.
+✔ Cannot create objects of abstract class
+
+✅ Definition
+A class becomes abstract when it has one or more pure virtual functions:
+
+class Base {
+public:
+    virtual void display() = 0;   // pure virtual function
+};
+
+🎯 Why use Abstract Classes?
+To define a common interface for all child classes.
+To enforce that derived classes must implement certain methods.
+To support runtime polymorphism.
+To separate what to do (base class) from how to do (derived class).
+
+⭐ Key Features of Abstract Class
+✔ Has at least one pure virtual function => virtual void show() = 0;
+✔ Cannot create objects of abstract class => Shape s;   // ❌ Not allowed
+✔ Used when different classes must follow the same interface
+(Example: "Print()", "Area()", "Draw()", "Login()")
+
+🎯 Real-Life Example: Payment System
+👉 Abstract class
+class Payment {
+public:
+    virtual void pay(int amount) = 0;
+};
+
+👉 Derived classes implement it differently
+class UPI : public Payment {
+public:
+    void pay(int amount) {
+        cout << "Paid Rs." << amount << " using UPI" << endl;
+    }
+};
+
+class Card : public Payment {
+public:
+    void pay(int amount) {
+        cout << "Paid Rs." << amount << " using Card" << endl;
+    }
+};
+
+🚀 When to Use Abstract Classes?
+Use an abstract class when:
+- You want to define a common interface.
+- You want derived classes to implement required functions.
+- You want to use polymorphism.
+
+
+
+
+*********************************************************************************************************************************************
+
+⭐ What is Interface ?
+In C++, there is no keyword called interface like in Java or C#.
+But you can create an interface using an abstract class that has:
+✅ Only pure virtual functions
+✅ No data members (usually)
+Such a class acts exactly like an interface.
+
+⭐ Definition (C++ Interface)
+A C++ interface is an abstract class where:
+All functions are pure virtual
+It defines what needs to be done, not how
+
+class InterfaceName {
+public:
+    virtual void function1() = 0;
+    virtual void function2() = 0;
+};
+
+🎯 Why Interfaces?
+Interfaces achieve: 100% abstraction, Loose coupling, Multiple inheritance, Common behavior structure
+
+🧩 Example: Interface for "Drive" Behavior
+👉 Interface
+class Vehicle {
+public:
+    virtual void start() = 0;
+    virtual void stop() = 0;
+};
+
+👉 Car implements the interface
+class Car : public Vehicle {
+public:
+    void start() {
+        cout << "Car started" << endl;
+    }
+    void stop() {
+        cout << "Car stopped" << endl;
+    }
+};
+
+👉 Bike implements the interface
+class Bike : public Vehicle {
+public:
+    void start() {
+        cout << "Bike started" << endl;
+    }
+    void stop() {
+        cout << "Bike stopped" << endl;
+    }
+};
+
+▶ Usage with Polymorphism
+int main() {
+    Vehicle* v;
+
+    Car c;
+    Bike b;
+
+    v = &c;
+    v->start();
+    v->stop();
+
+    v = &b;
+    v->start();
+    v->stop();
+
+    return 0;
+}
+
+📝 Output
+Car started
+Car stopped
+Bike started
+Bike stopped
+
+🏁 Summary
+An interface in C++ is created using an abstract class with only pure virtual functions.
+It is used when multiple classes must follow the same common rules/structure but implement it in their own way.
+
+
+🧩 Comparison Table
+| Feature                       | Abstract Class               | Interface (C++)              |
+| ----------------------------- | ---------------------------- | ---------------------------- |
+| Contains normal methods       | ✔ Yes                        | ❌ No                         |
+| Contains pure virtual methods | ✔ Yes                        | ✔ Yes (must be all)          |
+| Can have data members         | ✔ Yes                        | ❌ No (generally not allowed) |
+| Constructors allowed          | ✔ Yes                        | ❌ Rarely used (no need)      |
+| Supports multiple inheritance | ✔ Yes                        | ✔ Yes                        |
+| Level of abstraction          | Partial abstraction          | Full (100%) abstraction      |
+| Can provide default behavior  | ✔ Yes                        | ❌ No                         |
+| When to use?                  | When some behavior is common | When defining rules/contract |
+
+
+2️⃣ Abstract Class Example => Contains a pure virtual function + normal function.
+
+class Animal {
+public:
+    virtual void sound() = 0;     // pure virtual
+    void eat() {                   // normal function
+        cout << "This animal eats food.\n";
+    }
+};
+
+
+📘 Real-World Analogy
+Interface = Rules / Contract
+Example: Driving License
+- Defines what you must do (drive, follow rules)
+- Does not tell how you should drive
+- Anyone (car, bike, truck) can implement it
+
+Abstract Class = Base Blueprint
+Example: Vehicle
+- Has wheels, engine (shared properties)
+- Some functions defined, some not
+
+🏁 Summary (One-Liner for Interview)
+Abstract class = Partial abstraction + common behavior
+Interface = 100% abstraction + only rules, no implementation
+

@@ -81,7 +81,288 @@ Useful for restoring sessions (e.g., after page refresh, to auto-login).
 
 
 
+1️⃣ What is the role of protectRoute middleware?
+Answer:
+It checks whether a user is authenticated before allowing access to protected routes. Typically, it:
+Reads JWT token from cookies or headers.
+Verifies the token with JWT_SECRET.
+Attaches decoded user info to req.user.
+If verification fails → returns 401 Unauthorized.
+
+5️⃣ What does the logout route do internally?
+Answer:
+Usually clears the cookie storing JWT (using res.clearCookie("token")) or invalidates the token server-side (if stored in DB or cache).
+This effectively ends the user’s session.
+
+6️⃣ Why use POST for logout instead of GET?
+Answer:
+Logout changes the server’s state (removing a session/cookie).
+POST is safer than GET (which should be idempotent and not alter state).
 
 
 
 
+✅ Interview Answer: Explain Your Project in Brief
+
+“My project is a real-time video calling and language-learning social platform called Streamify Video Calls.
+It allows users to connect with people worldwide, make friends, and communicate through chat and video calls.
+On the backend, I built the system using Node.js, Express, MongoDB, and JWT authentication. The project is structured using the MVC pattern.
+
+Key features I implemented:
+1. User Authentication & Onboarding
+Secure login and signup using JWT, password hashing with bcrypt,
+Users complete onboarding with profile details, languages, and preferences.
+
+2. Stream Video-Call Integration
+I integrated Stream API (StreamChat) to generate tokens and upsert users into the Stream platform.
+This allows us to enable real-time chat and video calling without managing WebRTC manually.
+
+3. Friend System (Like Social Media)
+I built a complete friend-management system:
+- Send friend requests
+- Accept requests
+- Incoming & outgoing requests
+- Friend list
+- Recommended users (excluding current user & existing friends)
+
+This uses two Mongoose models:
+User
+FriendRequest
+
+4. Protected Routes & Middleware
+All user-related APIs are protected using a custom auth middleware.
+Middleware validates the JWT and injects the authenticated user into the request.
+
+5. Clean and Scalable API Architecture
+I separated everything into:
+Routes
+Controllers
+Models
+Stream utility (stream.js)
+
+This makes the code modular and production-ready.
+
+6. Database Management with MongoDB
+Used Mongoose schemas with pre-save hooks (password hashing)
+Used $addToSet, $nin, $ne queries for efficient friend recommendation and relationship management
+
+🎯 Short and impressive version (if interviewer wants very brief)
+“My project is a real-time video calling and social interaction platform.
+Users can sign up, create profiles, send and accept friend requests, and join video calls using Stream API.
+On the backend, I implemented secure authentication, friend management, and Stream token generation using Node.js, Express, MongoDB, and structured everything using the MVC pattern.”
+
+
+
+
+
+🔷 1. Client → Server → Stream API Architecture
+Frontend (React/Next.js)
+      ↓ HTTP requests (Axios/Fetch)
+Backend (Node.js + Express)
+      ↓
+Controllers → Services → Database (MongoDB)
+      ↓
+Stream API (for chat + video calls)
+
+
+⭐ Database Schema Design : 1) User, 2) FriendRequest
+🗄️ Database Schema Diagram (High-Level)
+Users
+ ├── _id
+ ├── fullName
+ ├── email
+ ├── password (hashed)
+ ├── bio
+ ├── profilePic
+ ├── nativeLanguage
+ ├── learningLanguage
+ ├── location
+ ├── isOnboarded
+ └── friends → [User._id]
+
+FriendRequests
+ ├── sender → User._id
+ ├── recipient → User._id
+ └── status ("pending" | "accepted")
+
+
+⭐ 2. Challenge: Preventing Duplicate Friend Requests
+Problem : Users were able to send the same friend request multiple times or even send a request to themselves.
+
+What I did
+Added validation to block:
+- Self requests
+- Requests to existing friends
+- Duplicate pending requests
+
+Used MongoDB query:
+
+$or: [
+  { sender: myId, recipient: recipientId },
+  { sender: recipientId, recipient: myId }
+]
+
+Outcome : The friend request system became consistent, clean, and impossible to exploit.
+
+
+
+
+⭐ 6. Challenge: Designing Friend Recommendation Logic
+Problem => 
+Recommended users should exclude:
+- The logged-in user
+- Already added friends
+- Not-yet-onboarded users
+
+What I did
+
+Wrote MongoDB query using:
+$ne, $nin, $and
+
+Outcome : The recommendation feature became accurate and efficient.
+
+
+
+✅ Where does your project store chats between friends?
+✅ Your project does NOT store chats in your MongoDB database.
+There is no Message model and no custom chat persistence in your backend.
+But your project does store chats — using Stream (GetStream) Chat API.
+
+🔥 Where are chats stored?
+👉 Chats are stored on Stream’s own servers (GetStream Cloud Infrastructure).
+
+StreamChat is a managed real-time messaging platform, so your backend does NOT need to:
+❌ create a message schema
+❌ save messages to MongoDB
+❌ manage chat channels manually
+
+Instead, Stream handles:
+✔ chat history
+✔ channels
+✔ real-time messaging
+✔ user typing indicators
+✔ unread counts
+✔ message persistence
+✔ message search
+
+
+📌 So the final answer for interview:
+“Where are chats stored in your project?”
+All chat messages and chat channels in my Streamify application are stored using the Stream Chat API (GetStream).
+My backend only generates Stream user accounts and secure auth tokens.
+Stream automatically manages message storage, channels, message history, real-time updates, and scalability on their cloud infrastructure.
+So the chat data is not stored in MongoDB — it is stored and managed entirely by Stream.”
+
+
+
+
+
+🔄 COMPLETE WORKFLOW OF FRIEND REQUEST SYSTEM
+
+### 🔹 Step 1: User Sends Friend Request
+API: POST /api/users/friend-request/:id
+
+Validations checked:
+✔ Cannot send request to yourself
+✔ Recipient must exist
+✔ Already friends? → reject
+✔ Already a pending request both directions? → reject
+
+If valid → create:
+FriendRequest.create({
+  sender: myId,
+  recipient: recipientId,
+  status: "pending"
+});
+
+
+### 🔹 Step 2: User Receives Pending Requests
+API: GET /api/users/friend-requests
+
+Fetches:
+incomingReqs = FriendRequest.find({
+  recipient: req.user.id,
+  status: "pending"
+})
+
+✔ Populates sender profile
+✔ Used to show “Accept / Reject Request” UI
+
+
+### 🔹 Step 3: User Accepts Friend Request
+API: PUT /api/users/friend-request/:id/accept
+
+Flow:
+1️⃣ Validate request exists
+2️⃣ Check current user = recipient
+3️⃣ Update request status → "accepted"
+4️⃣ Add EACH USER to the other's friend list:
+
+await User.findByIdAndUpdate(senderId, {
+  $addToSet: { friends: recipientId }
+});
+
+await User.findByIdAndUpdate(recipientId, {
+  $addToSet: { friends: senderId }
+});
+
+
+### 🔹 Step 4: Store Final Friends List
+Once accepted, both users get:
+"friends": [ "friendId1", "friendId2", ... ]
+
+This is used in:
+✔ Chat system (show friends available for calls)
+✔ Recommended users (exclude existing friends)
+✔ UI sidebar friend list
+
+
+
+✅ Simple Explanation of How I Implement Video Calls
+
+“I added video calling to my project using Stream’s Video API.
+Stream works on top of WebRTC — which is the technology that actually sends video and audio between two people.
+My backend does not handle video directly.
+It only creates a Stream token for each user so they can securely join a call.
+When a user wants to start or join a call, the frontend uses Stream’s SDK along with this token.
+Stream then takes care of the complicated parts like:
+- finding and connecting both users
+- sharing network details between them
+- managing the call room
+After Stream finishes this setup, WebRTC ( web Real Time communication) automatically creates a direct peer-to-peer video connection between both users.
+This allows smooth and high-quality video and audio communication.”
+
+
+
+
+✅ Improvements & New Features I Would Add
+
+⭐ 5. Add User Blocking / Reporting
+🔥 Why? => Prevents harassment and spam.
+
+🛠 How:
+Add blockedUsers: [] array in User model.
+Modify friend request endpoint to check: if (recipient.blockedUsers.includes(myId)) reject
+Add a /block/:id route.
+
+
+⭐ 6. Add Group Calls
+🔥 Why? => Expands platform usage → group study, team meetings, group chat.
+
+🛠 How:
+Use Stream’s "Call Type: default".
+Create group rooms with dynamic participant list.
+Modify frontend UI to support multiple tiles (grid layout).
+
+
+⭐ 7. Improve Friend Recommendation System
+Reason: Right now your recommendation is simple:
+➡️ “Show users who are not my friends and not me”.
+
+How to Improve:
+Add machine learning-based recommendations
+Suggest users based on:
+Same native/learning language
+Same location
+Common friends
+Interests in bio

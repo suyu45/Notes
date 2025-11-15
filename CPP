@@ -32,3 +32,154 @@
 | **Extensibility**     | Hard to add new data/functions           | Easy to extend with new data/functions       |
 | **Overloading**       | Not supported                            | Supported (function & operator overloading)  |
 | **Examples**          | C, VB, FORTRAN, Pascal                   | C++, Java, VB.NET, C#.NET                    |
+
+
+
+⭐ What is a Static Variable?
+A static variable is a variable whose lifetime lasts for the entire program.
+It is created only once and retains its value between function calls.
+
+Static variables can be used:
+Inside functions
+Inside classes (as static data member)
+As global static variables (file-level scope)
+
+🧠 Key Properties of Static Variables
+✔ 1. Memory is allocated only once
+Static variables are stored in the static/global memory area, not on the stack.
+
+✔ 2. Retains value between function calls
+A normal (auto) variable is re-created every time a function is called.
+A static variable keeps its updated value.
+
+✔ 3. Default value = 0
+If uninitialized, static variables automatically get 0.
+
+✔ 4. Scope may be local, but lifetime is global
+Static variable inside a function is local in scope but global in lifetime.
+
+📌 Example 1: Static Variable in a Function
+
+void counter() {
+    static int count = 0;   // created once, retains value
+    count++;
+    cout << "Count = " << count << endl;
+}
+
+int main() {
+    counter();
+    counter();
+    counter();
+    return 0;
+}
+
+Output
+Count = 1
+Count = 2
+Count = 3
+
+👉 Normal variable would reset to 0 each time, but static variable remembers the value.
+
+🎯 Short Interview Answer
+A static variable is a variable that is created once and retains its value for the entire program lifetime.
+It is stored in static memory and keeps its value between function calls.
+In classes, static variables are shared by all objects.
+
+***************************************************************************************************************************************************
+
+
+⭐ Static Data Member (Static Variable in Class)
+A static data member is a variable that:
+Belongs to the class, not to any object.
+Has only one copy shared by all objects.
+Is stored in static memory (not inside each object).
+Must be defined outside the class.
+Can be accessed using class name as well as object.
+
+👉 Why use static data member?
+To store information common to all objects (e.g., count of objects).
+
+******************************************
+✔ Example: Static Data Member
+
+class Student {
+public:
+    static int count;   // declaration
+    string name;
+
+    Student(string n) {
+        name = n;
+        count++;        // increment object count
+    }
+};
+
+// definition outside class
+int Student::count = 0;
+
+int main() {
+    Student s1("Amit");
+    Student s2("Suman");
+
+    cout << "Total students: " << Student::count;  // accessing with class name
+    return 0;
+}
+
+Output:
+Total students: 2
+******************************************
+
+
+⭐ Static Member Function
+A static member function:
+Can access only static data members.
+Does not have this pointer (because it doesn’t belong to any object).
+
+Can be called using:
+Class name (recommended)
+Object name (allowed but not preferred)
+
+****************************************
+✔ Example: Static Member Function
+
+class Student {
+public:
+    static int count;   // static data member
+
+    // Constructor increments count whenever object is created
+    Student() {
+        count++;
+    }
+
+    static void getCount() {
+        cout << "Total objects created: " << count << endl;
+    }
+};
+
+// definition of static member
+int Student::count = 0;
+
+int main() {
+
+    Student::getCount();   // Before any object creation → 0
+
+    Student s1;
+    Student s2;
+    Student s3;
+
+    Student::getCount();   // After creating 3 objects → 3
+
+    return 0;
+}
+
+📤 Output
+Total objects created: 0
+Total objects created: 3
+****************************************
+
+🎯 Short Interview Answer
+Static data members belong to the class, not objects, so all objects share a single copy.
+Static member functions also belong to the class and can only access static members.
+
+******************************************************************************************************************************************************************************
+
+

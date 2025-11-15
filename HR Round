@@ -177,6 +177,10 @@ By combining clear prioritization, structured planning, and effective collaborat
 
 
 10. Can you tell me about a challenge you faced and how you overcame it?
+In my MERN project, my biggest challenge was managing API inconsistencies between the frontend and backend. The data coming from Node/Express didn’t always match what React expected, 
+which caused UI issues. I solved it by debugging with console logs and Postman, creating a proper API structure, and adding error handling. 
+This taught me the importance of clear API contracts and improved my full-stack debugging skills.
+
 A week before our final project submission, we encountered a major bug in the backend. I took the
 initiative to debug the issue, collaborated with teammates to test different solutions, and worked
 extra hours until it was fixed. This ensured that we met our deadline successfully.

@@ -355,6 +355,48 @@ C++ solves this using virtual inheritance, which ensures only one shared instanc
 
 *******************************************************************************************************************************************************************************
 
+🧱 What is a Class?
+A class is a blueprint, template, or model used to create objects.
+It does not occupy memory until an object is created.
+It contains data members (variables) and member functions (methods).
+It describes what an object will contain and what it can do.
+
+👉 Example (Blueprint Analogy)
+A class is like a blueprint of a house.
+The blueprint itself is not a house; it only defines how the house will be.
+From the blueprint, you can build many houses (objects).
+
+
+🚗 What is an Object?
+An object is a real-world instance of a class.
+It occupies memory.
+It uses the class blueprint to store data and perform actions.
+Multiple objects can be created from a single class.
+
+👉 Example (Real-world analogy)
+Class = “Car” blueprint
+Objects = Individual cars like BMW, Audi, Honda
+
+
+🧠 Key Differences (Class vs Object)
+| Class                          | Object                            |
+| ------------------------------ | --------------------------------- |
+| Blueprint/template             | Real-world instance               |
+| Does not occupy memory         | Occupies memory                   |
+| Defines properties & behaviors | Uses those properties & behaviors |
+| Created once                   | Many objects can be created       |
+
+
+🎯 Short Interview Answer
+Class is a blueprint that defines the properties and behaviors of objects.
+Object is an instance of a class that occupies memory and can access class members.
+
+
+
+
+
+
+
 
 
 

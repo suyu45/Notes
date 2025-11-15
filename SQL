@@ -198,3 +198,250 @@ SQL data types define the kind of data a column holds, such as numeric, string, 
 
 
 
+⭐ CHAR vs VARCHAR (Very Important DBMS/SQL Interview Topic)
+Both CHAR and VARCHAR are string data types, but they store data differently.
+
+🔹 1️⃣ CHAR (Fixed-length String) => CHAR stores fixed-length data.
+
+If you define: CHAR(10)
+This column will always take 10 characters of storage.
+If the input is shorter, SQL will pad it with spaces.
+
+Example:
+Value = 'ABC'
+Stored as = 'ABC ' (7 trailing spaces)
+
+✔ Fast for fixed-size data
+✔ Efficient for small, predictable values
+✔ No change in length → faster comparisons
+
+
+🔹 2️⃣ VARCHAR (Variable-length String) => VARCHAR stores variable-length data.
+
+If you define: VARCHAR(10)
+It stores only the actual number of characters, plus 1 or 2 bytes to store length metadata.
+
+Example:
+Value = 'ABC'
+Storage = 3 chars + 1 byte = 4 bytes
+
+✔ Saves space
+✔ Best when length varies
+✔ Commonly used for names, emails, addresses
+
+⭐ CHAR vs VARCHAR (Tabular Difference)
+| Feature          | CHAR                             | VARCHAR                    |
+| ---------------- | -------------------------------- | -------------------------- |
+| **Storage**      | Fixed-length                     | Variable-length            |
+| **Speed**        | Faster                           | Slightly slower            |
+| **Performance**  | Best for fixed-size data         | Best when data varies      |
+| **Padding**      | Pads with spaces                 | No padding                 |
+| **Use Case**     | Codes, gender, OTP, country_code | Names, emails, addresses   |
+| **Memory Usage** | Always uses full size            | Uses only required memory  |
+
+🎯 Short Interview Answer
+CHAR is used for fixed-length strings and is faster but wastes space.
+VARCHAR is used for variable-length strings and saves space but is slightly slower.
+
+
+******************************************************************************************************************************
+
+⭐ What is DDL?
+DDL (Data Definition Language) is a set of SQL commands used to define, modify, or delete the structure of database objects such as: Tables, Views, Indexes, Schemas, Constraints
+DDL changes the schema of the database.
+✔ Structure-level changes
+✔ Auto-committed (cannot be rolled back in many systems)
+
+⭐ Main DDL Commands
+CREATE, ALTER, DROP, TRUNCATE, RENAME
+
+🔹 1️⃣ CREATE — Create new database objects => Used to create a table, database, view, or index.
+Example: Create a database => CREATE DATABASE companyDB;
+
+🔹 2️⃣ ALTER — Modify the structure of an existing table
+Used to:
+✔ Add a column
+✔ Delete a column
+✔ Modify a column (change datatype, size, constraints)
+✔ Add/remove constraints => same syntax as Modify a column
+✔ Change Column Name (Rename Column) only in MySQL
+✔ Rename a table
+
+Example: Add a column
+ALTER TABLE Employees
+ADD email VARCHAR(100);
+
+Example: Modify a column
+ALTER TABLE Employees
+MODIFY salary DECIMAL(12,2);
+
+Example: Drop a column
+ALTER TABLE Employees
+DROP COLUMN email;
+
+Example: Change Column Name (Rename Column)  only in MySql
+ALTER TABLE Employees
+CHANGE name full_name VARCHAR(60);
+
+Add a Constraint => Example: Add NOT NULL
+ALTER TABLE Employees
+MODIFY name VARCHAR(50) NOT NULL;
+
+Rename a Table
+ALTER TABLE old_table
+RENAME TO new_table;
+
+🔹 3️⃣ DROP — Delete database objects permanently => This removes the table and all its data.
+DROP TABLE Employees;
+DROP DATABASE companyDB;
+⚠️ This action is permanent. Cannot be rolled back.
+
+
+🔹 4️⃣ TRUNCATE — Remove all data but keep structure => Deletes all rows instantly
+Resets auto-increment, Much faster than DELETE, Structure remains
+
+Example: TRUNCATE TABLE Employees;
+✔ Table remains
+✔ Rows removed
+✔ Faster because it doesn't log row-by-row deletion
+
+
+🔹 5️⃣ RENAME — Change the name of a table
+Example: RENAME TABLE Employees TO Staff;
+
+🎯 Short Interview Answer
+DDL commands are used to define and manage the database structure.
+They include CREATE, ALTER, DROP, TRUNCATE, and RENAME.
+DDL changes the schema and is auto-committed.
+
+
+🔥 TRUNCATE vs DROP vs DELETE (SQL Difference)
+| Feature                      | **DELETE**                   | **TRUNCATE**                                  | **DROP**                        |
+| ---------------------------- | ---------------------------  | --------------------------------------------- | ------------------------------- |
+| **Type**                     | DML (Data Manipulation)      | DDL (Data Definition)                         | DDL (Data Definition)           |
+| **Deletes**                  | Specific rows                | All rows                                      | Entire table (structure + data) |
+| **WHERE clause**             | ✅ Yes                       | ❌ No                                         | ❌ No                           |
+| **Rollback**                 | ✅ Yes (if in a transaction) | ⚠️ Depends (usually cannot, treated like DDL) | ❌ Cannot                       |
+| **Speed**                    | Slow (row-by-row)            | Very fast                                     | Fast                            |
+| **Removes table structure?** | ❌ No                        | ❌ No                                         | ✅ Yes                          |
+
+
+**********************************************************************************************************************************************
+
+🔥 DML Commands in SQL
+DML (Data Manipulation Language) commands are used to insert, modify, delete, and retrieve data in a database table.
+They operate on the data, not on the structure.
+
+✅ 1. INSERT => Used to insert new rows into a table.
+Example 1: Insert single row
+INSERT INTO employees (id, name, salary)
+VALUES (1, 'Suyog', 50000);
+
+Example 2: Insert multiple rows
+INSERT INTO employees (id, name, salary)
+VALUES 
+(2, 'Amit', 45000),
+(3, 'Riya', 60000);
+
+✅ 2. UPDATE => Used to modify existing rows.
+Example:
+UPDATE employees
+SET salary = 70000
+WHERE id = 3;
+
+Update all rows (⚠️ risky)
+UPDATE employees
+SET salary = salary + 5000;
+
+✅ 3. DELETE => Used to delete specific rows.
+Example:
+DELETE FROM employees
+WHERE id = 2;
+
+Delete all rows (but keep structure)
+DELETE FROM employees;
+
+✅ 4. SELECT => Used to retrieve data from a table.
+Example:
+SELECT name, salary
+FROM employees
+WHERE salary > 50000;
+
+
+❓ Is SELECT a DML command? 👉 Yes. SELECT retrieves data, so it is considered part of DML.
+❓ Can DML operations be rolled back? 👉 Yes, DML commands can be rolled back if inside a transaction.
+
+
+*******************************************************************************************************************************************
+
+🔥 DCL Commands in SQL (Data Control Language)
+
+DCL commands are used to control access, permissions, and security of the database.
+
+There are two main DCL commands: 1️⃣ GRANT, 2️⃣ REVOKE
+
+✅ 1. GRANT : Used to give permissions to a user on database objects (tables, views, etc.)
+Example: Give SELECT permission
+GRANT SELECT ON employees TO user1;
+
+Example: Give multiple permissions
+GRANT SELECT, INSERT, UPDATE
+ON employees
+TO user1;
+
+Example: Give all permissions
+GRANT ALL PRIVILEGES ON employees TO user1;
+
+✅ 2. REVOKE : Used to take back permissions previously granted.
+Example: Remove SELECT permission
+REVOKE SELECT ON employees FROM user1;
+
+Example: Remove all privileges
+REVOKE ALL PRIVILEGES ON employees FROM user1;
+
+
+******************************************************************************************************************************************************
+
+🔥 TCL Commands in SQL (Transaction Control Language)
+TCL commands are used to manage transactions in a database.
+A transaction is a set of SQL operations that are executed as a single unit — either all succeed or all fail.
+
+TCL Includes These Commands: 1️⃣ COMMIT, 2️⃣ ROLLBACK, 3️⃣ SAVEPOINT
+
+✅ 1. COMMIT : Permanently saves all changes made in the current transaction.
+
+Example:
+
+BEGIN;
+UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+COMMIT;
+
+👉 After COMMIT, changes cannot be undone.
+
+
+✅ 2. ROLLBACK : Undoes all changes made in the current transaction.
+
+Example:
+
+BEGIN;
+DELETE FROM employees WHERE id = 10;
+ROLLBACK;
+
+👉 The DELETE action is undone.
+
+
+✅ 3. SAVEPOINT : Creates a checkpoint in a transaction so you can roll back partially, not the entire transaction.
+
+Example:
+
+BEGIN;
+UPDATE accounts SET balance = balance - 1000 WHERE id = 1;
+SAVEPOINT sp1;
+UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+ROLLBACK TO sp1;
+COMMIT;
+
+📌 Meaning:
+First update is kept
+Second update is undone

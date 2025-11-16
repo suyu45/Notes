@@ -843,3 +843,68 @@ Drop constraint:
 ALTER TABLE employees
 DROP CONSTRAINT chk_salary;
 
+
+
+✅ What Are Aliases in SQL?
+Aliases are temporary names given to columns or tables in SQL queries to make them:
+Shorter
+More readable
+Easier to reference
+
+Aliases do not change the original table/column name.
+They exist only for that particular query.
+
+You create an alias using the keyword AS (optional in SQL).
+
+⭐ Types of Aliases
+1) Column Alias
+2) Table Alias
+
+📌 Aliases Cannot Be Used in WHERE Clause
+(Because WHERE executes before SELECT)
+
+❌ Invalid:
+SELECT salary * 12 AS annual_salary
+FROM employees
+WHERE annual_salary > 500000;
+
+
+✔ Use HAVING (or repeat expression):
+
+SELECT salary * 12 AS annual_salary
+FROM employees
+HAVING annual_salary > 500000;
+
+or
+
+SELECT salary * 12 AS annual_salary
+FROM employees
+WHERE salary * 12 > 500000;
+
+
+⭐ Interview Summary (Quick)
+
+Aliases are temporary names for columns or tables
+Created with or without AS
+Useful in joins, subqueries, and calculated columns
+Mandatory in self-joins
+Not allowed in WHERE clause
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

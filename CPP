@@ -20,7 +20,32 @@
 variables => global, local
 operators => Arithmetic, Logical (Comparison), Assignment, Bitwise
 break, continue
-Switch Statements
+Macros =>  syntax:  #define PIE 3.14
+
+*************************** Switch Statements ***************************
+int main() {
+    int a = 10, b = 5;
+    char op = '+';
+
+    switch(op) {
+        case '+': cout << a + b; break;
+        case '-': cout << a - b; break;
+        case '*': cout << a * b; break;
+        case '/': cout << a / b; break;
+        default: cout << "Invalid operator!";
+    }
+    return 0;
+}
+
+
+int x = 2;
+switch(x) {
+    case 1: cout << "One\n";
+    case 2: cout << "Two\n";
+    case 3: cout << "Three\n";
+}
+
+
 ternary operator ( if-else ) => ? :
 call by value, call by reference
 call by pointer
@@ -200,6 +225,177 @@ Used for small and frequently used functions.
 Reduces function call overhead.
 Not suitable for big, complex functions.
 Inline functions are expanded at compile time.
+
+
+
+**************************************************************************************************************
+
+🔹 What is this Keyword in C++?
+this is a special pointer available inside non-static member functions of a class.
+📌 It stores the address of the current object (the object that is calling the function).
+
+🔹 Example 2: Returning current object (Method Chaining)
+class Test {
+    int x;
+public:
+    Test& setX(int x) {
+        this->x = x;
+        return *this;   // return the current object
+    }
+
+    void show() {
+        cout << x << endl;
+    }
+};
+
+int main() {
+    Test t;
+    t.setX(10).show();  // method chaining
+}
+
+
+🔹 Example 4: When local and global variable names conflict
+class Sample {
+public:
+    int x;
+    void setX(int x) {
+        this->x = x;  // resolves name conflict
+    }
+};
+
+
+🔹 Key Points (Interview-Ready Summary)
+this is a pointer to the current calling object.
+Only available in non-static member functions (not in static functions).
+
+Used to:
+✔ resolve naming conflicts
+✔ return current object
+✔ method chaining
+✔ pass current object as argument
+*this gives the actual object, this gives address.
+
+
+************************************************************************************************
+
+✅ Memory Allocation in C/C++
+Memory is divided into 4 main parts:
+
+🔹 1. Static / Compile-Time Memory Allocation
+Memory is allocated before program execution (at compile time).
+
+✔ Examples => Global variables, Static variables, Functions, Constant string literals
+✔ Features => Fixed size, Faster allocation, Exists for entire program lifetime
+
+✔ Example
+int x = 10;     // static memory
+static int y;  // static memory
+
+
+🔹 2. Stack Memory (Automatic Memory Allocation)
+Memory allocated automatically when a function is called and freed automatically when the function ends.
+
+✔ Examples => Local variables, Function parameters
+✔ Features => Fastest memory, Limited size, Memory deallocated automatically, LIFO (Last-in-first-out)
+
+✔ Example
+void test() {
+    int a = 5;  // stored in stack
+}
+
+
+🔹 3. Heap Memory (Dynamic Memory Allocation)
+Memory allocated manually at runtime using new/delete (C++) or malloc/free (C).
+
+✔ Why use heap?
+For storing: Large data, Variable-sized arrays, Objects created at runtime, Linked lists, trees, graphs
+
+✔ C++ Example
+int *p = new int(10);   // allocates memory on heap
+delete p;               // frees memory
+
+✔ C Example
+int *p = (int*)malloc(sizeof(int));
+*p = 10;
+free(p);
+
+✔ Features => Manual control, Flexible but slower, Risk of memory leaks
+
+🔹 4. Free Store
+Part of heap managed by C++ new and delete.
+Used for: Objects, Constructors/destructors
+
+
+🔥 Examples (Simple and Interview-Ready)
+
+✔ Example 1: Stack vs Heap
+int main() {
+    int a = 10;           // stack
+    int *p = new int(20); // heap
+    cout << a << endl;
+    cout << *p << endl;
+    delete p;             // free heap memory
+}
+
+
+✔ Example 2: Dynamic Array
+int *arr = new int[5];   // heap memory of 5 integers
+for(int i = 0; i < 5; i++)
+    arr[i] = i+1;
+delete[] arr;            // must free array
+
+
+✔ Example 3: Using Heap for Objects
+class Student {
+public:
+    Student() {
+        cout << "Object created" << endl;
+    }
+    ~Student() {
+        cout << "Object destroyed" << endl;
+    }
+};
+
+int main() {
+    Student *s = new Student; // object on heap
+    delete s;                 // manually delete
+}
+
+****************************** Dynamic 2D array memory allocation ***********************************
+int ROW = 2; int COL = 3;
+double **pvalue = new double* [ROW]; // Allocate memory for rows
+// Now allocate memory for columns
+for(int i = 0; i < ROW; i++) { pvalue[i] = new double[COL]; }
+
+The syntax to release the memory for multi-dimensional will be as follows:
+for(int i = 0; i < ROW; i++) { delete[] pvalue[i]; }
+delete [] pvalue;
+
+
+Dynamic Memory Allocation for Objects
+int main( )
+{
+    Box* myBoxArray = new Box[4];
+    delete [] myBoxArray; // Delete array
+    return 0;
+}
+
+
+
+
+
+🚀 Important Interview Points
+
+✔ Static Allocation => Done at compile time, Fixed size, Global/static variables
+✔ Stack Allocation => Automatic, Fast but limited memory, Local variables, function calls
+✔ Heap Allocation => Dynamic (runtime), Flexible size, Must use delete/free, Can cause memory leaks
+
+✔ Why dynamic allocation?
+When size is unknown
+When lifetime must be controlled manually
+For dynamic structures: Linked list, tree, graph
+
+
 
 
 

@@ -445,3 +445,401 @@ COMMIT;
 📌 Meaning:
 First update is kept
 Second update is undone
+
+
+**********************************************************************************************************
+🔥 DQL (Data Query Language)
+DQL is a subset of SQL used to retrieve data from the database.
+It focuses only on querying data, not modifying it.
+
+✅ Main DQL Command: SELECT
+There is only one DQL command, and that is: ➡️ SELECT
+
+Used to query and fetch data from one or more tables.
+📌 Interview Summary
+DQL = SELECT
+Used to fetch/query data
+Does NOT modify data
+Part of SQL that deals with reading data only
+
+
+********************************************************************************************************************************
+
+🔥 SQL Operators
+SQL operators are symbols or keywords used to perform operations on data in queries.
+They are mainly used inside WHERE, HAVING, and SELECT statements.
+
+Operators are divided into several types:
+1️⃣ Arithmetic Operators => % ( modulo operator ) -> reminder
+2️⃣ Comparison (Relational) Operators => <> is same to !=
+3️⃣ Logical Operators => AND,	OR,  NOT
+4️⃣ Bitwise Operators => & (and), ^ (xor), | (or)  => SELECT 5 & 3;   -- Output: 1
+5️⃣ Special / Other Operators => IN, NOT IN, BETWEEN, LIKE, IS NULL / IS NOT NULL, EXISTS, ANY / ALL
+
+
+
+1️⃣ BETWEEN => Used to check range (inclusive).
+
+Example:
+SELECT * FROM employees
+WHERE salary BETWEEN 30000 AND 60000;
+
+✔ Includes 30000 and 60000.
+✔ Works with numbers, dates, text.
+
+
+2️⃣ IN => Used to match multiple values.
+Example:
+SELECT * FROM employees
+WHERE department IN ('IT', 'HR', 'Finance');
+
+✔ Same as using multiple OR conditions
+✔ Cleaner and faster
+
+
+3️⃣ NOT IN => Opposite of IN.
+SELECT * FROM employees
+WHERE department NOT IN ('Sales', 'Marketing');
+
+
+4️⃣ LIKE => Used for pattern matching with wildcards.
+
+Wildcards:
+| Symbol | Meaning                  |
+| ------ | ------------------------ |
+| `%`    | any number of characters |
+| `_`    | exactly one character    |
+
+Examples:
+SELECT * FROM employees WHERE name LIKE 'S%';   -- starts with S
+SELECT * FROM employees WHERE name LIKE '%n';   -- ends with n
+SELECT * FROM employees WHERE name LIKE '%an%'; -- contains 'an'
+SELECT * FROM employees WHERE name LIKE '_a%';  -- 2nd letter is a
+
+
+
+5️⃣ IS NULL / IS NOT NULL
+✔ You cannot use = NULL or != NULL
+❌ Wrong → WHERE manager_id = NULL
+SELECT * FROM employees WHERE manager_id IS NOT NULL;
+SELECT * FROM employees WHERE manager_id IS NULL;
+
+
+7️⃣ EXISTS => Returns TRUE if the subquery returns at least one row.
+Example:
+SELECT name FROM employees e
+WHERE EXISTS (
+    SELECT 1 FROM projects p WHERE p.emp_id = e.id
+);
+
+✔ Used for checking existence
+✔ Faster than IN for large data
+✔ Very important for interviews
+
+
+8️⃣ NOT EXISTS => Opposite of EXISTS.
+Example:
+SELECT name FROM employees e
+WHERE NOT EXISTS (
+    SELECT 1 FROM projects p WHERE p.emp_id = e.id
+);
+
+Finds employees with no projects.
+
+
+9️⃣ ANY => Condition must be true for at least one value.
+Example:
+SELECT * FROM employees
+WHERE salary > ANY (SELECT salary FROM interns);
+
+Meaning: salary > smallest intern salary
+
+
+🔟 ALL => Condition must be true for all values.
+Example:
+SELECT * FROM employees
+WHERE salary > ALL (SELECT salary FROM interns);
+
+Meaning: salary > highest intern salary
+
+
+********************************************************
+🔥 IN vs EXISTS (Most Asked SQL Interview Question)
+Both IN and EXISTS are used with subqueries, but they work differently internally.
+
+✅ 1️⃣ IN — compares values
+IN checks whether a value is present in a list returned by a subquery.
+Example:
+SELECT name FROM employees
+WHERE id IN (SELECT emp_id FROM projects);
+
+➡ Finds employees who have projects.
+➡ Subquery returns a list → main query checks membership.
+
+
+✅ 2️⃣ EXISTS — checks existence of rows
+EXISTS returns TRUE if the subquery returns at least one row.
+Example:
+SELECT name FROM employees e
+WHERE EXISTS (
+    SELECT 1 FROM projects p WHERE p.emp_id = e.id
+);
+
+➡ Also finds employees who have projects,
+but it works differently internally.
+
+
+🔥 Real Difference (Very Important)
+
+✔ EXISTS is correlated => Subquery depends on outer query.
+WHERE EXISTS (
+      SELECT 1 FROM projects p 
+      WHERE p.emp_id = e.id
+)
+
+For each employee, SQL checks if a matching project exists.
+
+
+✔ IN stores values from the subquery and compares
+WHERE id IN (SELECT emp_id FROM projects)
+
+The subquery returns a list of IDs first.
+
+
+🚀 Performance Difference
+✔ Use EXISTS when the outer table is large => EXISTS stops as soon as it finds a match → faster.
+✔ Use IN when the subquery result is small => IN compares values → faster when few values.
+
+
+⚠️ Very Important Case: NULL values
+
+Suppose the subquery returns a NULL:
+
+SELECT emp_id FROM projects;
+
+If one emp_id is NULL:
+
+➤ IN breaks!
+WHERE id IN (NULL) → always FALSE
+
+➤ EXISTS works fine (NULL doesn’t matter)
+
+Exists checks only rows, not values.
+
+👉 EXISTS is safer when NULLs are present.
+
+
+| Feature          | IN                | EXISTS               |
+| ---------------- | ----------------- | -------------------- |
+| What it checks   | Value list        | Row existence        |
+| Best when        | Subquery is small | Outer table is large |
+| Deals with NULLs | ❌ Problematic     | ✔ Safe               |
+| How it works     | Compares values   | Checks row existence |
+| Type             | Non-correlated    | Correlated subquery  |
+
+✔ Final One-Line Answer for Interviews
+IN compares values and may perform poorly with large lists or NULL values, while EXISTS checks for the presence of rows and performs better with large datasets.
+
+
+*****************************************************************************************************************************************************
+
+🔥 ANY vs ALL in SQL
+Both ANY and ALL are used with subqueries to compare values.
+They modify comparison operators (>, <, =, !=, etc.)
+
+✅ 1️⃣ ANY (or SOME) 👉 Think: “If it matches ANY one value, return TRUE”
+
+✔ Another Example:    WHERE age = ANY (30, 40, 50)  <==> Equivalent to <==>  WHERE age IN (30, 40, 50)
+👉 ANY = IN when used with = operator.
+
+
+✅ 2️⃣ ALL 👉 Think: “Must satisfy the condition for all values”
+
+✔ Another Example:   WHERE age != ALL (30, 40, 50)  <==> Equivalent to <==>  WHERE age NOT IN (30, 40, 50)
+👉 != ALL => NOT IN
+
+| Feature         | ANY                                    | ALL                                  |
+| --------------- | -------------------------------------- | ------------------------------------ |
+| Condition       | True if matches **one or more** values | True only if matches **every** value |
+| Logical meaning | At least one                           | Every one                            |
+| Works like      | MIN check (for >)                      | MAX check (for >)                    |
+| Example meaning | > ANY (values) → > minimum             | > ALL (values) → > maximum           |
+
+🎯 Final Interview Answer (Short)
+ANY returns TRUE if the condition matches at least one value from the subquery.
+ALL returns TRUE only if the condition matches every value in the subquery.
+> ANY compares with the minimum, while > ALL compares with the maximum.
+
+
+
+*********************************************************************************************************
+
+🔥 What is a VIEW in SQL?
+A View is a virtual table created from the result of a SQL query.
+It does not store data physically (most of the time) — it only stores the query, and data is fetched from underlying tables whenever the view is used.
+👉 Think of a view as a saved SQL query that behaves like a table.
+
+Create a view:
+CREATE VIEW emp_it AS
+SELECT id, name, salary FROM employees
+WHERE department = 'IT';
+
+Now you can treat the view like a table:
+
+SELECT * FROM emp_it;
+
+➡ Shows only IT department employees.
+
+
+❓ 2. Why use views?
+To simplify queries, secure sensitive data, improve abstraction and Reusability & Maintainability
+
+***************************************************************************************************************************
+
+✅ SQL Clauses
+SQL Clauses are special keywords used in a query to filter, sort, group, or limit data.
+They help define conditions, ranges, and structure of SELECT operations.
+A clause is not a command by itself — it is a part of a SQL query.
+
+⭐ List of Major SQL Clauses
+| Clause             | Purpose                            |
+| ------------------ | ---------------------------------- |
+| **WHERE**          | Filters rows based on condition    |
+| **HAVING**         | Filters groups after aggregation   |
+| **ORDER BY**       | Sorts result (ASC/DESC)            |
+| **GROUP BY**       | Groups rows for aggregation        |
+| **LIMIT / OFFSET** | Restricts number of rows returned  |
+| **DISTINCT**       | Removes duplicate rows             |
+| **BETWEEN**        | Filters values in a range          |
+| **LIKE**           | Filters using pattern matching     |
+| **IN**             | Filters using multiple values      |
+| **EXISTS**         | Checks if subquery returns any row |
+| **AND / OR**       | Combine conditions                 |
+| **IS NULL**        | Check NULL values                  |
+
+
+************************************************************************************************
+📌 5. LIMIT & OFFSET (MySQL) => Used to return limited rows.
+Example:
+SELECT * FROM employees
+LIMIT 5 OFFSET 10;
+
+(returns 5 rows starting from the 11th row)
+************************************************************************************************
+
+⭐ Example Combining Most Clauses
+
+SELECT department, COUNT(*) AS total
+FROM employees
+WHERE salary > 30000              -- filter rows
+GROUP BY department                -- group rows
+HAVING COUNT(*) > 5               -- filter groups
+ORDER BY total DESC               -- sorting
+LIMIT 3;                          -- limit results
+
+
+
+🧠 KEY DIFFERENCE TABLE ✅ WHERE vs HAVING
+| Feature               | WHERE           | HAVING                   |
+| --------------------- | --------------- | ------------------------ |
+| Filters               | Rows            | Groups (aggregated data) |
+| Used When             | Before GROUP BY | After GROUP BY           |
+| Works on              | Individual rows | Aggregated results       |
+| Can use aggregates?   | ❌ No           | ✅ Yes                   |
+| Query execution stage | Early           | After grouping           |
+
+⭐ Memory Trick
+👉 WHERE = Filter BEFORE grouping => Can not use aggregate functions (COUNT, MAX, MIN, AVG, SUM).
+👉 HAVING = Filter AFTER grouping => Can use aggregate functions.
+
+
+***************************************************************************************************************
+
+✅ What Are Aggregate Functions in SQL?
+Aggregate functions perform a calculation on a set of values and return a single value (summary).
+
+⭐ List of Major Aggregate Functions
+| Function    | Description                       |
+| ----------- | --------------------------------- |
+| **COUNT()** | Counts rows                       |
+| **SUM()**   | Returns total of a numeric column |
+| **AVG()**   | Returns average value             |
+| **MAX()**   | Returns maximum value             |
+| **MIN()**   | Returns minimum value             |
+
+
+⭐ Important Notes (Interview Points)
+
+🔹 Aggregate functions ignore NULL values
+Example: SELECT AVG(bonus) FROM employees;
+If some bonuses are NULL → they are skipped.
+
+
+🔹 Aggregate functions require GROUP BY when selecting NON-aggregated columns
+
+❌ Invalid: (If department is not grouped)
+SELECT department, SUM(salary)
+FROM employees;
+
+✔ Correct:
+SELECT department, SUM(salary)
+FROM employees
+GROUP BY department;
+
+
+🔹 Aggregate functions can be used in HAVING but not in WHERE
+
+❌ Invalid: WHERE COUNT(*) > 5
+
+✔ Valid: HAVING COUNT(*) > 5
+
+
+****************************************************************************************************************************
+
+✅ What Are SQL Constraints?
+SQL Constraints are rules applied on table columns to ensure the correctness, reliability, and integrity of the data.
+They prevent invalid data from entering the database.
+
+⭐ Types of SQL Constraints
+| Constraint                 | Purpose                                          |
+| -------------------------- | ------------------------------------------------ |
+| **NOT NULL**               | Ensures a column cannot store NULL values        |
+| **UNIQUE**                 | Ensures all values in a column are unique        |
+| **PRIMARY KEY**            | Uniquely identifies each row (NOT NULL + UNIQUE) |
+| **FOREIGN KEY**            | Creates a link between two tables                |
+| **CHECK**                  | Ensures a condition must be true                 |
+| **DEFAULT**                | Sets a default value if none is provided         |
+| **AUTO_INCREMENT** (MySQL) | Automatically generates unique values            |
+
+
+⭐ Example: Table With All Constraints
+CREATE TABLE employees (
+    emp_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT CHECK(age >= 18),
+    department_id INT,
+    salary DECIMAL(10,2) DEFAULT 30000,
+    FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+Composite Primary Key: PRIMARY KEY (order_id, product_id)
+
+
+⭐ INTERVIEW KEY POINTS
+✔ PRIMARY KEY = UNIQUE + NOT NULL
+✔ FOREIGN KEY ensures referential integrity
+✔ CHECK used for conditions
+✔ DEFAULT assigns automatic values
+✔ Constraints prevent invalid data before saving
+✔ You cannot have two primary keys but can have multiple unique keys
+
+⭐ Constraints Can Be Added Later (ALTER TABLE)
+Add constraint:
+ALTER TABLE employees
+ADD CONSTRAINT chk_salary CHECK (salary > 10000);
+
+Drop constraint:
+ALTER TABLE employees
+DROP CONSTRAINT chk_salary;
+

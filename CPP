@@ -17,6 +17,127 @@
 | **Data Handling**        | Data is globally accessible                                      | Provides **data hiding** and security                                     |
 
 
+variables => global, local
+operators => Arithmetic, Logical (Comparison), Assignment, Bitwise
+break, continue
+Switch Statements
+ternary operator ( if-else ) => ? :
+call by value, call by reference
+call by pointer
+ampersand (&) operator which denotes an address in memory. 
+*(address) ===>  (*) is de-referancing operator which gives value
+
+pointer =>  int *p = &a;  int **pp;     char*ch // pointer to character
+A pointer is a variable that holds the memory address of another variable.
+It is used to access and manipulate data indirectly through its address.
+📌 Why do we use pointers?
+Pointers allow:
+Dynamic memory allocation (new, delete)
+Efficient array & string operations
+Passing large objects to functions without copying
+Implementing data structures (linked list, trees, graph)
+Polymorphism (using base class pointers)
+
+| Operator | Description                                                   |
+| -------- | ------------------------------------------------------------- |
+| `&`      | Address-of operator (gives address of variable)               |
+| `*`      | Dereference operator (access value stored at pointer address) |
+
+
+
+
+
+****************************************** shallow and deep copy ***************************************
+⭐ Shallow Copy vs Deep Copy
+Shallow and deep copy refer to how objects are copied in object-oriented programming.
+
+✅ Shallow Copy (Default Copy)
+✔ What it does:
+Copies only the values of data members.
+For pointers → it copies the address, not the data stored at that address.
+Both objects now point to the same memory.
+
+❌ Problem:
+If one object modifies the pointer data → the other object is affected.
+When destructors run → double free error may occur.
+
+✔ Created by:
+Default copy constructor
+Default assignment operator
+
+🔹 Shallow Copy Example
+
+class Demo {
+public:
+    int *ptr;
+
+    Demo(int x) {
+        ptr = new int(x);
+    }
+};
+
+int main() {
+    Demo d1(10);
+    Demo d2 = d1;   // shallow copy
+
+    *d2.ptr = 20;   // modifying d2
+
+    cout << *d1.ptr << endl;  // Output: 20 (affected!)
+}
+
+🔍 Explanation:
+d1.ptr and d2.ptr point to the same memory → unsafe.
+
+
+✅ Deep Copy
+✔ What it does:
+Copies data and allocates new memory.
+For pointer members → it creates a separate copy.
+Objects become independent.
+
+✔ Use deep copy when:
+Your class contains dynamic memory
+You want independent objects
+
+🔹 Deep Copy Example with Custom Copy Constructor
+
+class Demo {
+public:
+    int *ptr;
+
+    Demo(int x) {
+        ptr = new int(x);
+    }
+
+    // Deep copy constructor
+    Demo(const Demo &d) {
+        ptr = new int(*d.ptr);   // allocate new memory
+    }
+};
+
+int main() {
+    Demo d1(10);
+    Demo d2 = d1;   // deep copy now
+
+    *d2.ptr = 20;
+
+    cout << *d1.ptr << endl;   // Output: 10 (not affected)
+    cout << *d2.ptr << endl;   // Output: 20
+}
+
+🧠 Key Differences
+| Feature             | Shallow Copy                           | Deep Copy                   |
+| ------------------- | -------------------------------------- | --------------------------- |
+| Pointer behavior    | Copies pointer address                 | Copies actual data          |
+| Memory              | Shared memory                          | Separate memory             |
+| Safety              | Unsafe (double free, unwanted changes) | Safe                        |
+| Default by compiler | Yes                                    | No (needs custom code)      |
+| Use case            | Simple objects                         | Objects with dynamic memory |
+
+🏁 One-Line Interview Answer
+Shallow copy copies only the address of dynamically allocated memory, while deep copy creates a new memory block and copies data so both objects are independent.
+
+
 
 
 

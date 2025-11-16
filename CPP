@@ -139,6 +139,72 @@ Shallow copy copies only the address of dynamically allocated memory, while deep
 
 
 
+🔹 What is an Inline Function?
+An inline function is a function in C++ where the compiler replaces the function call with the actual function code at compile time.
+This helps avoid function call overhead (like pushing arguments on stack, jumping to function code, and returning).
+
+🔹 Syntax
+inline return_type functionName(parameters) {    // function body    }
+
+🔹 Why Inline Function? (Benefits)
+✔ 1. Faster execution
+Because the function body is pasted directly instead of calling, skipping:
+- Stack push/pop
+- Function call jump
+- Return jump
+
+✔ 2. Good for short functions
+Works best for very small functions like getters, setters, or simple calculations.
+✔ 3. Improves performance (sometimes)
+
+🔹 When Not to Use Inline
+The compiler may ignore inline if:
+- Function is large
+- Has loops
+- Has recursion
+- Contains static variables
+- Has switch-case or complex logic
+
+So inline is just a request, not a command.
+
+🔹 Example of Inline Function
+
+inline int square(int x) {
+    return x * x;
+}
+
+int main() {
+    cout << square(5);   // Replaced with: 5 * 5
+}
+
+Instead of calling square(5), compiler may convert it to:
+
+cout << 5 * 5;
+
+🔹 Real-life Example
+A BankAccount class with an inline getter:
+
+class BankAccount {
+    int balance;
+public:
+    BankAccount(int b) : balance(b) {}
+
+    inline int getBalance() {   // simple, fast
+        return balance;
+    }
+};
+
+🔹 Key Points (Interview Ready)
+inline is a request, not guaranteed.
+Used for small and frequently used functions.
+Reduces function call overhead.
+Not suitable for big, complex functions.
+Inline functions are expanded at compile time.
+
+
+
+
+
 
 
 | **Feature**           | **Procedure Oriented Programming (POP)** | **Object Oriented Programming (OOP)**        |

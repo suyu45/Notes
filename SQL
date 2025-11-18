@@ -1197,7 +1197,91 @@ DROP INDEX idx_name ON employees;
 
 
 
+******************************************************************************************************************************************************
 
+
+✅ What is CASCADE in SQL?
+CASCADE is an action used in FOREIGN KEY constraints to automatically apply changes (UPDATE or DELETE) from a parent table to a child table.
+It ensures referential integrity without manually updating related rows.
+
+🔥 Types of CASCADE Actions
+There are two main CASCADE options:
+
+1️⃣ ON DELETE CASCADE
+If a row in the parent table is deleted →
+all matching rows in the child table are also deleted automatically.
+
+📌 Example
+Parent table: departments
+| dept_id | dept_name |
+| ------- | --------- |
+
+Child table: employees
+| emp_id | emp_name | dept_id |
+
+With CASCADE:
+CREATE TABLE employees (
+  emp_id INT PRIMARY KEY,
+  emp_name VARCHAR(50),
+  dept_id INT,
+  FOREIGN KEY (dept_id)
+    REFERENCES departments(dept_id)
+    ON DELETE CASCADE
+);
+
+What happens?
+If you run:
+DELETE FROM departments WHERE dept_id = 10;
+
+➡ All employees belonging to dept_id = 10 will be automatically deleted.
+
+✔ Prevents orphan records
+✔ Maintains referential integrity
+
+
+
+2️⃣ ON UPDATE CASCADE
+If the parent key is updated →
+child table automatically updates the foreign key to match.
+
+Example:
+FOREIGN KEY(dept_id)
+REFERENCES departments(dept_id)
+ON UPDATE CASCADE;
+
+If dept_id changes from 10 → 20 in departments,
+the employees table will also update automatically.
+
+
+🎯 Why use CASCADE?
+✔ Maintains Data Consistency
+Child records cannot become invalid.
+
+✔ Reduces Manual Work
+You don’t need to update/delete data in multiple tables manually.
+
+✔ Prevents Orphan Records
+No employee will refer to a department that no longer exists.
+
+
+⚠ When NOT to use CASCADE?
+❌ If you delete a department, you may accidentally delete all employees.
+❌ Critical data should not be deleted automatically.
+❌ Use carefully in production systems.
+
+
+🌟 Real-world Example
+E-commerce
+Parent: Orders
+Child: OrderItems
+
+If an order is canceled (deleted):
+👉 all order items should automatically delete → ON DELETE CASCADE
+
+
+📌 Interview Answer (Short)
+CASCADE is an action used in foreign key constraints to automatically apply changes from the parent table to the child table.
+ON DELETE CASCADE deletes related child rows automatically, and ON UPDATE CASCADE updates child rows when the parent key changes. It helps maintain referential integrity.
 
 
 

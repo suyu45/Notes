@@ -1,0 +1,242 @@
+✅ What is Normalization?
+Normalization is a process in database design used to remove redundancy (duplicate data) and avoid anomalies during: INSERT, UPDATE, DELETE
+
+It organizes data into multiple related tables so the database becomes:
+✔ Efficient
+✔ Consistent
+✔ Easy to maintain
+
+Goal:
+👉 Store each fact only once
+👉 Avoid unnecessary duplication
+👉 Make relationships clear
+
+🎯 Why Normalization is Needed?
+Without normalization (in unnormalized form):
+| StudentID | StudentName | Course1 | Course2 | Instructor |
+| --------- | ----------- | ------- | ------- | ---------- |
+| 1         | Suyog       | DBMS    | SQL     | Mehta      |
+
+Problems:
+- Redundancy (same instructor repeated for many rows)
+- Update anomaly => If instructor name changes, need to update in many places.
+- Insert anomaly => Cannot add a course without a student.
+- Delete anomaly => Deleting last student deletes course details too.
+Normalization fixes this.
+
+🔥 Types (Normal Forms)
+1️⃣ 1NF (First Normal Form)
+Rule:
+✔ No repeating groups
+✔ Every column must have atomic (indivisible) values
+✔ Each row must be unique
+
+❌ Before 1NF:
+| Student | Courses   |
+| ------- | --------- |
+| Suyog   | DBMS, SQL |
+
+✔ After 1NF:
+| Student | Course |
+| ------- | ------ |
+| Suyog   | DBMS   |
+| Suyog   | SQL    |
+
+
+2️⃣ 2NF (Second Normal Form)
+Rule:
+✔ Must be in 1NF
+✔ No partial dependency
+(A non-key column should not depend on only part of a composite key)
+
+Example:
+Table (StudentID, CourseID) → Composite key
+| StudentID | CourseID | StudentName |
+| --------- | -------- | ----------- |
+
+Problem:
+StudentName depends only on StudentID, not CourseID → partial dependency.
+
+✔ Fix by splitting:
+
+Students Table
+| StudentID | StudentName |
+
+Enrollments Table
+| StudentID | CourseID |
+
+
+3️⃣ 3NF (Third Normal Form)
+Rule:
+✔ Must be in 2NF
+✔ No transitive dependency
+(Non-key attribute should not depend on another non-key attribute)
+
+❌ Example:
+| EmpID | EmpName | DeptID | DeptName |
+| ----- | ------- | ------ | -------- |
+
+DeptName depends on DeptID → transitive dependency.
+
+✔ Fix:
+
+Employee
+| EmpID | EmpName | DeptID |
+
+Department
+| DeptID | DeptName |
+
+
+4️⃣ BCNF (Boyce-Codd Normal Form)
+A stronger version of 3NF.
+
+Rule:
+✔ Every determinant must be a candidate key
+
+Used when:
+Table has multiple candidate keys
+Functional dependencies become complex
+
+🌟 Summary Table
+| Normal Form | Removes               | Requirement       |
+| ----------- | --------------------- | ----------------- |
+| **1NF**     | Repeating groups      | Atomic values     |
+| **2NF**     | Partial dependency    | Must be in 1NF    |
+| **3NF**     | Transitive dependency | Must be in 2NF    |
+| **BCNF**    | Advanced anomalies    | Stronger than 3NF |
+
+
+📘 Real Example of Full Normalization
+Student Course Table (Unnormalized)
+| StudentID | StudentName | Course | Instructor |
+| --------- | ----------- | ------ | ---------- |
+
+After Normalization:
+Students
+| StudentID | StudentName |
+
+Courses
+| CourseID | CourseName | Instructor |
+
+StudentCourse
+| StudentID | CourseID |
+
+🎯 Benefits of Normalization
+✔ Eliminates duplicate data
+✔ Avoids update/insert/delete anomalies
+✔ Makes database efficient
+✔ Improves data consistency
+✔ Saves storage
+
+📌 Interview Answer (Short Version)
+Normalization is a database design technique used to remove redundancy and avoid anomalies by organizing data into multiple related tables. 
+It follows several normal forms like 1NF, 2NF, 3NF, and BCNF. Each form reduces a specific type of redundancy (repeating groups, partial dependency, transitive dependency).
+
+
+
+*****************************************************************************************************************************************************************************
+
+
+✅ What Are Anomalies in DBMS?
+Anomalies are problems that occur in a database when it is poorly designed (not normalized).
+They cause data inconsistency, redundancy, and incorrect behavior during: INSERT, UPDATE, DELETE
+
+Normalization helps remove these anomalies.
+
+⭐ Types of Anomalies
+There are 3 main anomalies:
+
+1️⃣ Update Anomaly
+Occurs when the same data exists in multiple places.
+If you update one place, you must update all places.
+If not, data becomes inconsistent.
+
+❌ Example (Unnormalized Table)
+| StudentID | StudentName | Course | Instructor |
+| --------- | ----------- | ------ | ---------- |
+| 1         | Suyog       | DBMS   | Mehta      |
+| 2         | Rohan       | SQL    | Mehta      |
+
+Instructor "Mehta" repeated twice.
+
+Problem
+If instructor name changes to “Mehta Sir”, YOU MUST update both rows.
+If you forget one → inconsistent data.
+
+👉 This is Update Anomaly.
+
+
+
+2️⃣ Insert Anomaly
+Occurs when you cannot insert data because some other data is missing.
+
+❌ Example
+You want to add a new course "AI" with instructor "Kapoor".
+But your table structure is:
+
+| StudentID | StudentName | Course | Instructor |
+
+You cannot insert a course until a student registers for it.
+
+👉 This is Insert Anomaly.
+
+
+
+3️⃣ Delete Anomaly
+Occurs when deleting one record unintentionally removes other important data.
+
+❌ Example
+| StudentID | StudentName | Course | Instructor |
+| --------- | ----------- | ------ | ---------- |
+| 1         | Suyog       | DBMS   | Mehta      |
+
+If you delete Suyog (the only student in DBMS),
+then DBMS + Instructor Mehta data also gets deleted.
+
+So deleting one fact removes another fact.
+
+👉 This is Delete Anomaly.
+
+
+🧠 Summary Table
+Anomaly Type	When it Occurs	Problem
+Update	Same data stored multiple times	Data inconsistency
+Insert	Cannot insert data without other data	Missing information
+Delete	Deleting a record removes needed data	Loss of information
+
+
+🎯 Why Anomalies Occur?
+Because table is poorly structured:
+Repeating groups
+Redundant data
+Dependencies not organized
+Not normalized
+
+Thus, database becomes inconsistent.
+
+
+🔥 How to Remove Anomalies?
+
+Apply Normalization:
+1NF → Remove repeating groups
+2NF → Remove partial dependency
+3NF → Remove transitive dependency
+BCNF → Solve advanced anomalies
+
+
+📌 Interview Answer (Short & Crisp)
+
+Anomalies are problems in database operations caused by un-normalized tables. The three main anomalies are:
+Update anomaly – updating data in one place but not in others leads to inconsistency.
+Insert anomaly – cannot insert a record because some required data is missing.
+Delete anomaly – deleting a record unintentionally deletes important information.
+
+Normalization helps eliminate these anomalies.
+
+
+
+***********************************************************************************************************************************************************
+
+
+
+

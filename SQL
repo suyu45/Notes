@@ -894,10 +894,306 @@ Not allowed in WHERE clause
 
 
 
+✅ Types of Keys in DBMS
+Keys are attributes (columns) used to identify records, maintain relationships, and ensure data integrity in a database.
+
+
+📌 Simple Diagram (Conceptually)
+Super Keys
+   ↓ (minimal keys)
+Candidate Keys
+   ↓ (one chosen)
+Primary Key
+
+
+
+⭐ Summary Table (Best for Interviews)
+| Key               | Purpose                                       |
+| ----------------- | --------------------------------------------- |
+| **Primary Key**   | Unique + Not Null                             |
+| **Foreign Key**   | Connects two tables                           |
+| **Candidate Key** | All possible unique keys                      |
+| **Alternate Key** | Candidate keys except primary key             |
+| **Super Key**     | Any unique identifier (may have extra fields) |
+| **Composite Key** | Multiple columns as primary key               |
+| **Unique Key**    | Unique but allows NULL                        |
+| **Surrogate Key** | System-generated PK                           |
+| **Natural Key**   | Real-world key (email, SSN)                   |
+
+
+⭐ 11. Candidate Key vs Super Key (Important)
+| Type              | Meaning                                                             |
+| ----------------- | ------------------------------------------------------------------- |
+| **Super Key**     | Any key that can uniquely identify rows (may include extra columns) |
+| **Candidate Key** | Minimal super key (no extra columns)                                |
+
+Every candidate key is a super key,
+but every super key is NOT a candidate key.
+
+⭐ 7. Unique Key => Ensures all values in a column are unique, but allows one NULL (varies by DBMS).
 
 
 
 
+
+✅ What is a JOIN in SQL?
+A JOIN is used to combine rows from two or more tables based on a related column between them (usually a primary key → foreign key relationship).
+Joins help in retrieving meaningful combined data from multiple tables.
+
+⭐ Types of Joins in SQL
+| Join Type           | What It Returns                                 |
+| ------------------- | ----------------------------------------------- |
+| **INNER JOIN**      | Matching rows from both tables                  |
+| **LEFT JOIN**       | All rows from left + matching from right        |
+| **RIGHT JOIN**      | All rows from right + matching from left        |
+| **FULL OUTER JOIN** | All rows from both tables (matched + unmatched) |
+| **CROSS JOIN**      | Cartesian product (all combinations)            |
+| **SELF JOIN**       | Join a table with itself                        |
+
+(MySQL does NOT support FULL OUTER JOIN directly)
+
+⭐ 4. FULL OUTER JOIN
+Returns:
+All matched rows
+Unmatched rows from both tables
+
+📌 Not supported directly in MySQL, but possible using UNION.
+
+Standard SQL:
+SELECT e.name, d.dept_name
+FROM employees e
+FULL OUTER JOIN departments d
+ON e.dept_id = d.dept_id;
+
+MySQL Alternative:
+SELECT e.name, d.dept_name
+FROM employees e
+LEFT JOIN departments d ON e.dept_id = d.dept_id
+UNION
+SELECT e.name, d.dept_name
+FROM employees e
+RIGHT JOIN departments d ON e.dept_id = d.dept_id;
+
+
+⭐ 5. CROSS JOIN
+Returns Cartesian product = every row of left × every row of right.
+
+Query:
+SELECT e.name, d.dept_name
+FROM employees e
+CROSS JOIN departments d;
+
+If:
+employees = 3 rows
+departments = 3 rows
+Total = 3×3 = 9 rows.
+
+
+⭐ 6. SELF JOIN
+Joining a table with itself.
+
+Example:
+Employees and their managers in the same table.
+
+SELECT e.name AS employee, m.name AS manager
+FROM employees e
+JOIN employees m
+ON e.manager_id = m.id;
+
+
+
+⭐ Best Interview Explanation
+👉 INNER JOIN = Only common data
+👉 LEFT JOIN = All left + matching right
+👉 RIGHT JOIN = All right + matching left
+👉 FULL JOIN = Everything from both tables
+👉 CROSS JOIN = Every combination
+👉 SELF JOIN = Join the table with itself
+
+
+*************************************************************************************
+The query:
+SELECT e.name, d.dept_name
+FROM employees e
+JOIN departments d 
+ON e.dept_id = d.dept_id;
+
+This is an INNER JOIN.
+
+✅ Reason (Interview Explanation)
+In SQL:
+JOIN without specifying LEFT/RIGHT/FULL
+👉 Defaults to INNER JOIN
+
+So: JOIN = INNER JOIN
+
+This means the query will only return matching rows where: employees.dept_id = departments.dept_id
+✔ Final Answer: INNER JOIN
+*************************************************************************************
+
+
+SELECT e.name, d.dept_name FROM employees e 
+FULL JOIN departments d ON e.dept_id = d.dept_id
+
+🔹 Full Outer Join (FULL JOIN)
+
+✔ Explanation
+FULL JOIN (or FULL OUTER JOIN) returns:
+All matching rows between employees and departments
+Plus all non-matching rows from employees
+Plus all non-matching rows from departments
+Where values don’t match, SQL fills them with NULL.
+
+FULL JOIN (or FULL OUTER JOIN)
+👉 Your query is a FULL OUTER JOIN.
+
+
+
+
+✅ Is NATURAL JOIN available in SQL?
+✔ Supported in: MySQL, Oracle, PostgreSQL, SQLite
+
+❌ Not supported in: SQL Server (it does NOT support NATURAL JOIN)
+
+✅ What is NATURAL JOIN?
+A NATURAL JOIN automatically joins tables using all columns with the same name in both tables.
+
+Example:
+SELECT *
+FROM employees
+NATURAL JOIN departments;
+
+✔ How it works:
+SQL automatically finds matching column names (e.g., dept_id)
+Joins using dept_id = dept_id
+Removes the duplicate column from output
+
+⚠️ Why NATURAL JOIN is rarely recommended?
+It depends on column names, not logic
+If someone renames a column later → your query breaks or behaves differently
+Harder to read and maintain
+
+👍 Better alternative (recommended)
+Use INNER JOIN with explicit condition:
+SELECT *
+FROM employees e
+JOIN departments d ON e.dept_id = d.dept_id;
+
+
+
+
+✅ SQL Set Operations : 
+SQL Set Operations allow you to combine the results of two or more SELECT queries.
+They work like mathematical set operations.
+
+✅ List of SQL Set Operations
+| Set Operation      | Description                                                    | Removes Duplicates? | Allows Duplicates? |
+| ------------------ | -------------------------------------------------------------- | ------------------- | ------------------ |
+| **UNION**          | Combines results of two queries                                | ✔ Yes               | ❌ No               |
+| **UNION ALL**      | Combines results including duplicates                          | ❌ No                | ✔ Yes              |
+| **INTERSECT**      | Returns only matching rows present in both queries             | ✔ Yes               | ❌ No               |
+| **EXCEPT / MINUS** | Returns rows from first query that are **not** in second query | ✔ Yes               | ❌ No               |
+
+
+1️⃣ UNION => Merges results from both queries
+            Removes duplicates
+
+SELECT name FROM employees
+UNION
+SELECT name FROM managers;
+
+
+2️⃣ UNION ALL => Merges results
+                Keeps duplicate records
+
+SELECT name FROM employees
+UNION ALL
+SELECT name FROM managers;
+
+
+3️⃣ INTERSECT => Returns only common rows between both queries
+
+SELECT name FROM employees
+INTERSECT
+SELECT name FROM managers;
+
+📌 Not supported in MySQL before version 8.0.31.
+
+
+4️⃣ EXCEPT / MINUS => Returns rows that are present in first result but not in second
+
+PostgreSQL / SQL Server → EXCEPT
+SELECT name FROM employees
+EXCEPT
+SELECT name FROM managers;
+
+
+Oracle → MINUS
+SELECT name FROM employees
+MINUS
+SELECT name FROM managers;
+
+
+⚠ Requirements for all Set Operations
+Both queries must have:
+- Same number of columns
+- Same data types
+- Same column order
+
+
+
+
+✅ What is an Index in SQL?
+An Index in SQL is a data structure (usually a B-Tree or Hash) that improves the speed of data retrieval on a table.
+
+It works like an index in a book:
+Instead of scanning all pages, you directly jump to the page where the topic is listed.
+
+👉 Indexes make SELECT queries faster
+👉 But they slow down INSERT, UPDATE, DELETE (because index must be updated)
+
+🧠 How Index Works Internally?
+The database creates a tree-like structure (typically B-Tree) for indexed columns.
+Example:
+| id | name  |
+| -- | ----- |
+| 1  | Mohit |
+| 2  | Priya |
+| 3  | Aryan |
+If name is indexed, SQL sorts the column internally → searching becomes O(log n) instead of O(n).
+
+⭐ Why Use Index? (Advantages)
+✔ Faster SELECT queries
+Especially for: WHERE conditions, JOIN conditions, ORDER BY / GROUP BY, Searching large tables
+✔ Helps maintain UNIQUE constraints
+✔ Improves query optimization
+
+
+⚠ Drawbacks of Index
+❌ Slows down INSERT, UPDATE, DELETE
+Because the index must be updated as well.
+
+❌ Takes extra memory
+Indexes require storage space.
+
+❌ Too many indexes hurt performance
+Use only when necessary.
+
+
+🔥 When to Use Index
+Use index on columns that are:
+✔ Frequently used in WHERE
+✔ Used in JOIN
+✔ Used in ORDER BY / GROUP BY
+✔ Large tables
+
+
+🔍 How to Create an Index
+CREATE INDEX idx_name
+ON employees(name);
+
+🗑 How to Drop an Index
+DROP INDEX idx_name ON employees;
 
 
 

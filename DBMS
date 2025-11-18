@@ -239,4 +239,102 @@ Normalization helps eliminate these anomalies.
 
 
 
+✅ What Are ACID Properties?
+ACID is a set of 4 properties that ensure a database transaction is reliable, consistent, and safe, even if failures happen.
+
+A transaction = a group of SQL operations executed together
+(e.g., money transfer, booking ticket, order placement)
+
+👉 ACID ensures that even if power fails, network breaks, system crashes, data remains safe.
+
+🔥 ACID = Atomicity + Consistency + Isolation + Durability
+
+1️⃣ Atomicity → “All or Nothing”
+A transaction must either:
+✔ complete fully
+❌ or not happen at all
+
+There is no partial execution.
+
+🏦 Example (Money Transfer)
+Transfer ₹500 from A → B
+Two operations happen: 1) Deduct 500 from A, 2) Add 500 to B
+
+If the system crashes after step 1 →
+Step 2 must NOT happen.
+
+Either:
+✔ both succeed
+❌ or both fail
+
+This is Atomicity.
+
+
+
+2️⃣ Consistency → “Valid Data Before & After Transaction”
+After every transaction, the database must remain valid according to rules (constraints).
+
+Examples:
+No negative bank balance (if rule says so)
+Age cannot be negative
+Foreign key constraints must match
+
+Example:
+If total money in bank A+B = ₹5000
+→ after transaction, total must still be ₹5000
+
+No rules should break.
+
+
+
+3️⃣ Isolation → “Transactions do not interfere”
+If multiple transactions run at the same time,
+each transaction should behave as if it's the only one running.
+
+🛒 Example:
+Two users buying the last item on Amazon:
+User 1 adds to cart
+User 2 adds to cart
+
+Isolation ensures:
+✔ only ONE will successfully purchase
+❌ both cannot buy the last item
+
+Prevents issues like:
+Dirty reads
+Lost updates
+Phantom reads
+
+
+4️⃣ Durability → “Once committed, data is safe forever”
+After a transaction is committed:
+✔ it must survive system crashes, power failure, or reboot
+✔ DB writes it to disk / logs permanently
+
+Example:
+If you send money and you get “Transaction Successful”:
+Even if power goes OFF the next second…
+
+✔ the money is transferred
+❌ it will NOT roll back
+
+Because DB has stored it permanently.
+
+
+⭐ Summary Table
+| ACID Property   | Meaning                              | Real-Life Example                       |
+| --------------- | ------------------------------------ | --------------------------------------- |
+| **Atomicity**   | All or nothing                       | Money transfer (both steps must happen) |
+| **Consistency** | Data remains valid                   | No negative balance                     |
+| **Isolation**   | No interference between transactions | Multiple users buying same product      |
+| **Durability**  | Save permanently                     | Transaction stays even after crash      |
+
+📌 Interview Answer (Short)
+ACID properties are a set of rules that ensure reliable transaction processing in a database.
+They include:
+Atomicity – all operations in a transaction succeed or fail together
+Consistency – database must remain valid after the transaction
+Isolation – concurrent transactions do not affect each other
+Durability – once committed, data is permanently saved
+
 

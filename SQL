@@ -1,3 +1,17 @@
+3 table join =>
+SELECT c.name, o.order_id, p.amount
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN payments p ON o.order_id = p.order_id;
+
+
+3 table left join =>
+SELECT e.name, d.dept_name, l.city
+FROM employees e
+LEFT JOIN departments d ON e.dept_id = d.dept_id
+LEFT JOIN locations l ON d.dept_id = l.dept_id;
+
+
 1. What is SQL?
 => • SQL stands for Structured Query Language. It is used for storing and managing data in Relational Database Management System (RDBMS).
    • It is a standard language for Relational Database System. It enables a user to create, read, update and delete relational databases and tables.

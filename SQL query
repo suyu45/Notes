@@ -1,0 +1,186 @@
+✅ EXISTS in SQL
+EXISTS is a Boolean operator in SQL that checks whether a subquery returns at least one row.
+If the subquery returns 1 or more rows → EXISTS = TRUE
+If the subquery returns 0 rows → EXISTS = FALSE
+It is commonly used with correlated subqueries.
+
+✨ Key Points
+EXISTS does not return data — it only checks if rows exist.
+The subquery usually references the outer query (correlated subquery).
+SQL stops searching as soon as it finds one matching row → fast performance.
+
+
+✅ Example 1: Find employees who belong to at least one department
+SELECT e.emp_id, e.name
+FROM employees e
+WHERE EXISTS (
+    SELECT 1
+    FROM departments d
+    WHERE d.dept_id = e.dept_id
+);
+
+✔ Why SELECT 1?
+
+EXISTS ignores selected columns.
+It only checks if any row is returned.
+
+
+✅ Example 2: Find customers who have placed at least one order
+SELECT c.customer_id, c.name
+FROM customers c
+WHERE EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+);
+
+✔ Returns only customers who have at least one order.
+
+
+✅ Example 3: NOT EXISTS
+
+Find customers with no orders:
+
+SELECT c.customer_id, c.name
+FROM customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.customer_id = c.customer_id
+);
+
+
+🔥 EXISTS vs IN (Quick Difference)
+| Feature            | EXISTS                 | IN                             |
+| ------------------ | ---------------------- | ------------------------------ |
+| Works better with  | Large subquery results | Small subquery results         |
+| Checks             | Row existence          | Matching values                |
+| Behavior with NULL | Safe                   | Can give wrong/missing results |
+
+
+🎯 When to use EXISTS?
+Use EXISTS when:
+- You are checking existence of related rows.
+- You need a correlated check.
+- The subquery returns large data.
+- You want the query to stop early after the first match.
+
+
+*************************************************************************************************************************
+
+
+CREATE TABLE logs (
+    id INT PRIMARY KEY,
+    message VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Whenever a row is inserted → created_at automatically stores system time.
+
+
+1. CURRENT_TIMESTAMP
+SELECT CURRENT_TIMESTAMP; ➡ Returns current date + time
+
+2. NOW()
+SELECT NOW(); ➡ Same as CURRENT_TIMESTAMP
+
+
+📆 2. Date & Time Functions (Most Important for SQL Interviews)
+
+⭐ 1. DATE() => Extracts only the date part.
+SELECT DATE('2025-02-21 10:35:20'); 
+-- Output: 2025-02-21
+
+
+⭐ 2. TIME() => Extracts only the time part.
+SELECT TIME('2025-02-21 10:35:20');
+
+
+⭐ 3. DAY(), MONTH(), YEAR()
+SELECT YEAR(NOW());   -- 2025
+SELECT MONTH(NOW());  -- 2
+SELECT DAY(NOW());    -- 21
+
+
+⭐ 4. DATE_ADD() => Add days/months/years.
+SELECT DATE_ADD('2025-02-21', INTERVAL 7 DAY);
+
+
+⭐ 5. DATE_SUB() => Subtract dates.
+SELECT DATE_SUB('2025-02-21', INTERVAL 1 MONTH);
+
+
+⭐ 6. DATEDIFF()
+
+Difference in days.
+
+SELECT DATEDIFF('2025-03-01','2025-02-21');
+
+⭐ 7. TIMESTAMPDIFF()
+
+Difference in minutes/hours/days.
+
+SELECT TIMESTAMPDIFF(HOUR, '2025-02-20 05:00:00', '2025-02-21 10:00:00');
+
+⭐ 8. DAYNAME(), MONTHNAME()
+SELECT DAYNAME('2025-02-21');   -- Friday
+SELECT MONTHNAME('2025-02-21'); -- February
+
+🔍 3. EXTRACT() Function
+
+EXTRACT() is used to extract specific parts from a date/time.
+
+Syntax:
+EXTRACT(unit FROM date_value)
+
+Examples:
+✔ Extract Year
+SELECT EXTRACT(YEAR FROM '2025-02-21 10:30:00');
+
+✔ Extract Month
+SELECT EXTRACT(MONTH FROM NOW());
+
+✔ Extract Day
+SELECT EXTRACT(DAY FROM '2025-02-21');
+
+✔ Extract Hour / Minute / Second
+SELECT EXTRACT(HOUR FROM '2025-02-21 10:30:00');
+SELECT EXTRACT(MINUTE FROM '2025-02-21 10:30:00');
+
+✔ Extract Quarter
+SELECT EXTRACT(QUARTER FROM '2025-02-21');
+-- Output: 1
+
+✔ Extract Week
+SELECT EXTRACT(WEEK FROM '2025-02-21');
+
+🧠 Most Asked Interview Examples
+🔸 Find employees who joined this year:
+SELECT * FROM employees
+WHERE YEAR(join_date) = YEAR(CURDATE());
+
+🔸 Find records created in last 7 days:
+SELECT * FROM orders
+WHERE order_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY);
+
+🔸 Group orders by month:
+SELECT MONTHNAME(order_date) AS Month, COUNT(*) 
+FROM orders
+GROUP BY Month;
+
+⭐ Short Interview Definition
+Timestamp
+
+A TIMESTAMP stores both date + time and can automatically capture the current system time when inserting or updating rows.
+
+Extract
+
+EXTRACT() pulls a specific part of a date/time like YEAR, MONTH, DAY, HOUR.
+
+Date & Time Functions
+
+Functions like NOW(), DATE(), CURDATE(), DATE_ADD(), DATEDIFF() help manipulate and calculate dates and times.
+
+
+
+

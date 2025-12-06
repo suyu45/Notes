@@ -1,3 +1,13 @@
+__builtin_popcount(x) gives the number of 1-bits in x.
+stoi() 
+stoll()
+to_string(val3)
+long long val1 = stoll(first);
+string third = to_string(val3);
+string second = num.substr(index, length);
+s.erase(s.size() - 5);  // removes last 5 characters
+
+
 1) Binary search
 
 Binary Search is a search algorithm used on sorted arrays (or ranges) to find the position of a target value.

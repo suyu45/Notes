@@ -25,6 +25,29 @@ vector<vector<int>> score;
 score.assign(m, vector<int>(m, 0));
 
 
+
+for (string num : nums)   integers.insert(stoi(num, 0, 2));
+
+✔ stoi(num, 0, 2) converts a binary string to an integer
+Example: "11" → 3
+
+
+string ans = bitset<16>(num).to_string();
+✔ Converts num into a 16-bit binary string
+
+Example: num = 2 => "0000000000000010"
+
+return ans.substr(16 - n);
+We only need the last n bits
+
+Example: n = 2
+"0000000000000010".substr(14) → "10"
+
+
+
+
+
+
 1) Binary search
 
 Binary Search is a search algorithm used on sorted arrays (or ranges) to find the position of a target value.

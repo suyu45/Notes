@@ -21,6 +21,10 @@ int high = accumulate(jobs.begin(), jobs.end(), 0);
 int gcdVal = __gcd(nums1, nums2);
 
 
+vector<vector<int>> score;
+score.assign(m, vector<int>(m, 0));
+
+
 1) Binary search
 
 Binary Search is a search algorithm used on sorted arrays (or ranges) to find the position of a target value.

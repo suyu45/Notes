@@ -7,6 +7,19 @@ string third = to_string(val3);
 string second = num.substr(index, length);
 s.erase(s.size() - 5);  // removes last 5 characters
 
+📊 Bonus: Get Max + Index
+auto it = max_element(v.begin(), v.end());
+int mx = *it;
+int index = it - v.begin();
+
+int mx = *max_element(v.begin(), v.end());
+
+sort(jobs.rbegin(), jobs.rend());   // descending
+
+int high = accumulate(jobs.begin(), jobs.end(), 0);
+
+int gcdVal = __gcd(nums1, nums2);
+
 
 1) Binary search
 

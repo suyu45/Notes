@@ -123,6 +123,15 @@ SELECT DAYNAME('2025-02-21');   -- Friday
 SELECT MONTHNAME('2025-02-21'); -- February
 
 
+❓ How to get records from last 7 days?
+SELECT * FROM orders
+WHERE order_date >= CURRENT_DATE - INTERVAL 7 DAY;
+
+❓ How to get only year from a date?
+SELECT YEAR(order_date) FROM orders;
+
+
+
 🔍 3. EXTRACT() Function
 EXTRACT() is used to extract specific parts from a date/time.
 

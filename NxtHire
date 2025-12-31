@@ -560,11 +560,20 @@ and handle applications — all with secure authentication and cloud storage for
 
 
 🧑‍💼 Project Explanation – NxtHire (Job Portal Platform) ********************************************************************************
-NxtHire is a full-stack job portal and recruitment platform designed to connect students (job seekers) with recruiters (company HRs) in a structured and efficient way.
+NxtHire is a full-stack job portal and recruitment platform designed to connect job seekers with recruiters in a structured and efficient way.
 
 The platform supports two types of users:
-Students – who create profiles, upload resumes, and apply for jobs
-Recruiters – who create companies, post jobs, and review applications
+Recruiters ( mainly Company HRs ) – who register companies, post jobs, and review applications
+Job seekers( Commonly Students and employees ) – who create profiles, upload resumes, apply for jobs, and track the application
+
+
+⚙️ Tech Stack (you can say if asked)
+Frontend: HTML, CSS, JavaScript (or React with TailwindCSS )
+Backend: Node.js, Express.js
+Database: MongoDB
+File Upload: Multer + Cloudinary
+Authentication: Role-based access (Student / Recruiter)
+
 
 🗂️ System Design & Data Model
 The application is built around four core entities:
@@ -572,13 +581,6 @@ User
 Company
 Job
 Application
-
-⚙️ Tech Stack (you can say if asked)
-Frontend: HTML, CSS, JavaScript (or React if applicable)
-Backend: Node.js, Express.js
-Database: MongoDB
-File Upload: Multer + Cloudinary
-Authentication: Role-based access (Student / Recruiter)
 
 
 🎯 Why This Project Matters

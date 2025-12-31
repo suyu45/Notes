@@ -1,0 +1,242 @@
+📘 HTML NOTES (Quick & Clear)
+🔹 What is HTML?
+HTML (HyperText Markup Language) is used to structure web pages using elements like text, images, links, forms, etc.
+
+🔹 Common HTML Tags
+<h1> to <h6> – Headings
+<p> – Paragraph
+<a> – Anchor (link)
+<img> – Image
+<br> – Line break
+<hr> – Horizontal line
+
+🔹 Lists
+<ul>
+  <li>Item</li>
+</ul>
+
+<ol>
+  <li>Item</li>
+</ol>
+
+🔹 Forms
+<form>
+  <input type="text" required />
+  <input type="submit" />
+</form>
+
+🔹 Input Types => text, email, password, number, checkbox, radio, submit
+
+🔹 HTML Attributes
+id – unique identifier
+class – grouping elements
+src – image source
+href – link reference
+required – mandatory field
+
+
+🔹 Semantic HTML
+Improves readability & SEO:
+<header>, <nav>, <section>, <article>, <footer>
+
+🔹 HTML5 Features
+Semantic tags
+Audio & video
+Form validations
+Local storage
+Canvas & SVG
+
+❓ MOST ASKED HTML INTERVIEW QUESTIONS & ANSWERS
+1️⃣ What is HTML?
+HTML is a markup language used to structure content on the web.
+
+2️⃣ Difference between HTML and HTML5?
+HTML5 introduces semantic tags, multimedia support, and built-in form validation.
+
+3️⃣ What are semantic elements?
+Elements that clearly describe their meaning, like <article>, <section>.
+
+6️⃣ What is the use of required attribute?
+Makes input fields mandatory before form submission.
+
+7️⃣ What is the use of id and class?
+id → unique
+class → reusable
+
+1️⃣2️⃣ What is iframe?
+Used to embed another webpage inside a page.
+
+1️⃣3️⃣ What is the difference between inline and block elements?
+Inline → no new line
+Block → starts on new line
+
+
+🎯 One-Line Interview Tip
+“HTML structures the content, CSS styles it, and JavaScript makes it interactive.”
+
+🎯 Short Interview Answer : Tags
+“A tag is an HTML element enclosed in angle brackets that defines the structure and presentation of content on a webpage.”
+
+
+
+✅ What is an Attribute in HTML?
+An attribute provides additional information or properties about an HTML element.
+Attributes are always written inside the opening tag and usually come in name–value pairs.
+
+🔹 Example => <img src="photo.jpg" alt="Profile Image">
+src → specifies image source
+alt → alternate text
+
+🔹 Syntax => <tagname attribute="value">Content</tagname>
+
+🔹 Common HTML Attributes
+id – unique identifier
+class – group of elements
+href – link destination
+src – image source
+style – inline CSS
+title – tooltip text
+required – mandatory input
+
+
+✅ What are Semantic Tags in HTML?
+Semantic tags are HTML elements that clearly describe their meaning and purpose to both the browser and developers.
+They make the code more readable, accessible, and SEO-friendly.
+
+🔹 Examples of Semantic Tags
+<header> – Top section of a page or section
+<nav> – Navigation links
+<section> – Thematic grouping of content
+<article> – Independent, self-contained content
+<aside> – Sidebar or related content
+<footer> – Footer of a page or section
+<main> – Main content of the page
+
+🔹 Why Semantic Tags Are Important
+✔ Improve code readability
+✔ Help search engines understand content
+✔ Improve accessibility (screen readers)
+✔ Easier maintenance
+
+
+🎯 Short Interview Answer
+“HTML5 is the latest version of HTML that supports multimedia, semantic elements, modern APIs, and better mobile support without external plugins.”
+
+💡 One-Line Difference
+“HTML5 focuses on structure + behavior, while older HTML focused mainly on structure.”
+
+
+🎨 CSS NOTES (Quick & Clear)
+🔹 What is CSS?
+CSS (Cascading Style Sheets) is used to style and layout web pages—colors, fonts, spacing, positioning, and responsiveness.
+
+🔹 Ways to Apply CSS
+1) Inline CSS => <p style="color:red;">Hello</p>
+
+2) Internal CSS
+<style>
+p { color: red; }
+</style>
+
+3) External CSS (recommended)
+<link rel="stylesheet" href="style.css">
+
+🔹 CSS Selectors
+Element: p
+Class: .box
+ID: #header
+Universal: *
+Grouping: h1, h2
+
+🔹 Box Model
+Consists of: Content, Padding, Border, Margin
+
+🔹 Positioning
+static (default)
+relative
+absolute
+fixed
+sticky
+
+🔹 Display Properties
+block, inline, inline-block, none, flex, grid
+
+🔹 Flexbox (1D Layout)
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+🔹 CSS Grid (2D Layout)
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+🔹 Colors
+Named colors
+HEX (#ff0000)
+RGB / RGBA
+HSL
+
+🔹 Responsive Design
+Media queries:
+
+@media (max-width: 768px) {
+  body { background: lightblue; }
+}
+
+🔹 Z-index => Controls stacking order (works with positioned elements).
+
+❓ MOST ASKED CSS INTERVIEW QUESTIONS & ANSWERS
+1️⃣ What is CSS?
+CSS is used to style and design web pages.
+
+2️⃣ Difference between class and id?
+class → reusable
+id → unique
+
+3️⃣ What is the CSS Box Model?
+It defines element layout: content, padding, border, margin.
+
+4️⃣ Difference between display:none and visibility:hidden?
+display:none → removes element
+visibility:hidden → hides but keeps space
+
+5️⃣ What is Flexbox?
+Flexbox is a one-dimensional layout system for aligning items.
+
+6️⃣ Flex vs Grid?
+Flexbox → 1D layout
+Grid → 2D layout
+
+7️⃣ What is position:absolute?
+Positions element relative to nearest positioned ancestor.
+
+8️⃣ What is z-index?
+Controls vertical stacking of elements.
+
+9️⃣ What is responsive design?
+Design that adapts to different screen sizes.
+
+🔟 What is specificity?
+Rules that decide which CSS applies.
+
+Priority:
+Inline > ID > Class > Element
+
+1️⃣1️⃣ What is overflow?
+Controls content overflow: hidden, scroll, auto.
+
+1️⃣2️⃣ Difference between em and rem?
+em → relative to parent
+rem → relative to root
+
+1️⃣3️⃣ What is pseudo-class?
+Defines element state.
+Example:
+a:hover { color:red; }
+
+🎯 One-Line Interview Tip
+“CSS controls layout, styling, and responsiveness of a webpage.”

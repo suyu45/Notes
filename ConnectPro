@@ -429,3 +429,91 @@ Add Redis caching for frequently accessed data like friend lists and user profil
 4. Advanced Security Features
 Implement refresh tokens, rate limiting, and API request throttling for enhanced security.
 
+
+
+
+✅ What is JWT (JSON Web Token)?
+JWT is a stateless, secure way to transmit user identity information between a client and a server.
+It is mainly used for authentication and authorization in web applications.
+
+A JWT is a compact string made of three parts: Header.Payload.Signature
+
+✅ Why do we use JWT?
+To authenticate users after login
+To protect APIs (authorization)
+To avoid server-side session storage
+To scale applications easily
+
+JWT is stateless, meaning the server does not store session data.
+
+✅ Structure of JWT
+
+Header:
+Algorithm used (HS256 / RS256)
+Token type (JWT)
+
+Payload:
+User data (claims) like: userId, role, email
+Expiry time (exp)
+
+Signature:
+Created using: base64(header + payload + secretKey)
+Prevents token tampering
+
+
+✅ JWT Authentication Workflow (Step-by-Step)
+🔹 1. User Login
+User sends email & password to backend
+Backend validates credentials
+
+🔹 2. Token Generation
+Backend generates JWT using: User ID, Role, Expiry time
+Token is signed with a secret key
+
+🔹 3. Token Sent to Client
+JWT is returned to frontend
+Stored in: HttpOnly Cookie (more secure) OR LocalStorage
+
+🔹 4. Accessing Protected Routes
+Frontend sends JWT in every request:
+Authorization: Bearer <token>
+
+🔹 5. Token Verification (Middleware)
+Backend middleware:
+Extracts token
+Verifies signature
+Checks expiry
+
+If valid → request allowed
+If invalid/expired → 401 Unauthorized
+
+🔹 6. Authorization
+Backend checks role from payload
+
+Grants or denies access (e.g., admin vs user)
+
+
+✅ JWT Example Flow (Simple)
+Login → JWT Generated → Token Stored in cookies → Token Sent with Requests → Middleware Verifies → User Gets Access
+
+✅ Advantages of JWT
+Stateless & scalable
+Faster authentication
+Works well with microservices
+Easy frontend-backend integration
+
+⚠️ Limitations of JWT
+Cannot be easily invalidated before expiry
+Token theft = security risk
+Needs HTTPS always
+
+✅ JWT in Your Project (Interview Tie-in)
+“In my project, I use JWT for user authentication. After login, the server generates a token and sends it to the frontend. For every protected API, 
+I validate the token using middleware before allowing access.”
+
+🎯 Short Interview Answer (Best)
+“JWT is a stateless authentication mechanism used to securely transmit user identity. After login, the server generates a signed token and sends it to the client. 
+The client sends this token with every request, and the backend verifies it using middleware before allowing access.”
+
+💡 Bonus Line (Impressive)
+“JWT shifts authentication responsibility to the client while keeping the server stateless.”

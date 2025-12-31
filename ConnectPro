@@ -382,7 +382,7 @@ a managed solution like Stream is more reliable.”
 
 
 ✅ Interview Answer: Explain Your Project in Brief
-“My project is a real-time video calling and language-learning social platform called Streamify Video Calls.
+“ConnectPro is a real-time chat and video calling platform designed for language exchange.
 It allows users to connect with people worldwide, make friends, and communicate through chat and video calls.
 On the frontend, I used React with Tailwind CSS.
 On the backend, I built the system using Node.js, Express and for database i used MongoDB.

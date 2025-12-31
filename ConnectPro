@@ -429,8 +429,3 @@ Add Redis caching for frequently accessed data like friend lists and user profil
 4. Advanced Security Features
 Implement refresh tokens, rate limiting, and API request throttling for enhanced security.
 
-5. Frontend Enhancements
-Improve UI/UX with better call controls, reconnect logic, and mobile responsiveness.
-
-6. Monitoring & Logging
-Integrate logging and monitoring tools like Winston and Prometheus for better production observability.

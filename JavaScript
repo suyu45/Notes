@@ -689,3 +689,349 @@ Each operation blocks the next until it completes.
 
 Asynchronous JavaScript
 Code executes without blocking, allowing long-running tasks (like API calls or timers) to run in the background while other code continues.
+
+
+
+1. What is the Event Loop?
+The Event Loop is a mechanism in JavaScript that handles asynchronous operations, allowing non-blocking execution in a single-threaded environment.
+
+JS is single-threaded → only one call stack
+Event Loop ensures callbacks, timers, and promises are executed at the right time
+
+2. Components of Event Loop
+1) Call Stack → executes functions synchronously
+2) Web APIs / Browser APIs → handle async tasks (setTimeout, HTTP requests)
+3) Callback Queue / Task Queue → stores ready-to-run callbacks
+4) Event Loop → monitors the stack; moves queued callbacks to the stack when it’s empty
+
+3. Example: Synchronous vs Asynchronous
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+console.log("End");
+
+
+Output:
+Start
+End
+Timeout
+
+
+✅ Explanation:
+"Start" → pushed to stack → executed
+setTimeout → sent to Web API, then stack frees up
+"End" → executed
+Event Loop moves callback from task queue to stack → "Timeout" executed
+Even with 0ms delay, setTimeout executes after current stack is empty
+
+
+
+1. What is the Call Stack?
+The Call Stack is a data structure (stack) that keeps track of function calls in JavaScript.
+JS uses it to manage execution contexts in a synchronous manner
+Last In, First Out (LIFO) → the last function called is executed first
+
+2. How Call Stack Works
+JavaScript starts executing code → global execution context is pushed to the stack
+When a function is called → new execution context is pushed on top of the stack
+Function finishes → execution context is popped from the stack
+JS continues with the next context on the stack
+
+
+1. What is the Callback Queue?
+The Callback Queue (also called Task Queue / Message Queue) is a queue where asynchronous callbacks are stored after finishing in Web APIs, 
+waiting to be executed by the Event Loop.
+
+JavaScript is single-threaded, so async tasks cannot run immediately
+Callbacks wait in the queue until the Call Stack is empty
+
+
+2. How It Works with Event Loop
+JS executes code → synchronous functions go on Call Stack
+Asynchronous tasks like setTimeout or DOM events are handled by Web APIs
+Once ready, their callbacks go to the Callback Queue
+Event Loop checks if Call Stack is empty, then moves callbacks from queue to stack
+
+
+
+1. What is Callback Hell?
+Callback Hell occurs when callbacks are nested inside other callbacks multiple levels deep, making the code hard to read, maintain, and debug.
+Happens mostly in asynchronous JavaScript
+Often referred to as “Pyramid of Doom” due to indentation levels
+
+2. Example of Callback Hell
+doSomething(function(result) {
+    doSomethingElse(result, function(newResult) {
+        doThirdThing(newResult, function(finalResult) {
+            console.log("Final Result: " + finalResult);
+        });
+    });
+});
+
+Problems:
+Deeply nested code → hard to read
+Hard to handle errors
+Difficult to maintain or extend
+
+
+3. Real-Life Analogy
+Imagine giving instructions like:
+“Do A, then do B, then do C…”
+If each step depends on the previous one, instructions get nested and confusing
+
+
+4. How to Avoid Callback Hell
+
+4.2 Using Promises
+doSomething()
+  .then(result => doSomethingElse(result))
+  .then(newResult => doThirdThing(newResult))
+  .then(finalResult => console.log("Final Result: " + finalResult))
+  .catch(err => console.log(err));
+
+
+Promises flatten the structure
+Provide better error handling with .catch()
+
+
+4.3 Using Async / Await (ES7+)
+async function processTasks() {
+    try {
+        const result = await doSomething();
+        const newResult = await doSomethingElse(result);
+        const finalResult = await doThirdThing(newResult);
+        console.log("Final Result: " + finalResult);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+processTasks();
+
+✅ Makes asynchronous code look synchronous, very readable
+
+
+5. Common Interview Points
+Explain what Callback Hell is → nested asynchronous callbacks
+Show why it’s a problem → readability, maintainability
+Explain solutions → named functions, Promises, async/await
+Mention error handling becomes difficult with callbacks
+
+6. One-Line Interview Answer ⭐
+Callback Hell is when asynchronous callbacks are nested multiple levels, making code unreadable and hard to maintain; it can be solved using Promises or async/await.
+
+
+
+1. What is a Promise?
+A Promise is an object that represents the eventual completion or failure of an asynchronous operation.
+
+A Promise can be in one of three states:
+Pending – initial state, not fulfilled or rejected
+Fulfilled – operation completed successfully
+Rejected – operation failed
+
+Introduced in ES6 to avoid callback hell
+
+
+2. Basic Promise Example
+const myPromise = new Promise((resolve, reject) => {
+  const success = true;
+
+  if (success) {
+    resolve("Operation Successful!");
+  } else {
+    reject("Operation Failed!");
+  }
+});
+
+myPromise
+  .then((result) => console.log(result))  // Operation Successful!
+  .catch((error) => console.log(error));
+
+
+✅ Explanation:
+resolve() → marks promise as fulfilled
+reject() → marks promise as rejected
+.then() handles success, .catch() handles errors
+
+
+3. Promises in Asynchronous Code
+const fetchData = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    const data = "Data received";
+    resolve(data);
+  }, 1000);
+});
+
+fetchData.then((result) => console.log(result));
+
+Output after 1 second:
+Data received
+
+
+4. Promise Chaining
+new Promise((resolve, reject) => {
+  resolve(5);
+})
+  .then((num) => num * 2)       // 10
+  .then((num) => num + 3)       // 13
+  .then((num) => console.log(num)); // 13
+
+✅ Each .then() receives the return value from the previous .then()
+
+
+5. Error Handling in Promises
+new Promise((resolve, reject) => {
+  reject("Something went wrong");
+})
+  .then((result) => console.log(result))
+  .catch((error) => console.log("Error: " + error));
+
+.catch() handles any error in the chain
+
+
+1. Promise States
+A Promise can be in three states:
+| State                    | Description                                          |
+| ------------------------ | ---------------------------------------------------- |
+| **Pending**              | Initial state; neither fulfilled nor rejected        |
+| **Fulfilled / Resolved** | Operation completed successfully; triggers `.then()` |
+| **Rejected**             | Operation failed; triggers `.catch()`                |
+
+✅ Explanation:
+.then() → executed when Promise is fulfilled
+.catch() → executed when Promise is rejected
+
+3. .finally()
+.finally() is executed regardless of the promise outcome
+Useful for cleanup tasks
+
+const myPromise = new Promise((resolve, reject) => {
+  resolve("Done");
+});
+
+myPromise
+  .then((result) => console.log("Then:", result))
+  .catch((err) => console.log("Catch:", err))
+  .finally(() => console.log("Finally: Cleanup"));
+
+Output:
+Then: Done
+Finally: Cleanup
+
+
+Even if rejected, .finally() runs:
+
+Promise.reject("Failed")
+  .catch(err => console.log(err))
+  .finally(() => console.log("Cleanup")); 
+
+// Output:
+// Failed
+// Cleanup
+
+
+
+1. What is Async / Await?
+Async / Await is syntactic sugar over Promises that makes asynchronous code look and behave like synchronous code.
+
+👉 Introduced in ES2017 (ES8)
+
+One-line interview answer ⭐
+Async/Await is a modern way to handle asynchronous operations in JavaScript, built on top of Promises, that improves readability and error handling.
+
+2. async Keyword
+async is used before a function
+An async function always returns a Promise
+If you return a value → it’s wrapped in Promise.resolve()
+
+async function greet() {
+  return "Hello";
+}
+
+greet().then(console.log); // Hello
+
+
+Equivalent to:
+
+function greet() {
+  return Promise.resolve("Hello");
+}
+
+
+3. await Keyword
+await pauses execution of the async function
+Waits for the Promise to resolve or reject
+
+Can be used only inside async functions
+
+async function fetchData() {
+  const result = await Promise.resolve("Data loaded");
+  console.log(result);
+}
+
+fetchData();
+
+
+⚠️ Important:
+await does not block the main thread
+It only pauses the current async function
+
+4. Basic Async/Await Example
+function getData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Data received"), 1000);
+  });
+}
+
+async function showData() {
+  const data = await getData();
+  console.log(data);
+}
+
+showData();
+
+Output after 1 second:
+Data received
+
+
+5. Error Handling with Try–Catch
+
+Async/Await uses try–catch instead of .catch()
+
+async function fetchUser() {
+  try {
+    const user = await Promise.reject("User not found");
+    console.log(user);
+  } catch (error) {
+    console.log("Error:", error);
+  }
+}
+
+fetchUser();
+
+✔ Cleaner and more readable than promise chaining
+
+
+Q: Does async/await block JavaScript?
+👉 No, it pauses only the async function, not the main thread.
+
+
+6. Async/Await vs Promises
+| Promises                    | Async / Await       |
+| --------------------------- | ------------------- |
+| `.then().catch()`           | `try { } catch { }` |
+| Harder to read when chained | More readable       |
+| Callback-like style         | Synchronous-looking |
+| Explicit chaining           | Linear flow         |
+
+
+10. One-Minute Interview Answer ⭐
+Promises and async/await both handle asynchronous operations. Promises use chaining with .then() and .catch(), while 
+async/await is syntactic sugar on top of Promises that allows writing asynchronous code in a synchronous style with better readability and easier error handling.
+
+
+

@@ -225,3 +225,467 @@ If asked: “Are let and const hoisted?”
 Say: Yes, they are hoisted but kept in the Temporal Dead Zone until initialized.
 
 
+
+2. Primitive Data Types ⭐ (Most Asked)
+Primitive types store single values and are immutable.
+List of Primitive Data Types: string, number, boolean, undefined, null, symbol, bigint
+
+3. Non-Primitive Data Types
+Non-primitive types store collections of values and are mutable.
+object, array, function, date, ( map and set (internally objects) )
+
+| Feature    | Primitive    | Non-Primitive             |
+| ---------- | ------------ | ------------------------- |
+| Stores     | Single value | Multiple / complex values |
+| Stored by  | Value        | Reference                 |
+| Mutable    | ❌ No         | ✅ Yes                     |
+| Memory     | Stack        | Heap                      |
+| Comparison | By value     | By reference              |
+
+3️⃣ boolean : Represents logical values.
+
+let isLoggedIn = true;
+Falsy values: false, 0, "", null, undefined, NaN
+
+4️⃣ undefined : A variable declared but not assigned a value.
+
+let a;
+console.log(a); // undefined
+
+Default value assigned by JS
+
+
+5️⃣ null ⭐ (Very Tricky) : Represents intentional absence of value.
+
+let data = null;
+
+⚠️ Interview trap:
+typeof null; // "object" (bug in JS)
+
+
+6️⃣ symbol (ES6) : Represents unique and immutable values.
+
+let id = Symbol("id");
+let id2 = Symbol("id");
+id === id2; // false
+
+Used for:
+Unique object keys
+Avoiding naming conflicts
+
+
+7️⃣ bigint (ES2020)
+Used for very large integers beyond Number limit.
+
+let big = 123456789012345678901234567890n;
+
+Ends with n
+Cannot mix with number
+
+10n + 20n; // ✅
+10n + 20;  // ❌ Error
+
+
+6. Non-Primitive Examples
+Object
+let user = { name: "Suyog", age: 21 };
+
+Array
+let arr = [1, 2, 3];
+
+Function
+function greet() {}
+
+
+7. Value vs Reference Example (Important ⭐)
+let a = 10;
+let b = a;
+b = 20;
+
+console.log(a); // 10
+
+let obj1 = { x: 1 };
+let obj2 = obj1;
+obj2.x = 5;
+
+console.log(obj1.x); // 5
+
+8. Common Interview Questions & Traps
+Q1: typeof null? 👉 "object"
+
+Q2: Is JavaScript statically typed? 👉 ❌ No, dynamically typed
+
+Q3: Are strings mutable? 👉 ❌ No
+
+Q4: Are arrays primitive? 👉 ❌ No, they are objects
+
+9. One-Line Interview Answer ⭐
+JavaScript has primitive data types that store immutable values by value, and non-primitive types that store mutable data by reference.
+
+
+1. What are Truthy & Falsy?
+Falsy → values that behave like false in a boolean context
+Truthy → everything else that behaves like true
+JavaScript performs implicit boolean conversion when needed.
+
+JavaScript has 8 falsy values including false, 0, "", null, undefined, NaN, -0, and 0n.
+👉 If a value is not in this list, it is truthy.
+
+
+1. What is Type Coercion?
+
+👉 Type coercion is JavaScript’s automatic or manual conversion of one data type into another.
+
+There are two types:
+Implicit coercion (automatic)
+Explicit coercion (manual)
+
+2. Implicit Type Coercion (Automatic) ⭐
+JavaScript automatically converts types during operations.
+
+2.1 String Coercion
++ operator
+"5" + 2;     // "52"
+5 + "2";     // "52"
+👉 If either operand is a string, result is a string.
+
+2.2 Number Coercion
+-, *, /
+"5" - 2;   // 3
+"5" * 2;   // 10
+"10" / 2;  // 5
+Strings are converted to numbers.
+
+
+3. Explicit Type Coercion (Manual) ✅
+You explicitly convert types using functions.
+
+3.1 To String
+String(10);     // "10"
+(10).toString(); // "10"
+
+3.2 To Number
+Number("10");   // 10
+parseInt("10"); // 10
+parseFloat("10.5"); // 10.5
+
+
+5. == vs === (Must Mention)
+| Operator | Checks       | Coercion |
+| -------- | ------------ | -------- |
+| `==`     | Value        | ✅ Yes    |
+| `===`    | Value + Type | ❌ No     |
+
+null == undefined; // true
+
+
+2. null vs undefined (VERY COMMON QUESTION ⭐)
+🔹 undefined
+Variable is declared but not assigned
+Automatically assigned by JavaScript
+let a; console.log(a); // undefined
+
+🔹 null
+Represents intentional absence of value
+Explicitly assigned by developer
+let b = null;
+
+| Feature       | `null`                  | `undefined`        |
+| ------------- | ----------------------- | ------------------ |
+| Meaning       | Intentional empty value | Value not assigned |
+| Assigned by   | Developer               | JavaScript         |
+| Type          | `object` (JS bug)       | `undefined`        |
+| Default value | ❌ No                    | ✅ Yes              |
+
+typeof null;      // "object" ❌ (bug)
+typeof undefined; // "undefined"
+
+
+2. Strict Mode ("use strict") ⭐ (VERY IMPORTANT)
+What is Strict Mode?
+👉 Strict Mode is a restricted version of JavaScript that:
+Catches common coding mistakes
+Prevents unsafe actions
+Makes code more secure & predictable
+
+How to Enable Strict Mode
+Entire Script
+
+"use strict";
+x = 10; // ❌ Error
+
+
+
+1. What is Variable Shadowing?
+Variable shadowing occurs when a variable declared in an inner scope has the same name as a variable in an outer scope. 
+The inner variable “shadows” (overrides) the outer one within its scope.
+
+2. Basic Example
+
+let x = 100; // Outer scope
+function test() {
+  let x = 50; // Inner scope shadows outer x
+  console.log(x); // 50
+}
+test();
+console.log(x); // 100 (outer x unaffected)
+
+
+
+******* Hoisting Example (Declaration)
+sayHello(); // ✅ Works because function declarations are hoisted with body
+function sayHello() {
+  console.log("Hi!");
+}
+
+
+*********** Function Expression **********
+greet(); // ❌ ReferenceError
+const greet = function() {
+  console.log("Hello!");
+};
+
+7. One-Line Interview Answers ⭐
+Function Declaration : A function declaration is fully hoisted, has a name, and can be called before it is defined.
+Function Expression : A function expression is assigned to a variable, not hoisted fully, and cannot be called before the assignment.
+
+
+
+1. What is an Arrow Function?
+Arrow functions are shorter syntax for writing functions, introduced in ES6, and they do not have their own this, arguments, super, or new.target.
+
+// Traditional function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function
+const add = (a, b) => a + b;
+const square = x => x * x;
+const sum = (a, b) => {
+  const result = a + b;
+  return result;
+};
+
+
+
+1. What is a Callback Function?
+A callback function is a function passed as an argument to another function, which is then executed inside the outer function.
+Callbacks are used for:
+Asynchronous operations (AJAX, setTimeout, Promises)
+Event handling
+Functional programming (map, filter, forEach)
+
+Example: Greeting User with Callback
+// This is the callback function
+function greetUser(name) {
+  console.log("Hello, " + name + "!");
+}
+
+// This is the function that accepts a callback
+function processUser(callback) {
+  const userName = "Suyog";
+  callback(userName); // Call the callback function
+}
+
+// Call the function and pass the callback
+processUser(greetUser);
+
+
+
+
+
+
+1. Rest Operator ...
+The rest operator collects all remaining elements or arguments into an array.
+Used in function parameters or destructuring
+Must be last parameter in a function
+
+1.1 Rest in Function Parameters
+function sum(...numbers) {
+  console.log(numbers);        // array of all arguments
+  return numbers.reduce((a,b) => a + b, 0);
+}
+
+console.log(sum(1,2,3,4)); // 10
+
+...numbers collects all arguments into an array
+Works with any number of arguments
+
+
+1.2 Rest in Array Destructuring
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+console.log(first);  // 1
+console.log(second); // 2
+console.log(rest);   // [3,4,5]
+
+1.3 Rest in Object Destructuring
+const person = { name: "Suyog", age: 21, city: "Latur" };
+const { name, ...others } = person;
+console.log(name);   // "Suyog"
+console.log(others); // { age: 21, city: "Latur" }
+
+
+2. Spread Operator ...
+The spread operator expands an array or object into individual elements.
+Used in function calls, array literals, object literals
+
+2.1 Spread in Arrays
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+const combined = [...arr1, ...arr2];
+console.log(combined); // [1,2,3,4,5,6]
+
+2.2 Spread in Function Calls
+const nums = [1, 2, 3];
+console.log(Math.max(...nums)); // 3
+
+Expands array elements into individual arguments
+
+2.3 Spread in Objects
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+
+const combinedObj = { ...obj1, ...obj2 };
+console.log(combinedObj); // { a:1, b:2, c:3, d:4 }
+
+
+5. One-Line Interview Answers ⭐
+Rest Operator => The rest operator collects multiple elements or arguments into a single array.
+Spread Operator => The spread operator expands an array or object into individual elements.
+
+
+
+1. What is this in JavaScript?
+The this keyword refers to the object that is currently executing the function, or the context in which a function is called.
+
+2. this in Global Context
+console.log(this);
+
+In browser → window object
+In Node.js → {} (module.exports)
+In strict mode → undefined
+
+
+
+1. What is a Closure?
+A closure is a function that remembers and has access to its lexical scope, even when the function is executed outside that scope.
+Every function in JavaScript forms a closure naturally
+Closures allow data privacy and function factories
+
+2. Basic Example
+function outer() {
+  let count = 0; // local variable in outer function
+
+  function inner() {
+    count++;
+    console.log(count);
+  }
+
+  return inner; // returning inner function
+}
+
+const counter = outer(); // outer() executed, returns inner
+counter(); // 1
+counter(); // 2
+counter(); // 3
+
+
+✅ Explanation:
+inner forms a closure over count
+count persists between calls even though outer has finished execution
+
+
+
+1. What is Asynchronous JavaScript?
+Asynchronous JavaScript allows the program to perform long-running tasks without blocking the main thread, letting other code run while waiting for tasks 
+like API calls, timers, or file operations to complete.
+
+JS is single-threaded, so async operations use callbacks, promises, or async/await to handle delayed tasks.
+
+2. Synchronous vs Asynchronous
+
+2.1 Synchronous Example
+console.log("Start");
+console.log("Process");
+console.log("End");
+
+Output:
+Start
+Process
+End
+
+Each statement executes one after another
+
+
+2.2 Asynchronous Example
+console.log("Start");
+setTimeout(() => {
+  console.log("Inside Timeout");
+}, 2000);
+console.log("End");
+
+Output:
+Start
+End
+Inside Timeout
+
+setTimeout is asynchronous → non-blocking
+JS continues executing the next lines
+
+
+4. Common Ways to Handle Async in JS
+
+4.1 Callbacks
+function fetchData(callback) {
+  setTimeout(() => {
+    callback("Data received");
+  }, 1000);
+}
+
+fetchData((data) => console.log(data));
+
+Oldest method, can lead to callback hell
+
+
+4.2 Promises
+const fetchData = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("Data received"), 1000);
+});
+
+fetchData
+  .then((data) => console.log(data))
+  .catch((err) => console.log(err));
+
+Cleaner than callbacks
+resolve → success, reject → error
+
+
+4.3 Async / Await
+function getData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Data received"), 1000);
+  });
+}
+
+async function fetchData() {
+  const data = await getData();
+  console.log(data);
+}
+
+fetchData();
+
+
+Makes async code look synchronous
+Must use async keyword with await
+
+
+
+1. Definition
+Synchronous JavaScript
+Code executes line by line, one statement after another.
+Each operation blocks the next until it completes.
+
+Asynchronous JavaScript
+Code executes without blocking, allowing long-running tasks (like API calls or timers) to run in the background while other code continues.

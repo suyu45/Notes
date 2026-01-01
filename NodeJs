@@ -1,0 +1,146 @@
+Question: What is Node.js?
+Node.js is an open-source, cross-platform JavaScript runtime environment that allows you to run JavaScript code outside the browser, mainly on the server-side. 
+It is built on the Chrome V8 engine and uses an event-driven, non-blocking I/O model to build fast, scalable, and efficient applications.
+
+Key Points to Mention in Interviews:
+Runs server-side JavaScript
+Non-blocking, asynchronous I/O → handles multiple requests efficiently
+Single-threaded but can handle concurrency using the event loop
+Uses V8 engine (same as Chrome browser)
+Supports NPM (Node Package Manager) for modules and packages
+
+
+
+Question: What are the features of Node.js?
+Node.js has several important features that make it suitable for building fast, scalable, and efficient server-side applications.
+
+1️⃣ Asynchronous and Event-Driven
+All APIs in Node.js are asynchronous (non-blocking).
+Server does not wait for tasks to complete; uses callbacks/events.
+
+2️⃣ Single-Threaded but Highly Scalable
+Node.js uses a single-threaded event loop for concurrency.
+Can handle thousands of requests without creating new threads.
+
+3️⃣ Non-Blocking I/O
+Operations like file reading, network requests, DB queries are non-blocking, improving performance.
+
+4️⃣ Fast Execution
+Built on Chrome V8 engine, which compiles JS to machine code, making Node.js extremely fast.
+
+5️⃣ Cross-Platform
+Runs on Windows, Linux, macOS without changes to the code.
+
+6️⃣ NPM (Node Package Manager)
+Provides access to thousands of modules and packages.
+Helps in package management and code reusability.
+npm install express
+
+7️⃣ Open Source
+Free to use and has a large community support.
+
+8️⃣ Real-Time Applications
+Perfect for apps like chat applications, gaming, live streaming.
+Uses WebSockets for real-time bidirectional communication.
+
+9️⃣ Single Language for Frontend & Backend
+You can write JavaScript on both client and server, improving development efficiency.
+
+One-Minute Interview Answer ⭐
+Node.js is asynchronous, event-driven, single-threaded, and non-blocking. It’s fast (V8 engine), cross-platform, open-source, and has NPM for package management. 
+It’s ideal for real-time, scalable applications.
+
+
+3️⃣ Features of Node.js
+Asynchronous & Event-driven: Handles multiple requests without blocking
+Single-threaded but scalable: Uses event loop
+Non-blocking I/O: Fast file/network operations
+Cross-platform: Works on Windows, Linux, MacOS
+NPM: Rich package ecosystem
+
+
+Question: What are Modules in Node.js?
+A module in Node.js is a reusable block of code whose scope is private. Modules help organize code and separate functionality into smaller files. 
+Node.js has a built-in module system, and modules can also be third-party or user-defined.
+
+
+
+3️⃣ Module Systems in Node.js
+1. CommonJS
+Default module system in Node.js
+Uses require() and module.exports
+
+2. ES6 Modules
+Uses import and export syntax
+Supported in modern Node.js (with "type": "module" in package.json)
+
+// CommonJS
+const fs = require('fs');
+
+// ES6
+import fs from 'fs';
+
+
+What is NPM?
+NPM (Node Package Manager) is the default package manager for Node.js used to install, manage, share, and update JavaScript packages (libraries).
+
+One-line interview answer ⭐
+NPM is a tool that manages Node.js packages and project dependencies.
+
+
+Why is NPM Important?
+Reuse existing code instead of writing everything from scratch
+Manage project dependencies easily
+Version control of packages
+Access to millions of open-source libraries
+
+
+scripts → custom commands
+
+
+Common NPM Commands (Most Asked)
+Initialize Project
+npm init
+npm init -y
+
+Install Packages
+npm install express
+npm i express
+
+Install as Dev Dependency
+npm install nodemon --save-dev
+
+Install All Dependencies
+npm install
+
+Uninstall Package
+npm uninstall express
+
+Update Package
+npm update express
+
+Run Scripts
+npm run start
+npm run dev
+
+
+What is package.json?
+package.json is the configuration and metadata file of a Node.js project.
+It describes project information, scripts, and dependencies required to run the application.
+
+One-line interview answer ⭐
+package.json manages project metadata, scripts, and dependencies in a Node.js application.
+
+
+What are Dependencies?
+Dependencies are external libraries/packages required for your project to work.
+
+
+❓ What happens if node_modules is deleted?
+Run npm install to regenerate it using package.json and package-lock.json.
+
+❓ Why not push node_modules to GitHub?
+It’s large and can be recreated using package.json.
+
+
+process.env → environment variables

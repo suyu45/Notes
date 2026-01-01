@@ -1035,3 +1035,391 @@ async/await is syntactic sugar on top of Promises that allows writing asynchrono
 
 
 
+1️⃣ Memory Heap
+What is Memory Heap?
+Memory Heap is the region of memory where objects, arrays, and functions are stored dynamically during program execution.
+
+Key Points
+Stores non-primitive (reference) types
+Memory allocation is dynamic
+Managed by Garbage Collector
+No fixed order
+
+Example
+let user = {
+  name: "Suyog",
+  age: 22
+};
+
+Object {name, age} → stored in heap
+Variable user → stored in stack as a reference
+
+
+2️⃣ Stack (Call Stack)
+What is Stack?
+Stack is a memory structure that stores primitive values and execution contexts using LIFO (Last In, First Out) order.
+
+Key Points
+Stores primitive data types
+Stores function execution contexts
+Fixed size (limited)
+Fast access
+
+
+3️⃣ Stack Example
+function first() {
+  second();
+}
+
+function second() {
+  console.log("Hello");
+}
+
+first();
+
+Stack Flow
+| second() |
+| first()  |
+| global   |
+
+
+4️⃣ Stack vs Heap (Most Asked Table)
+| Feature           | Stack                         | Heap                       |
+| ----------------- | ----------------------------- | -------------------------- |
+| Type              | Structured                    | Unstructured               |
+| Stores            | Primitives, execution context | Objects, arrays, functions |
+| Access            | Very fast                     | Slower than stack          |
+| Size              | Limited                       | Large                      |
+| Memory allocation | Static                        | Dynamic                    |
+| Managed by        | JS Engine                     | Garbage Collector          |
+| Error             | Stack Overflow                | Memory Leak                |
+
+
+5️⃣ Stack & Heap Together (Very Important)
+let a = 10;
+let b = a;
+let obj1 = { x: 1 };
+let obj2 = obj1;
+obj2.x = 5;
+console.log(a);       // 10
+console.log(obj1.x);  // 5
+
+Explanation
+a, b → primitives → copied by value (stack)
+obj1, obj2 → reference → both point to same heap memory
+
+
+8️⃣ Common Interview Mistakes ⚠️
+
+❌ “Stack stores objects”
+✔ Stack stores references to heap objects
+
+❌ “Heap is faster than stack”
+✔ Stack is faster
+
+
+9️⃣ One-Minute Interview Answer ⭐
+Stack is a LIFO memory structure that stores primitive values and execution contexts, while Heap is a large memory area used for dynamic allocation
+of objects and reference types, managed by garbage collection.
+
+
+
+9️⃣ One-Minute Interview Answer ⭐
+A shallow copy copies only top-level properties, sharing references for nested objects, while a deep copy duplicates all nested objects, 
+creating completely independent memory references.
+
+
+One-line interview answer ⭐
+Template literals allow embedding expressions inside strings using backticks and ${} syntax, making strings more readable and powerful.
+
+2️⃣ Syntax
+`string text ${expression}`
+
+Uses backticks ( ` ), not quotes
+Expressions are placed inside ${}
+
+
+1️⃣ What is Error Handling?
+Error handling is the process of detecting, handling, and responding to runtime errors so that the application doesn’t crash unexpectedly.
+
+One-line interview answer ⭐
+Error handling in JavaScript allows us to catch runtime errors and handle them gracefully using try, catch, finally, and custom errors.
+
+3️⃣ try–catch–finally
+Basic Syntax
+try {
+  // code that may throw error
+} catch (error) {
+  // error handling
+} finally {
+  // always runs
+}
+
+
+1️⃣ What is throw?
+The throw statement is used to manually generate (throw) an error in JavaScript.
+It immediately stops execution of the current code block and transfers control to the nearest catch.
+
+4️⃣ Throwing Custom Errors (throw)
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error("Division by zero is not allowed");
+  }
+  return a / b;
+}
+
+try {
+  divide(10, 0);
+} catch (err) {
+  console.log(err.message);
+}
+
+✔ Improves debugging
+✔ Helps validation
+
+
+
+1️⃣ What is DOM?
+DOM (Document Object Model) is a programming interface that represents an HTML document as a tree of objects, allowing JavaScript to read, modify, 
+and manipulate web pages dynamically.
+
+One-line interview answer ⭐
+The DOM is a tree-like representation of an HTML document that JavaScript uses to access and manipulate page elements.
+
+2️⃣ DOM Tree Structure
+
+Example HTML:
+
+<html>
+  <body>
+    <h1>Hello</h1>
+    <p>Welcome</p>
+  </body>
+</html>
+
+
+DOM Tree:
+
+Document
+ └── html
+     └── body
+         ├── h1
+         │   └── "Hello"
+         └── p
+             └── "Welcome"
+
+✔ Every element, attribute, and text is a node
+
+
+3️⃣ Types of DOM Nodes
+| Node Type      | Description                    |
+| -------------- | ------------------------------ |
+| Element Node   | HTML elements (`<div>`, `<p>`) |
+| Text Node      | Text inside elements           |
+| Attribute Node | Attributes like `id`, `class`  |
+| Document Node  | Entire document                |
+
+
+4️⃣ Accessing DOM Elements
+By ID
+document.getElementById("title");
+
+By Class
+document.getElementsByClassName("box");
+
+Returns HTMLCollection
+Live collection (updates automatically)
+Cannot use array methods directly
+
+
+By Tag
+document.getElementsByTagName("p");
+
+Modern Selectors (Most Used ⭐)
+
+document.querySelector(".box");
+Returns first matching element
+
+
+document.querySelectorAll(".box");
+Returns NodeList
+Static (does not auto-update)
+Supports forEach()
+
+
+5️⃣ Accessing Multiple Elements
+HTMLCollection
+const boxes = document.getElementsByClassName("box");
+boxes[0].style.color = "red";
+
+NodeList
+const boxes = document.querySelectorAll(".box");
+boxes.forEach(box => box.style.color = "blue");
+
+
+9️⃣ One-Minute Interview Answer ⭐
+DOM selection methods allow selecting HTML elements for manipulation. Traditional methods like getElementById() and getElementsByClassName() return HTMLCollections, 
+while modern methods like querySelector() and querySelectorAll() use CSS selectors and return NodeLists.
+
+
+5️⃣ Modifying DOM Elements
+
+Change Content
+element.textContent = "Hello";
+element.innerHTML = "<b>Hello</b>";
+
+⚠️ innerHTML can cause XSS vulnerabilities
+
+
+Change Styles
+element.style.color = "red";
+
+
+Change Attributes
+element.setAttribute("id", "newId");
+element.getAttribute("id");
+
+
+6️⃣ Creating & Removing Elements
+
+Create
+const div = document.createElement("div");
+div.textContent = "New Element";
+document.body.appendChild(div);
+
+Remove
+div.remove();
+
+
+7️⃣ DOM Events
+button.addEventListener("click", () => {
+  alert("Button clicked");
+});
+
+✔ Preferred over onclick
+
+
+
+1️⃣ What is Event Handling?
+Event handling is the process of detecting user actions (like click, input, mouseover) and executing code in response.
+
+One-line interview answer ⭐
+Event handling in JavaScript allows us to respond to user interactions like clicks, typing, or scrolling by attaching event listeners to DOM elements.
+
+
+2️⃣ Ways to Handle Events
+3. Using addEventListener() (Recommended ⭐)
+const btn = document.querySelector("#btn");
+btn.addEventListener("click", function() {
+  alert("Clicked!");
+});
+
+✅ Allows multiple handlers
+✅ Supports event capturing/bubbling
+
+
+3️⃣ Event Object
+btn.addEventListener("click", function(event) {
+  console.log(event.type);   // "click"
+  console.log(event.target); // element clicked
+});
+
+event.target → element that triggered event
+event.currentTarget → element listener is attached to
+event.preventDefault() → prevent default action
+event.stopPropagation() → stop bubbling/capturing
+
+
+4️⃣ Event Types
+1. Mouse Events
+click, dblclick, mouseenter, mouseleave, mousemove, contextmenu
+
+2. Keyboard Events
+keydown, keyup, keypress
+
+3. Form Events
+submit, change, input, focus, blur
+
+4. Window / Document Events
+load, resize, scroll, DOMContentLoaded, beforeunload
+
+
+6️⃣ Removing Event Listeners
+function clickHandler() {
+  console.log("Clicked!");
+}
+
+btn.addEventListener("click", clickHandler);
+btn.removeEventListener("click", clickHandler);
+
+⚠️ Must provide the same function reference
+
+
+
+2️⃣ Event Capturing (Trickling)
+The event starts at the document/root and goes down to the target element.
+Rarely used; less common than bubbling.
+Controlled by the third parameter of addEventListener.
+
+const parent = document.getElementById("parent");
+const child = document.getElementById("child");
+
+parent.addEventListener("click", () => {
+  console.log("Parent Capturing");
+}, true); // true = capturing
+
+child.addEventListener("click", () => {
+  console.log("Child Capturing");
+}, true);
+
+child.click();
+
+Output:
+Parent Capturing
+Child Capturing
+
+
+3️⃣ Event Bubbling
+Most events bubble by default.
+Event starts at target element and travels up to root.
+
+const parent = document.getElementById("parent");
+const child = document.getElementById("child");
+
+parent.addEventListener("click", () => {
+  console.log("Parent Bubbling");
+}, false); // false = bubbling (default)
+
+child.addEventListener("click", () => {
+  console.log("Child Bubbling");
+}, false);
+
+child.click();
+
+Output:
+Child Bubbling
+Parent Bubbling
+
+
+5️⃣ stopPropagation()
+event.stopPropagation() → stops further propagation (bubble/capture)
+
+
+9️⃣ One-Minute Interview Answer ⭐
+When an event occurs in the DOM, it propagates in three phases: capturing (top → target), target, and bubbling (target → top). 
+Capturing is controlled by addEventListener(..., true) and bubbling is the default. stopPropagation() can stop further propagation.
+
+
+1️⃣ What is preventDefault()?
+event.preventDefault() is a method that prevents the browser’s default action for a particular event from occurring.
+
+One-line interview answer ⭐
+preventDefault() stops the default behavior of an event while still allowing your custom JavaScript logic to run.
+
+
+
+1️⃣ What is Garbage Collection?
+Garbage Collection in JavaScript is an automatic process where the engine frees memory occupied by objects that are no longer reachable or needed, preventing memory leaks.
+
+One-line interview answer ⭐
+Garbage collection automatically cleans up memory by removing objects that are no longer referenced in the program.

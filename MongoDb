@@ -1,0 +1,475 @@
+What is MongoDB?
+MongoDB is a NoSQL, document-oriented database that stores data in JSON-like documents (BSON) instead of rows and columns like traditional SQL databases. 
+It is designed for high performance, scalability, and flexibility.
+
+One-line Answer ⭐
+MongoDB is a NoSQL database that stores data as JSON-like documents and supports high scalability and performance.
+
+Key Characteristics of MongoDB
+1️⃣ Document-Oriented
+Data is stored as documents (key–value pairs).
+Similar to JSON, but internally stored as BSON (Binary JSON).
+
+{
+  "_id": "123",
+  "name": "Suyog",
+  "skills": ["JS", "Node", "MongoDB"]
+}
+
+2️⃣ Schema-Less (Flexible Schema)
+Documents in the same collection can have different fields (structure).
+Easy to adapt to changing requirements.
+Easy to modify data models
+
+3️⃣ High Performance
+Supports indexes, in-memory processing, and fast reads/writes.
+
+4️⃣ Scalable
+Horizontal scaling using sharding.
+Handles large amounts of data efficiently.
+Handles large datasets & high traffic
+
+5️⃣ High Availability
+Uses replica sets (primary + secondary nodes).
+Automatic failover support.
+
+6️⃣ Rich Query Language
+Powerful querying using MongoDB Query Language (MQL)
+Supports CRUD operations, aggregation, filtering, sorting, and indexing.
+db.users.find({ age: { $gt: 18 } });
+
+
+Where is MongoDB Used?
+MERN / MEAN stack applications
+Real-time applications
+E-commerce platforms
+Content management systems
+Big data & analytics
+
+
+Common Interview Follow-ups
+❓ Is MongoDB relational?
+👉 No, it is a NoSQL database.
+
+❓ What format does MongoDB use?
+👉 BSON (Binary JSON).
+
+❓ Why use MongoDB?
+👉 For flexibility, scalability, and fast development.
+
+One-Minute Interview Answer ⭐
+MongoDB is a NoSQL, document-based database that stores data in JSON-like format called BSON. It is schema-less, scalable, and provides high performance, 
+making it suitable for modern web applications.
+
+
+| Feature        | MongoDB                      | SQL Databases         |
+| -------------- | ---------------------------- | --------------------- |
+| Schema         | Flexible, schema-less        | Fixed schema          |
+| Data storage   | JSON/BSON documents          | Tables, rows, columns |
+| Relationships  | Embedded or references       | Joins & foreign keys  |
+| Scaling        | Horizontal (Sharding)        | Vertical              |
+| Query language | MongoDB Query Language (MQL) | SQL                   |
+| Joins          | Limited                      | Strong                   |
+| Performance    | High for big data            | High for structured data |
+
+
+When to Use MongoDB?
+✔ Rapid development
+✔ Large & unstructured data
+✔ Scalable web apps
+
+When to Use SQL?
+✔ Strong relationships
+✔ Complex joins
+✔ Financial & transactional systems
+
+
+2️⃣ Features of MongoDB
+Document-oriented: Data stored as JSON/BSON documents
+Schema-less: Flexible structure, no fixed schema
+High performance: Indexing, in-memory processing
+Horizontal scaling: Sharding support
+Replication: High availability via replica sets
+Aggregation Framework: Advanced data queries
+Open Source
+
+
+Visual Representation
+MongoDB
+ └── Database
+     └── Collection
+         └── Document
+             └── Fields
+
+
+
+1️⃣ Database
+A database is the top-level container
+Holds multiple collections
+
+use myDatabase
+
+2️⃣ Collection
+A collection is a group of documents
+Similar to a table in SQL
+No fixed schema
+
+db.createCollection("users")
+
+3️⃣ Document
+A document is a single record stored as BSON
+Similar to a row in SQL
+
+{
+  "_id": ObjectId("64ab..."),
+  "name": "Suyog",
+  "email": "suyog@gmail.com",
+  "age": 23
+}
+
+4️⃣ Fields
+Key-value pairs inside a document
+Similar to columns
+
+"name": "Suyog"
+
+5️⃣ BSON (Binary JSON)
+MongoDB stores documents as BSON
+Supports extra data types (Date, ObjectId, Binary)
+
+MongoDB Structure vs SQL Structure
+| MongoDB    | SQL      |
+| ---------- | -------- |
+| Database   | Database |
+| Collection | Table    |
+| Document   | Row      |
+| Field      | Column   |
+
+
+
+Internal MongoDB Components (Interview Important)
+6️⃣ _id Field
+Unique identifier for each document
+Automatically generated if not provided
+
+"_id": ObjectId("507f1f77bcf86cd799439011")
+
+7️⃣ Indexes
+Improve query performance
+Created on fields
+
+db.users.createIndex({ email: 1 })
+
+8️⃣ Embedded Documents
+Documents inside documents
+Reduces joins
+
+{
+  "name": "Suyog",
+  "address": {
+    "city": "Pune",
+    "pincode": 411001
+  }
+}
+
+9️⃣ Arrays
+Store multiple values in a field
+"skills": ["JS", "Node", "MongoDB"]
+
+
+One-Minute Interview Answer ⭐
+MongoDB structure consists of databases containing collections, collections containing documents, and documents made of fields stored in BSON format,
+allowing flexible and scalable data storage.
+
+Frequently Asked Questions
+❓ Is MongoDB schema-less?
+✔ Yes, but schemas can be enforced using Mongoose.
+
+❓ What is BSON?
+✔ Binary JSON used internally by MongoDB.
+
+
+
+What is Mongoose?
+Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js that provides a schema-based solution to model application data.
+
+Simple definition (1-liner):
+Mongoose helps you interact with MongoDB using schemas, models, and validations.
+
+Why Use Mongoose? (Interview Favorite ⭐)
+MongoDB is schema-less → Mongoose adds structure & control.
+✔ Schema definition
+✔ Data validation
+✔ Middleware (hooks)
+✔ Relationships (populate)
+✔ Cleaner CRUD syntax
+
+
+Mongoose Architecture (Flow)
+Node.js App
+   ↓
+Mongoose
+   ↓
+MongoDB Database
+
+
+Core Concepts of Mongoose
+1️⃣ Schema
+Defines the structure of documents.
+
+const mongoose = require("mongoose");
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, unique: true },
+  age: Number,
+});
+
+
+2️⃣ Model
+A model is a wrapper around the schema used to perform CRUD operations.
+
+const User = mongoose.model("User", userSchema);
+
+
+3️⃣ Document
+An instance of a model.
+
+const user = new User({ name: "Suyog", email: "suyog@gmail.com" });
+await user.save();
+
+
+
+
+2️⃣ CRUD Operations with Mongoose
+
+*******************************************************
+A. Create (Insert Documents)
+
+// Single Document
+User.create({ name: "Amit", age: 25 });
+//         OR
+const user = new User({ name: 'Suyog', age: 23, email: 'suyog@email.com' });
+await user.save();
+
+// Multiple Documents
+await User.insertMany([
+  { name: 'Rahul', age: 25, email: 'rahul@email.com' },
+  { name: 'Amit', age: 22, email: 'amit@email.com' }
+]);
+
+
+*******************************************************
+B. Read (Query Documents)
+
+// Find all users
+const users = await User.find();
+
+// Find by condition
+const adultUsers = await User.find({ age: { $gte: 18 } });
+
+// Find one
+const su = await User.findOne({ name: 'Suyog' });
+
+// Find by ID
+const userById = await User.findById('634b9a7e6f5e4f1a2b8c9d0e');
+
+
+*******************************************************
+
+C. Update (Modify Documents)
+
+User.findByIdAndUpdate(id, { age: 30 });
+
+// Update one document
+await User.updateOne({ name: 'Suyog' }, { $set: { age: 24 } });
+
+// Update multiple documents
+await User.updateMany({ age: { $lt: 23 } }, { $inc: { age: 1 } });
+
+// Find and update, return updated document
+const updatedUser = await User.findOneAndUpdate(
+  { name: 'Rahul' },
+  { age: 26 },
+  { new: true } // returns updated document
+);
+
+
+*******************************************************
+
+D. Delete (Remove Documents)
+
+// Delete one
+await User.deleteOne({ name: 'Amit' });
+
+// Delete many
+await User.deleteMany({ age: { $lt: 20 } });
+
+// Find by ID and delete
+await User.findByIdAndDelete('634b9a7e6f5e4f1a2b8c9d0e');
+
+*******************************************************
+
+4️⃣ Validation & Default Values
+const productSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, default: 0, min: 0 },
+  inStock: { type: Boolean, default: true }
+});
+
+const Product = mongoose.model('Product', productSchema);
+
+required → field must exist
+default → default value
+min, max → numerical validation
+
+
+
+
+Middleware (Hooks) ⭐⭐⭐
+Used to run logic before or after database actions.
+
+userSchema.pre("save", function (next) {
+  this.name = this.name.toUpperCase();
+  next();
+});
+
+Types:
+pre
+post
+
+
+Relationships & Populate
+
+B. References (Normalized)
+Store ObjectId references to documents in another collection
+Good for one-to-many or many-to-many relationships
+
+Reference Relationship
+const postSchema = new mongoose.Schema({
+  title: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+});
+
+
+3️⃣ Using Populate in Mongoose
+Populate replaces the ObjectId reference with the actual document data.
+
+Populate
+Post.find().populate("user");
+
+
+❓ Can Mongoose handle relations?
+Yes, via references (populate) or embedded documents.
+
+
+
+Indexes
+Improve query performance.
+userSchema.index({ email: 1 });
+
+
+Connection using connection string
+mongoose.connect("mongodb://localhost:27017/mydb");
+
+
+*****************************************************
+const mongoose = require('mongoose');
+const userSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  skills: [String]
+});
+
+const User = mongoose.model('User', userSchema);
+*****************************************************
+
+❓ What is _id?
+Every document has a unique _id field (ObjectId by default).
+
+
+Schema → defines structure & validation
+Model → represents collection and allows CRUD operations
+
+One-Minute Interview Answer ⭐
+Mongoose is an ODM library for MongoDB that provides schema-based modeling, validation, middleware, and relationships, 
+making MongoDB easier and safer to use in Node.js applications.
+
+
+
+❓ How is data queried in MongoDB?
+Using MongoDB Query Language (MQL) with operators like $eq, $gt, $in.
+
+
+6️⃣ Important MongoDB Operators
+| Operator | Description             |
+| -------- | ----------------------- |
+| `$eq`    | Equal to                |
+| `$gt`    | Greater than            |
+| `$lt`    | Less than               |
+| `$gte`   | Greater than or equal   |
+| `$lte`   | Less than or equal      |
+| `$ne`    | Not equal               |
+| `$in`    | In array                |
+| `$nin`   | Not in array            |
+| `$and`   | Logical AND             |
+| `$or`    | Logical OR              |
+| `$set`   | Update fields           |
+| `$push`  | Add element to array    |
+| `$inc`   | Increment numeric field |
+
+
+{ timestamps: true } in Mongoose Schema
+{ timestamps: true } automatically adds and manages createdAt and updatedAt fields for each document in a Mongoose schema.
+
+What does it do?
+When you enable timestamps in a schema, Mongoose automatically:
+Adds createdAt → when the document is first created
+Adds updatedAt → whenever the document is updated
+You don’t need to define these fields manually.
+
+
+
+
+{ new: true } in Mongoose
+{ new: true } tells Mongoose to return the updated document, not the old one, after an update operation.
+
+Where is { new: true } used?
+It is mainly used with:
+findByIdAndUpdate()
+findOneAndUpdate()
+
+Example
+const updatedUser = await User.findByIdAndUpdate(
+  id,
+  { name: "Suyog Updated" },
+  { new: true }
+);
+
+console.log(updatedUser);
+
+
+Without { new: true }
+Returns the old document (before update)
+
+With { new: true }
+Returns the updated document (after update)
+
+Visual Difference
+// Default behavior
+User.findByIdAndUpdate(id, { age: 25 });
+// ➜ returns document with old age
+
+// With new: true
+User.findByIdAndUpdate(id, { age: 25 }, { new: true });
+// ➜ returns document with age = 25
+
+
+Why is { new: true } important? ⭐
+✔ Needed when you want to:
+Send updated data in API response
+Continue processing updated values
+Avoid extra database queries
+
+
+

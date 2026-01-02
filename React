@@ -254,3 +254,234 @@ useCallback
 
 One-Line Interview Answer ⭐
 Hooks allow functional components to use state and lifecycle features in React.
+
+
+
+
+useEffect in React – Deep Dive
+useEffect is a hook in React that lets you perform side effects in functional components, such as fetching data, subscribing to events, 
+or manually updating the DOM. It replaces lifecycle methods like componentDidMount, componentDidUpdate, and componentWillUnmount in class components.
+
+Basic Syntax
+useEffect(() => {
+  // Side effect code here
+});
+
+Dependency Array
+useEffect accepts a second argument, the dependency array [].
+
+| Dependency Array | Behavior                                     |
+| ---------------- | -------------------------------------------- |
+| Not provided     | Runs **after every render** (mount + update) |
+| `[]` (empty)     | Runs **only once** after component mounts    |
+| `[dep1, dep2]`   | Runs **when any dependency changes**         |
+
+
+Examples
+1️⃣ Run on every render (no dependency)
+useEffect(() => {
+  console.log("Component rendered");
+});
+
+2️⃣ Run only on mount
+useEffect(() => {
+  console.log("Component mounted");
+}, []);
+
+3️⃣ Run when dependencies change
+const [count, setCount] = useState(0);
+
+useEffect(() => {
+  console.log("Count changed:", count);
+}, [count]);
+
+
+
+❓ What happens if you omit the dependency array?
+The effect runs after every render, which can cause performance issues.
+
+
+1️⃣3️⃣ Conditional Rendering
+{isLoggedIn ? <Home /> : <Login />}
+
+
+1️⃣8️⃣ React Router
+Used for navigation in SPA.
+
+<Route path="/login" element={<Login />} />
+
+
+React Router – Complete Guide for Interviews
+React Router is a library for routing in React applications that allows navigation between different components (pages) without reloading the entire page, 
+enabling single-page applications (SPA) behavior.
+
+Why React Router?
+SPAs don’t reload the page
+Keeps URL in sync with UI
+Enables nested routing
+Supports dynamic routing
+
+Installation
+npm install react-router-dom
+
+Core Components of React Router
+
+1️⃣ BrowserRouter
+Wraps the entire app
+Keeps UI in sync with URL
+
+import { BrowserRouter } from "react-router-dom";
+
+<BrowserRouter>
+  <App />
+</BrowserRouter>
+
+
+2️⃣ Routes
+Container for all route definitions
+
+import { Routes, Route } from "react-router-dom";
+
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/about" element={<About />} />
+</Routes>
+
+
+3️⃣ Route
+Defines path → component mapping
+path → URL path
+element → Component to render
+
+<Route path="/contact" element={<Contact />} />
+
+
+4️⃣ Link
+Used to navigate without page reload
+
+import { Link } from "react-router-dom";
+
+<Link to="/about">About</Link>
+
+
+Advantages of React Router
+✔ Single-page navigation
+✔ Dynamic routing support
+✔ Nested routes for modular UI
+✔ Supports route parameters & query strings
+
+Common Interview Questions
+❓ What is the difference between Link and a tag?
+<Link> → SPA navigation (no reload)
+<a> → full page reload
+
+*****************************************************************
+
+❓ Why hooks were introduced?
+✔ To use state & lifecycle in functional components.
+
+
+
+1️⃣9️⃣ useRef
+Access DOM
+Persist values without re-render
+
+const inputRef = useRef();
+
+2️⃣0️⃣ Memoization ⭐
+useMemo
+Prevents expensive recalculations.
+
+useCallback
+Prevents unnecessary function recreation.
+
+2️⃣1️⃣ React.memo
+Prevents unnecessary re-renders of components.
+
+
+❓ What is SPA?
+Single Page Application without full page reload.
+
+❓ Can React be used with backend?
+✔ Yes (Node, Java, Python, etc.)
+
+
+
+
+Redux – Complete Guide for Interviews
+Redux is a predictable state management library for JavaScript applications, commonly used with React, that helps manage global state in a centralized store. 
+It ensures the app’s state is consistent and easier to debug.
+
+Why Redux? ⭐
+React state is local, Redux allows global state management
+Makes data flow predictable
+Helps with complex apps
+Easier to debug using DevTools
+
+Core Concepts of Redux
+1️⃣ Store
+Centralized place to hold the application state
+Only one store per app is recommended
+
+2️⃣ Actions
+Objects that describe what happened
+Must have a type field
+
+const increment = { type: "INCREMENT" };
+
+3️⃣ Reducers
+Functions that take current state + action and return new state
+Pure function: no side effects
+
+const counterReducer = (state = 0, action) => {
+  switch(action.type) {
+    case "INCREMENT": return state + 1;
+    case "DECREMENT": return state - 1;
+    default: return state;
+  }
+};
+
+4️⃣ Dispatch
+Method used to send actions to the store
+
+store.dispatch({ type: "INCREMENT" });
+
+5️⃣ Selector / getState
+Get data from the store
+
+const currentCount = store.getState();
+
+6️⃣ Provider
+Wrap React app to connect store
+
+import { Provider } from "react-redux";
+
+<Provider store={store}>
+  <App />
+</Provider>
+
+7️⃣ connect / useSelector / useDispatch
+useSelector → access state
+useDispatch → send actions
+
+
+*********************** Redux Flow Diagram *******************
+Component → Dispatch Action → Reducer → Store Updated → UI Rerenders
+
+Advantages of Redux
+✔ Centralized state
+✔ Predictable & testable
+✔ Debugging easier (Redux DevTools)
+✔ Middleware support (Thunk, Saga)
+
+Common Redux Interview Questions
+❓ Difference between Redux and React state?
+React state → local
+Redux → global, centralized
+
+
+One-Line Interview Answer ⭐
+Redux is a predictable state management library that centralizes the app state in a store, uses actions to describe changes, 
+reducers to update state, and enables consistent and debuggable data flow.
+
+

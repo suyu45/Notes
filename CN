@@ -1,0 +1,216 @@
+🔥 TOP 25 COMPUTER NETWORK INTERVIEW QUESTIONS & ANSWERS
+1. What is a computer network?
+A computer network is a group of interconnected devices that share data and resources.
+
+What is a Computer Network?
+A computer network is a collection of two or more devices (computers, servers, routers, etc.) connected together to share data, resources, 
+and services using communication protocols.
+
+Key Points (for interviews)
+Enables data communication
+Shares resources (files, printers, internet)
+Uses protocols like TCP/IP
+Can be wired or wireless
+
+Simple Example : Internet, Office LAN, Mobile hotspot network
+
+One-Line Answer ⭐
+A computer network allows connected devices to communicate and share resources.
+
+
+2. Types of networks
+LAN – Local Area Network
+MAN – Metropolitan Area Network
+WAN – Wide Area Network
+
+
+Types of Computer Networks
+Computer networks are classified based on their coverage area and usage.
+
+1. LAN (Local Area Network)
+Covers a small area (home, office, school)
+High speed, low cost
+Example: Office Wi-Fi
+
+2. MAN (Metropolitan Area Network)
+Covers a city or campus
+Larger than LAN, smaller than WAN
+Example: City-wide broadband network
+
+3. WAN (Wide Area Network)
+Covers a large geographic area (countries/continents)
+Slower than LAN, expensive
+Example: Internet
+
+4. PAN (Personal Area Network)
+Very short range (few meters)
+Connects personal devices
+Example: Bluetooth, Hotspot
+
+5. WLAN (Wireless LAN)
+LAN using wireless technology
+Example: Wi-Fi network
+
+6. CAN (Campus Area Network)
+Connects multiple LANs within a campus
+Example: University network
+
+Interview One-Line Summary ⭐
+Networks are classified as PAN, LAN, MAN, and WAN based on coverage area.
+
+
+
+3. What is the OSI model?
+A 7-layer reference model that standardizes network communication.
+
+
+OSI Model (Open Systems Interconnection Model)
+The OSI model is a 7-layer reference model that explains how data is transmitted from one computer to another over a network. 
+It was developed by ISO to standardize network communication.
+
+Why OSI Model is Important?
+Standardizes networking
+Helps in troubleshooting
+Improves understanding of data flow
+Vendor-independent
+
+7 Layers of OSI Model (Top → Bottom)
+
+7. Application Layer
+Provides network services to users
+Examples: HTTP, FTP, SMTP
+Used by browsers, email clients
+
+6. Presentation Layer
+Data formatting, encryption, compression
+Converts data into readable format
+
+5. Session Layer
+Manages sessions between devices
+Establishes, maintains, terminates sessions
+
+4. Transport Layer
+Ensures reliable data delivery
+Protocols: TCP, UDP
+Uses port numbers
+
+3. Network Layer
+Handles routing and logical addressing
+Protocols: IP, ICMP
+Device: Router
+
+2. Data Link Layer
+Handles physical addressing (MAC)
+Error detection
+Device: Switch
+
+1. Physical Layer
+Transmits raw binary data (0s & 1s)
+Cables, voltage, connectors
+
+******************  Mnemonic to Remember Layers  ****************** 
+****************** All People Seem To Need Data Processing ***** v.v.v.v.imp ************* 
+
+Interview One-Line Answer ⭐
+OSI model is a 7-layer framework that defines how data is transmitted over a network.
+
+
+
+5. TCP vs UDP
+TCP	UDP
+Reliable	Unreliable
+Connection-oriented	Connectionless
+Slower	Faster
+6. What is IP address?
+
+A unique identifier assigned to devices on a network.
+
+7. IPv4 vs IPv6
+
+IPv4 → 32-bit
+
+IPv6 → 128-bit
+
+8. What is MAC address?
+
+A hardware address uniquely assigned to a network interface.
+
+9. What is DNS?
+
+Domain Name System converts domain names into IP addresses.
+
+10. What is HTTP vs HTTPS?
+
+HTTPS is HTTP secured using SSL/TLS encryption.
+
+11. What is a port?
+
+A logical endpoint for communication.
+
+12. Common port numbers
+
+HTTP – 80
+
+HTTPS – 443
+
+FTP – 21
+
+SMTP – 25
+
+SSH – 22
+
+13. What is subnetting?
+
+Dividing a network into smaller networks for efficiency.
+
+14. What is a firewall?
+
+A security system that monitors and controls incoming and outgoing traffic.
+
+15. What is NAT?
+
+Network Address Translation maps private IPs to public IPs.
+
+16. What is a protocol?
+
+A set of rules governing data communication.
+
+17. What is bandwidth?
+
+Maximum data transfer capacity of a network.
+
+18. What is latency?
+
+Delay in data transmission.
+
+19. What is packet switching?
+
+Data is broken into packets and sent independently.
+
+20. What is ARP?
+
+Address Resolution Protocol maps IP address to MAC address.
+
+21. What is ICMP?
+
+Used for error reporting and diagnostics (e.g., ping).
+
+22. What is a router?
+
+Connects multiple networks and routes data.
+
+23. What is a switch?
+
+Connects devices within a LAN.
+
+24. What is a hub?
+
+Broadcasts data to all devices (obsolete).
+
+25. What is VPN?
+
+Creates a secure encrypted tunnel over public networks.
+
+⭐ ONE-LINE INTERVIEW SUMMARY
+
+Computer networks enable communication between devices using standardized protocols and layered architecture.

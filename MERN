@@ -1,0 +1,424 @@
+🔥 TOP 50 MERN STACK INTERVIEW QUESTIONS & ANSWERS
+🔹 GENERAL / MERN BASICS
+1. What is MERN Stack?
+MERN stands for MongoDB, Express.js, React, Node.js used to build full-stack web applications using JavaScript.
+
+2. Why MERN Stack is popular?
+Single language (JavaScript), fast development, scalability, strong community, and full-stack flexibility.
+
+3. What is REST API?
+A REST API is an architectural style for communication using HTTP methods like GET, POST, PUT, DELETE.
+
+4. Difference between frontend and backend?
+Frontend → UI (React)
+Backend → Server logic & DB (Node, Express, MongoDB)
+
+5. What is MVC architecture?
+Model (DB), View (UI), Controller (Business logic).
+
+🔹 JAVASCRIPT (CORE)
+6. What is JavaScript?
+A scripting language used to create dynamic web applications.
+
+7. var vs let vs const
+var → function scoped
+let → block scoped
+const → block scoped, cannot reassign
+
+8. What is closure?
+A function that remembers variables from its lexical scope even after execution.
+
+9. What is hoisting?
+Variables and functions are moved to the top of their scope during compilation.
+
+10. What is event loop?
+Manages async operations by moving tasks from queue to call stack.
+
+🔹 NODE.JS
+11. What is Node.js?
+A JavaScript runtime that executes JS outside the browser.
+
+12. Why Node.js is single-threaded?
+To handle multiple requests efficiently using non-blocking I/O.
+
+13. What is NPM?
+Node Package Manager used to install and manage packages.
+
+14. What is package.json?
+Contains project metadata, dependencies, and scripts.
+
+15. What are modules in Node.js?
+Reusable blocks of code (require, import).
+
+🔹 EXPRESS.JS
+16. What is Express.js?
+A lightweight Node.js framework for building APIs and web apps.
+
+17. Why Express.js?
+Simplifies routing, middleware, and server creation.
+
+18. What is middleware?
+Functions that execute between request and response.
+
+19. Types of middleware
+Application
+Router
+Error-handling
+Built-in
+Third-party
+
+20. What is CORS?
+Security feature that controls cross-origin requests.
+
+🔹 MONGODB
+21. What is MongoDB?
+A NoSQL, document-based database.
+
+22. MongoDB vs SQL
+MongoDB → schema-less, scalable
+SQL → structured, relational
+
+23. What is BSON?
+Binary JSON used internally by MongoDB.
+
+24. What is ObjectId?
+Unique identifier for MongoDB documents.
+
+25. What is indexing?
+Improves query performance.
+
+🔹 MONGOOSE
+26. What is Mongoose?
+ODM library for MongoDB and Node.js.
+
+27. What is schema in Mongoose?
+Defines document structure and validation.
+
+28. What are hooks in Mongoose?
+Functions executed before/after DB operations.
+
+29. What is populate()?
+Fetches referenced documents.
+
+30. What does { timestamps: true } do?
+Automatically adds createdAt and updatedAt.
+
+🔹 REACT
+31. What is React?
+A JavaScript library for building UI using components.
+
+32. What is JSX?
+HTML-like syntax inside JavaScript.
+
+33. What is Virtual DOM?
+In-memory representation of real DOM for efficient updates.
+
+34. Props vs State
+Props → read-only
+State → mutable, dynamic
+
+35. What are hooks?
+Functions that allow state and lifecycle in functional components.
+
+36. useState
+Manages component state.
+
+37. useEffect
+Handles side effects (API calls, subscriptions).
+
+38. Controlled vs Uncontrolled components
+Controlled → React controls input
+Uncontrolled → DOM controls input
+
+39. What is React Router?
+Used for navigation without page reload.
+
+40. What is key in React?
+Helps React identify list elements uniquely.
+
+🔹 REDUX
+41. What is Redux?
+State management library for global state.
+
+42. Why Redux is needed?
+To avoid prop drilling and manage complex state.
+
+43. Redux core concepts
+Store, Action, Reducer, Dispatch
+
+44. What is reducer?
+Pure function that updates state.
+
+45. Redux vs Context API
+Redux → complex apps
+Context → small apps
+
+🔹 AUTHENTICATION & SECURITY
+46. What is JWT?
+Token-based authentication mechanism.
+
+47. How authentication works in MERN?
+Login → JWT generated → stored → verified on each request.
+
+48. What is bcrypt?
+Library used to hash passwords.
+
+49. What is authorization?
+Determining user permissions.
+
+50. What is deployment?
+Hosting frontend & backend on servers (Netlify, Render, AWS).
+
+⭐ ONE-LINE MERN INTERVIEW SUMMARY
+MERN stack uses MongoDB, Express, React, and Node to build scalable full-stack applications using JavaScript across frontend and backend.
+
+
+
+
+
+🔥 CODING INTERVIEW QUESTIONS – REACT + NODE.JS
+
+⚛️ REACT CODING QUESTIONS
+
+1. Counter App using useState
+
+Question: Create a counter with increment & decrement.
+
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </>
+  );
+}
+export default Counter;
+
+📌 Asked: useState basics
+
+
+2. Fetch API data using useEffect
+import { useEffect, useState } from "react";
+
+function Users() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  return (
+    <ul>
+      {users.map(user => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+export default Users;
+
+📌 Asked: useEffect + API
+
+
+3. Controlled Form Input
+function Form() {
+  const [name, setName] = useState("");
+
+  return (
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+
+📌 Asked: Controlled component
+
+
+4. Props Example
+function Child({ message }) {
+  return <h2>{message}</h2>;
+}
+
+function Parent() {
+  return <Child message="Hello React" />;
+}
+
+📌 Asked: Props passing
+
+
+5. Conditional Rendering
+{isLoggedIn ? <Dashboard /> : <Login />}
+
+📌 Asked: UI logic
+
+
+6. List Rendering with Key
+{items.map(item => (
+  <li key={item.id}>{item.name}</li>
+))}
+
+📌 Asked: key importance
+
+
+7. useEffect Cleanup
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log("Running");
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
+
+📌 Asked: cleanup & memory leak
+
+
+8. React Router Setup
+<BrowserRouter>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/about" element={<About />} />
+  </Routes>
+</BrowserRouter>
+
+📌 Asked: routing
+
+
+🟢 NODE.JS / EXPRESS CODING QUESTIONS
+9. Create Simple Express Server
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.listen(3000);
+
+📌 Asked: Express basics
+
+
+10. REST API (GET & POST)
+app.use(express.json());
+
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+app.post("/users", (req, res) => {
+  users.push(req.body);
+  res.status(201).json(req.body);
+});
+
+📌 Asked: REST methods
+
+
+11. Middleware Example
+const logger = (req, res, next) => {
+  console.log(req.method);
+  next();
+};
+
+app.use(logger);
+
+📌 Asked: middleware flow
+
+
+
+12. Error Handling Middleware
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: err.message });
+});
+
+📌 Asked: centralized error handling
+
+
+13. Connect MongoDB (Mongoose)
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://127.0.0.1:27017/test")
+  .then(() => console.log("DB Connected"));
+
+📌 Asked: DB connection
+
+
+14. Mongoose Schema & Model
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String
+});
+
+module.exports = mongoose.model("User", userSchema);
+
+📌 Asked: schema creation
+
+
+15. CRUD – Create User
+app.post("/users", async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(201).json(user);
+});
+
+📌 Asked: async/await
+
+
+16. JWT Authentication
+const jwt = require("jsonwebtoken");
+
+const token = jwt.sign({ id: user._id }, "secret", { expiresIn: "1h" });
+
+📌 Asked: auth logic
+
+
+17. Protect Route with JWT
+const auth = (req, res, next) => {
+  const token = req.headers.authorization;
+  jwt.verify(token, "secret", (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+📌 Asked: middleware auth
+
+
+18. Password Hashing
+const bcrypt = require("bcrypt");
+
+const hash = await bcrypt.hash(password, 10);
+
+📌 Asked: security
+
+
+19. Async Error Handling
+try {
+  const data = await Model.find();
+} catch (error) {
+  res.status(500).json(error);
+}
+
+📌 Asked: try-catch
+
+
+20. CORS Setup
+const cors = require("cors");
+app.use(cors());
+
+📌 Asked: frontend-backend connection
+
+
+⭐ MOST COMMON PRACTICAL TASKS
+✔ Build CRUD API
+✔ Login / Register flow
+✔ Fetch & display data
+✔ Form handling
+✔ Pagination / Search
+✔ Protected routes

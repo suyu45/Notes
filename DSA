@@ -95,6 +95,24 @@ and once the function completes, it's popped off. This allows the program to ret
 | **Heap Sort**   | Build max heap, extract max, heapify                | O(n log n) | O(n log n) | O(n log n) | O(1)     | ❌ No   | ✅ Yes    | Guaranteed O(n log n) in-place sort           |
 
 
+🔍 Key Definitions (Interview Must-Know)
+🔹 Adaptive : A sorting algorithm is adaptive if it takes less time for partially sorted input.
+✔ Example: Insertion Sort performs in O(n) for nearly sorted arrays.
+
+🔹 Stable : A sorting algorithm is stable if it preserves the relative order of equal elements.
+
+
+| Sorting Algorithm  | Adaptive  | Stable   | In-Place  | Time Complexity (Avg) |
+| ------------------ | --------  | -------  | --------  | --------------------- |
+| **Bubble Sort**    | ✅ Yes    | ✅ Yes   | ✅ Yes    | O(n²)                 |
+| **Selection Sort** | ❌ No     | ❌ No    | ✅ Yes    | O(n²)                 |
+| **Insertion Sort** | ✅ Yes    | ✅ Yes   | ✅ Yes    | O(n²)                 |
+| **Merge Sort**     | ❌ No     | ✅ Yes   | ❌ No     | O(n log n)            |
+| **Quick Sort**     | ❌ No     | ❌ No    | ✅ Yes    | O(n log n)            |
+| **Heap Sort**      | ❌ No     | ❌ No    | ✅ Yes    | O(n log n)            |
+
+
+
 Quick Memory Hooks
 Stable Sorts: BIM → Bubble, Insertion, Merge
 In-place: All except Merge
@@ -123,6 +141,10 @@ It works like this:
 sort(nums.begin(), nums.end(), greater<int>());
 
 
+📌 What is IntroSort?
+IntroSort starts with Quick Sort, but if recursion goes too deep (indicating bad pivot choices), it switches to Heap Sort.
+For small subarrays, it uses Insertion Sort.
+👉 This avoids Quick Sort’s O(n²) worst case.
 
 
 ************************************* Sliding window and 2 pointer ********************************************

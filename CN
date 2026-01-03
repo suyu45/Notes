@@ -116,101 +116,155 @@ OSI model is a 7-layer framework that defines how data is transmitted over a net
 
 
 
-5. TCP vs UDP
-TCP	UDP
-Reliable	Unreliable
-Connection-oriented	Connectionless
-Slower	Faster
-6. What is IP address?
 
+TCP (Transmission Control Protocol)
+TCP is a connection-oriented, reliable transport-layer protocol that ensures ordered, error-free delivery of data between two devices.
+
+Key Features of TCP
+Connection-oriented (3-way handshake)
+Reliable (acknowledgements & retransmission)
+Ordered delivery
+Flow control (sliding window)
+Congestion control
+Error checking
+
+TCP 3-Way Handshake
+SYN → Client requests connection
+SYN-ACK → Server acknowledges
+ACK → Connection established
+
+Where TCP is Used
+HTTP / HTTPS
+FTP
+SMTP
+SSH
+
+Advantages
+Guaranteed data delivery
+No data loss or duplication
+
+Disadvantages
+Slower than UDP
+More overhead
+
+
+
+
+UDP (User Datagram Protocol)
+UDP is a connectionless, unreliable transport-layer protocol that sends data without guaranteeing delivery, order, or duplication.
+
+Key Features of UDP
+Connectionless (no handshake)
+Unreliable (no acknowledgements)
+No error recovery
+Faster than TCP
+Low overhead
+
+Where UDP is Used
+Video streaming
+Online gaming
+VoIP (calls)
+DNS
+Live broadcasts
+
+Advantages
+Very fast
+Ideal for real-time communication
+
+Disadvantages
+Packet loss possible
+No delivery guarantee
+
+UDP vs TCP (Quick Comparison)
+
+
+
+TCP vs UDP (In-Depth Comparison – Interview Ready)
+Both TCP and UDP are Transport Layer (Layer 4) protocols, but they are designed for different use cases.
+
+| Feature            | **TCP**                       | **UDP**                      |
+| ------------------ | ----------------------------- | ---------------------------- |
+| Full Form          | Transmission Control Protocol | User Datagram Protocol       |
+| OSI Layer          | Transport Layer               | Transport Layer              |
+| Connection Type    | Connection-oriented           | Connectionless               |
+| Reliability        | Reliable                      | Unreliable                   |
+| Data Ordering      | Maintains order               | No order guarantee           |
+| Error Handling     | Error detection & recovery    | Error detection only         |
+| Flow Control       | Yes                           | No                           |
+| Congestion Control | Yes                           | No                           |
+| Speed              | Slower                        | Faster                       |
+| Header Size        | 20–60 bytes                   | 8 bytes                      |
+| Overhead           | High                          | Low                          |
+| Packet Loss        | Retransmitted                 | Not retransmitted            |
+| Acknowledgement    | Required                      | Not required                 |
+| Use Cases          | HTTP, HTTPS, FTP, SMTP, SSH   | Streaming, Gaming, VoIP, DNS |
+| Example            | File download                 | Live video stream            |
+
+TCP → Phone call with confirmation
+UDP → Live broadcast (no feedback)
+
+11. When to Use What?
+Use TCP when accuracy matters
+Use UDP when speed matters
+
+Interview One-Line Answer ⭐
+TCP is reliable and connection-oriented, while UDP is fast and connectionless without delivery guarantees.
+
+
+
+6. What is IP address?
 A unique identifier assigned to devices on a network.
 
 7. IPv4 vs IPv6
-
 IPv4 → 32-bit
-
 IPv6 → 128-bit
 
 8. What is MAC address?
-
 A hardware address uniquely assigned to a network interface.
 
 9. What is DNS?
-
 Domain Name System converts domain names into IP addresses.
 
 10. What is HTTP vs HTTPS?
-
 HTTPS is HTTP secured using SSL/TLS encryption.
 
 11. What is a port?
-
 A logical endpoint for communication.
 
-12. Common port numbers
-
-HTTP – 80
-
-HTTPS – 443
-
-FTP – 21
-
-SMTP – 25
-
-SSH – 22
 
 13. What is subnetting?
-
 Dividing a network into smaller networks for efficiency.
 
 14. What is a firewall?
-
 A security system that monitors and controls incoming and outgoing traffic.
 
 15. What is NAT?
-
 Network Address Translation maps private IPs to public IPs.
 
 16. What is a protocol?
-
 A set of rules governing data communication.
 
 17. What is bandwidth?
-
 Maximum data transfer capacity of a network.
 
 18. What is latency?
-
 Delay in data transmission.
 
 19. What is packet switching?
-
 Data is broken into packets and sent independently.
 
-20. What is ARP?
-
-Address Resolution Protocol maps IP address to MAC address.
-
-21. What is ICMP?
-
-Used for error reporting and diagnostics (e.g., ping).
 
 22. What is a router?
-
 Connects multiple networks and routes data.
 
 23. What is a switch?
-
 Connects devices within a LAN.
 
 24. What is a hub?
-
 Broadcasts data to all devices (obsolete).
 
 25. What is VPN?
-
 Creates a secure encrypted tunnel over public networks.
 
 ⭐ ONE-LINE INTERVIEW SUMMARY
-
 Computer networks enable communication between devices using standardized protocols and layered architecture.

@@ -2,12 +2,20 @@
 
 #include <iostream>
 
+3️⃣ Binary Search using STL
+bool found = binary_search(a.begin(), a.end(), target);
+
 __builtin_popcount(x) gives the number of 1-bits in x.
 stoi() 
 stoll()
+sqrt(n)
+pow(n, 2);
+sort(arr, arr + n);
 to_string(val3)
+n = abs(n);          // handle negative numbers
 long long val1 = stoll(first);
 string third = to_string(val3);
+reverse(s.begin(), s.end());
 string second = num.substr(index, length);
 s.erase(s.size() - 5);  // removes last 5 characters
 
@@ -23,6 +31,10 @@ sort(jobs.rbegin(), jobs.rend());   // descending
 int high = accumulate(jobs.begin(), jobs.end(), 0);
 
 int gcdVal = __gcd(nums1, nums2);
+
+4️⃣ Using STL (min_element, max_element)
+int largest = *max_element(arr, arr + n);
+int smallest = *min_element(arr, arr + n);
 
 
 vector<vector<int>> score;
@@ -49,7 +61,342 @@ Example: n = 2
 
 
 
+2️⃣ Using Bitwise AND Operator (Faster)
+bool isEven(int n) {
+    return (n & 1) == 0;
+}
 
+bool isOdd(int n) {
+    return (n & 1) == 1;
+}
+
+💡 Explanation:
+n & 1 checks the least significant bit
+LSB 0 → Even, LSB 1 → Odd
+
+
+
+
+2️⃣ Optimized Method (Up to √n) ⭐ Best for Interviews
+bool isPrime(int n) {
+    if (n <= 1) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+
+    for (int i = 3; i * i <= n; i += 2) {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+
+⏱️ Time: O(√n)
+📦 Space: O(1)
+
+
+
+
+void sieve(int n) {
+    vector<bool> isPrime(n + 1, true);
+
+    isPrime[0] = false;
+    isPrime[1] = false;
+
+    for (int i = 2; i * i <= n; i++) { // ********* till i*i <= n ************* 
+        if (isPrime[i]) {
+            for (int j = i * i; j <= n; j += i) { // ********* start j from i*i *************
+                isPrime[j] = false;
+            }
+        }
+    }
+
+    for (int i = 2; i <= n; i++) {
+        if (isPrime[i])
+            cout << i << " ";
+    }
+}
+
+
+
+
+2️⃣ Using Euclidean Algorithm (Most Preferred)
+
+Recursive Approach:
+int gcd(int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+Iterative Approach:
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+✅ Time Complexity: O(log min(a, b))
+✅ Space Complexity: O(1) (iterative), O(log n) (recursive)
+
+
+3️⃣ Using STL Function (C++17+)
+#include <numeric> // for std::gcd
+int main() {
+    int a = 12, b = 18;
+    cout << gcd(a, b); // Output: 6
+}
+
+
+4️⃣ LCM Using GCD
+Relation: LCM(a, b) * GCD(a, b) = a * b
+
+
+
+swap(a, b);
+
+2️⃣ Swap no.s Without Using a Temporary Variable (Using Arithmetic)
+a = a + b;
+b = a - b;
+a = a - b;
+
+3️⃣ Using XOR Bitwise Operator (No Temp, No Overflow)
+a = a ^ b;
+b = a ^ b;
+a = a ^ b;
+
+
+
+🔢 Armstrong Number => A number is called an Armstrong number (also known as a Narcissistic number) if:
+sum of (each digit)^number of digits = number itself
+| Number | Explanation                    |
+| ------ | ------------------------------ |
+| 153    | (1^3 + 5^3 + 3^3 = 153)        |
+| 370    | (3^3 + 7^3 + 0^3 = 370)        |
+| 9474   | (9^4 + 4^4 + 7^4 + 4^4 = 9474) |
+
+⚠️ Common Interview Mistakes
+❌ Assuming Armstrong numbers are only 3-digit
+
+🎯 One-Line Interview Answer
+“An Armstrong number is equal to the sum of its digits raised to the power of the number of digits.”
+
+
+
+
+2️⃣ Dutch National Flag Algorithm (Optimal – Single Pass)
+void sort012(int arr[], int n) {
+    int low = 0, mid = 0, high = n - 1;
+
+    while (mid <= high) {
+        if (arr[mid] == 0) {
+            swap(arr[low], arr[mid]);
+            low++;
+            mid++;
+        } else if (arr[mid] == 1) {
+            mid++;
+        } else { // arr[mid] == 2
+            swap(arr[mid], arr[high]);
+            high--;
+        }
+    }
+}
+
+✅ Time: O(n)
+✅ Space: O(1)
+✅ In-place and single pass (most preferred for interviews)
+
+
+
+
+
+🔢 Find Missing & Repeating Number
+📌 Problem => Given an array of size n containing numbers from 1 to n: One number is missing, One number is repeating
+Example
+Input:  [4, 3, 6, 2, 1, 1]
+Output: Repeating = 1, Missing = 5
+
+1️⃣ Using Mathematical Equations (Most Asked)
+💡 Idea
+Let:
+S = sum(1..n) => n * (n + 1) / 2;
+S2 = sum of squares(1..n) => n * (n + 1) * (2*n + 1) / 6;
+s = sum of array
+s2 = sum of squares of array
+
+Then:
+missing - repeating = S - s
+missing² - repeating² = S2 - s2
+
+✅ Code
+void findMissingRepeating(int arr[], int n) {
+    long long S = (long long)n * (n + 1) / 2;
+    long long S2 = (long long)n * (n + 1) * (2*n + 1) / 6;
+
+    long long s = 0, s2 = 0;
+    for (int i = 0; i < n; i++) {
+        s += arr[i];
+        s2 += (long long)arr[i] * arr[i];
+    }
+
+    long long diff = S - s;            // M - R
+    long long diff2 = S2 - s2;          // M² - R²
+
+    long long sum = diff2 / diff;       // M + R ************* v.v.v.imp *********************
+
+    long long missing = (diff + sum) / 2;    // ******************
+    long long repeating = sum - missing;    // ******************
+
+    cout << "Repeating = " << repeating << endl;
+    cout << "Missing = " << missing << endl;
+}
+
+✅ Time: O(n)
+✅ Space: O(1)
+
+
+2️⃣ Using XOR (Most Optimal & Clean)
+💡 Idea
+XOR all array elements and numbers 1..n
+Get missing ^ repeating
+
+Separate using rightmost set bit
+
+✅ Code
+void findMissingRepeating(int arr[], int n) {
+    int xr = 0;
+    for (int i = 0; i < n; i++) {
+        xr ^= arr[i];
+        xr ^= (i + 1);
+    }
+
+    int setBit = xr & -xr; // ****************** v.v.v.v.imp *******************************
+    int x = 0, y = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] & setBit) x ^= arr[i];
+        else y ^= arr[i];
+
+        if ((i + 1) & setBit) x ^= (i + 1);
+        else y ^= (i + 1);
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == x) {
+            cout << "Repeating = " << x << "\nMissing = " << y;
+            return;
+        }
+    }
+    cout << "Repeating = " << y << "\nMissing = " << x;
+}
+
+✅ Time: O(n)
+✅ Space: O(1)
+🔥 Most preferred in interviews
+
+
+
+
+🔥 Maximum Sum Subarray (Kadane’s Algorithm)
+📌 Problem : Given an integer array, find the contiguous subarray with the maximum sum.
+Example
+Input:  [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Output: 6
+Subarray: [4, -1, 2, 1]
+
+✅ Kadane’s Algorithm (Clean & Simple)
+int maxSubArraySum(int arr[], int n) {
+    int currentSum = arr[0]; // ************ v.v.v.imp ************
+    int maxSum = arr[0];  // ************ v.v.v.imp ************
+
+    for (int i = 1; i < n; i++) {
+        currentSum = max(arr[i], currentSum + arr[i]);  // ************ v.v.v.imp ************
+        maxSum = max(maxSum, currentSum);
+    }
+    return maxSum;
+}
+
+
+
+✅ Simplest Kadane’s Algorithm (MAX SUM ONLY)
+int maxSubArraySum(int arr[], int n) {
+    int currentSum = 0;
+    int maxSum = INT_MIN;
+
+    for (int i = 0; i < n; i++) {
+        currentSum += arr[i];
+
+        if (currentSum > maxSum)
+            maxSum = currentSum;
+
+        if (currentSum < 0)
+            currentSum = 0;
+    }
+    return maxSum;
+}
+
+
+
+✅ Subarray With Given Sum
+Works for non-negative numbers
+
+bool subarrayWithSum(int arr[], int n, int target) {
+    int start = 0, end = 0;
+    int sum = 0;
+
+    while (end < n) {
+        sum += arr[end];
+
+        while (sum > target && start <= end) {
+            sum -= arr[start];
+            start++;
+        }
+
+        if (sum == target) {
+            cout << "Subarray found from index "
+                 << start << " to " << end << endl;
+            return true;
+        }
+        end++;
+    }
+    return false;
+}
+
+🧠 Simple Explanation
+end expands the window
+start shrinks the window if sum exceeds target
+Check sum at every step
+
+
+
+✅ CASE 2: Array WITH NEGATIVE numbers
+👉 Use Prefix Sum + HashMap
+💡 Idea => If: prefixSum[i] - prefixSum[j] = target
+
+Then subarray (j+1 to i) has given sum.
+🔹 Simple C++ Code (Works for ALL integers)
+bool subarrayWithSum(int arr[], int n, int target) {
+    unordered_map<int, int> mp;
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+
+        if (sum == target) {
+            cout << "Subarray found from index 0 to " << i << endl;
+            return true;
+        }
+
+        if (mp.find(sum - target) != mp.end()) {
+            cout << "Subarray found from index "
+                 << mp[sum - target] + 1 << " to " << i << endl;
+            return true;
+        }
+
+        mp[sum] = i;
+    }
+    return false;
+}
 
 
 1) Binary search
@@ -64,6 +411,14 @@ Precondition: Array must be sorted.
 | Best    | O(1)     | O(1)  |
 | Average | O(log n) | O(1)  |	
 | Worst   | O(log n) | O(1)  |
+
+⭐ Interview Tips
+Always mention array must be sorted
+Use mid = low + (high - low) / 2 (avoid overflow)
+Binary Search is widely used in:
+- Lower/Upper Bound
+- Search Space Optimization
+- Competitive Programming
 
 
 2) stack
@@ -149,6 +504,101 @@ sort(nums.begin(), nums.end(), greater<int>());
 IntroSort starts with Quick Sort, but if recursion goes too deep (indicating bad pivot choices), it switches to Heap Sort.
 For small subarrays, it uses Insertion Sort.
 👉 This avoids Quick Sort’s O(n²) worst case.
+
+🧩 Working Flow (Simple)
+Start Quick Sort
+   ↓
+If recursion depth too high
+   ↓
+Switch to Heap Sort
+   ↓
+For small subarrays → Insertion Sort
+
+
+
+void insertionSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = 1; i < n; i++) {
+        int key = a[i], j = i - 1;
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key;
+    }
+}
+
+
+
+void merge(vector<int>& a, int l, int m, int r) {
+    vector<int> L(a.begin() + l, a.begin() + m + 1); // *********** v.v.v.imp ************************
+    vector<int> R(a.begin() + m + 1, a.begin() + r + 1); // *********** v.v.v.imp ************************
+
+    int i = 0, j = 0, k = l;
+    while (i < L.size() && j < R.size())
+        a[k++] = (L[i] <= R[j]) ? L[i++] : R[j++];
+
+    while (i < L.size()) a[k++] = L[i++];
+    while (j < R.size()) a[k++] = R[j++];
+}
+
+void mergeSort(vector<int>& a, int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(a, l, m);
+        mergeSort(a, m + 1, r);
+        merge(a, l, m, r);
+    }
+}
+
+
+
+int partition(vector<int>& a, int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (a[j] < pivot)
+            swap(a[++i], a[j]);
+    }
+    swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+void quickSort(vector<int>& a, int low, int high) {
+    if (low < high) {
+        int pi = partition(a, low, high);
+        quickSort(a, low, pi - 1);
+        quickSort(a, pi + 1, high);
+    }
+}
+
+
+
+
+void heapify(vector<int>& a, int n, int i) {
+    int largest = i;
+    int l = 2 * i + 1, r = 2 * i + 2;
+
+    if (l < n && a[l] > a[largest]) largest = l;
+    if (r < n && a[r] > a[largest]) largest = r;
+
+    if (largest != i) {
+        swap(a[i], a[largest]);
+        heapify(a, n, largest);
+    }
+}
+
+void heapSort(vector<int>& a) {
+    int n = a.size();
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(a, n, i);
+
+    for (int i = n - 1; i > 0; i--) {
+        swap(a[0], a[i]);
+        heapify(a, i, 0);
+    }
+}
+
 
 
 ************************************* Sliding window and 2 pointer ********************************************
